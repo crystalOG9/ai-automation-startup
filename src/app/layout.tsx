@@ -13,6 +13,8 @@ export const metadata: Metadata = {
   description: "We discover repetitive business workflows and build AI-powered automation around them.",
 };
 
+import { BackgroundVisuals } from "@/components/BackgroundVisuals";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -21,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} antialiased scroll-smooth`}>
       <body className="min-h-full flex flex-col bg-background text-foreground overflow-x-hidden selection:bg-brand-500/30 selection:text-brand-50">
+        <BackgroundVisuals />
         {children}
       </body>
     </html>
