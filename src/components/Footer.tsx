@@ -15,15 +15,16 @@ export function Footer() {
               AUTOMATE
               <span className="w-2 h-2 rounded-full bg-brand-500" />
             </Link>
-            <p className="text-muted-foreground max-w-sm">
-              AI-powered business automation built around the way your company actually works.
+            <p className="text-muted-foreground max-w-sm text-sm leading-relaxed">
+              We discover repetitive business workflows and build AI-powered automation around the way your company actually works.
             </p>
           </div>
 
           <div>
-            <h4 className="text-white font-semibold mb-4">Platform</h4>
+            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Platform</h4>
             <ul className="space-y-3">
               <li><Link href="#how-it-works" className="text-muted-foreground hover:text-white transition-colors text-sm">How It Works</Link></li>
+              <li><Link href="#workflow-demo" className="text-muted-foreground hover:text-white transition-colors text-sm">Workflow Demo</Link></li>
               <li><Link href="#solutions" className="text-muted-foreground hover:text-white transition-colors text-sm">Solutions</Link></li>
               <li><Link href="#industries" className="text-muted-foreground hover:text-white transition-colors text-sm">Industries</Link></li>
               <li><Link href="#why-us" className="text-muted-foreground hover:text-white transition-colors text-sm">Why Us</Link></li>
@@ -31,28 +32,27 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="text-white font-semibold mb-4">Company</h4>
+            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Assessment</h4>
             <ul className="space-y-3">
-              <li><Link href="#about" className="text-muted-foreground hover:text-white transition-colors text-sm">About</Link></li>
-              <li><Link href="#contact" className="text-muted-foreground hover:text-white transition-colors text-sm">Contact</Link></li>
-              <li><Link href="#" className="text-muted-foreground hover:text-white transition-colors text-sm">Privacy Policy</Link></li>
-              <li><Link href="#" className="text-muted-foreground hover:text-white transition-colors text-sm">Terms of Service</Link></li>
+              <li><Link href="#contact" className="text-muted-foreground hover:text-white transition-colors text-sm">Request Assessment</Link></li>
+              <li><Link href="#differentiator" className="text-muted-foreground hover:text-white transition-colors text-sm">Workflow Differentiator</Link></li>
+              <li><Link href="#contact" className="text-muted-foreground hover:text-white transition-colors text-sm">Start With One Workflow</Link></li>
             </ul>
           </div>
           
         </div>
 
         <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-white/5 text-sm text-muted-foreground gap-4">
-          <p>© {new Date().getFullYear()} Automate Inc. All rights reserved.</p>
+          <p>© 2026 Automate. All rights reserved.</p>
           
           <div className="flex items-center gap-4">
-            <a href="#" className="hover:text-white transition-colors" aria-label="Website">
+            <a href="#contact" className="hover:text-white transition-colors" aria-label="Website">
               <Globe className="w-4 h-4" />
             </a>
-            <a href="#" className="hover:text-white transition-colors" aria-label="Contact">
+            <a href="#contact" className="hover:text-white transition-colors" aria-label="Contact">
               <Mail className="w-4 h-4" />
             </a>
-            <a href="#" className="hover:text-white transition-colors" aria-label="Community">
+            <a href="#contact" className="hover:text-white transition-colors" aria-label="Community">
               <MessageSquare className="w-4 h-4" />
             </a>
           </div>

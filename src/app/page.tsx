@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { ProblemSection } from "@/components/ProblemSection";
+import { MainDifferentiator } from "@/components/MainDifferentiator";
 import { CoreMessage } from "@/components/CoreMessage";
 import { HowItWorks } from "@/components/HowItWorks";
 import { AutomationDemo } from "@/components/AutomationDemo";
@@ -19,6 +20,7 @@ export default function Home() {
       <main>
         <Hero />
         <ProblemSection />
+        <MainDifferentiator />
         <CoreMessage />
         <HowItWorks />
         <AutomationDemo />

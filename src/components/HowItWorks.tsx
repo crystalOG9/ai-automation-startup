@@ -1,103 +1,153 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Search, Target, PenTool, Cpu, LineChart } from "lucide-react";
-import { cn } from "@/lib/utils";
+import {
+  MessageSquare,
+  Eye,
+  Network,
+  Cpu,
+  BarChart3,
+  Maximize2,
+  ArrowRight,
+} from "lucide-react";
+import Link from "next/link";
 
-const STEPS = [
+const WORKFLOW_STEPS = [
   {
     num: "01",
-    title: "Discover",
-    desc: "We visit or speak with your team and understand how work actually happens.",
-    icon: Search,
+    title: "TELL US",
+    desc: "Tell us what takes your team too long.",
+    icon: MessageSquare,
+    color: "text-blue-400",
+    glow: "bg-blue-500/10",
   },
   {
     num: "02",
-    title: "Identify",
-    desc: "We find repetitive, expensive, time-consuming workflows.",
-    icon: Target,
+    title: "OBSERVE",
+    desc: "We understand the real process.",
+    icon: Eye,
+    color: "text-cyan-400",
+    glow: "bg-cyan-500/10",
   },
   {
     num: "03",
-    title: "Design",
-    desc: "We design an automation specifically around your existing process.",
-    icon: PenTool,
+    title: "MAP",
+    desc: "We identify every step.",
+    icon: Network,
+    color: "text-indigo-400",
+    glow: "bg-indigo-500/10",
   },
   {
     num: "04",
-    title: "Automate",
-    desc: "AI + software + integrations handle the repetitive workload.",
+    title: "AUTOMATE",
+    desc: "We automate the safe repetitive parts.",
     icon: Cpu,
+    color: "text-brand-400",
+    glow: "bg-brand-500/10",
   },
   {
     num: "05",
-    title: "Optimize",
-    desc: "We measure the results and continuously improve the workflow.",
-    icon: LineChart,
+    title: "MEASURE",
+    desc: "We compare before and after.",
+    icon: BarChart3,
+    color: "text-emerald-400",
+    glow: "bg-emerald-500/10",
+  },
+  {
+    num: "06",
+    title: "EXPAND",
+    desc: "If it works, we expand.",
+    icon: Maximize2,
+    color: "text-purple-400",
+    glow: "bg-purple-500/10",
   },
 ];
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-24 relative">
-      <div className="container mx-auto px-4 md:px-6">
+    <section id="how-it-works" className="py-24 relative overflow-hidden">
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
         
-        <div className="max-w-3xl mb-16">
+        {/* Header */}
+        <div className="max-w-4xl mx-auto text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-brand-500/30 text-brand-300 text-xs font-semibold uppercase tracking-wider mb-4"
+          >
+            Engagement Roadmap
+          </motion.div>
+
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-5xl font-bold tracking-tight mb-6"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-6 uppercase"
           >
-            How it works
+            START WITH <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-cyan-300 to-blue-200">ONE WORKFLOW.</span>
           </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-base md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed"
+          >
+            You don&apos;t need to transform your entire company overnight. We begin with a single high-friction process, prove the value, and build from there.
+          </motion.p>
         </div>
 
-        <div className="relative">
-          {/* Connecting Line (Desktop) */}
-          <div className="hidden lg:block absolute top-[45px] left-[5%] right-[5%] h-[2px] bg-white/10 z-0" />
-          <motion.div 
-            className="hidden lg:block absolute top-[45px] left-[5%] h-[2px] bg-brand-500 z-0 origin-left"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
-          />
-
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-4 justify-between relative z-10">
-            {STEPS.map((step, idx) => (
+        {/* 6 Step Cards Grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-14">
+          {WORKFLOW_STEPS.map((step, idx) => {
+            const Icon = step.icon;
+            return (
               <motion.div
                 key={step.num}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: idx * 0.2 }}
-                className="flex flex-row lg:flex-col items-start lg:items-center text-left lg:text-center gap-6 lg:gap-8 flex-1 group"
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ delay: idx * 0.1 }}
+                className="glass-card p-6 md:p-8 rounded-2xl border border-white/5 hover:border-brand-500/30 transition-all duration-300 group relative flex flex-col justify-between hover:bg-white/5"
               >
-                {/* Node */}
-                <div className="relative">
-                  <div className="w-16 h-16 rounded-full glass border-2 border-white/10 flex items-center justify-center relative z-10 group-hover:border-brand-500 transition-colors bg-background">
-                    <step.icon className="w-6 h-6 text-muted-foreground group-hover:text-brand-400 transition-colors" />
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${step.glow} ${step.color} border border-white/5`}>
+                      <Icon className="w-6 h-6" />
+                    </div>
+                    <span className="font-mono font-bold text-xs text-brand-400 bg-brand-500/10 px-2.5 py-1 rounded-full border border-brand-500/20">
+                      {step.num}
+                    </span>
                   </div>
-                  <div className="absolute inset-0 bg-brand-500/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                  
-                  {/* Mobile connecting line */}
-                  {idx < STEPS.length - 1 && (
-                    <div className="lg:hidden absolute top-16 bottom-[-32px] left-1/2 -translate-x-1/2 w-[2px] bg-white/10" />
-                  )}
-                </div>
 
-                {/* Content */}
-                <div className="flex-1 pt-2 lg:pt-0">
-                  <div className="text-brand-400 font-mono text-sm mb-2">{step.num}</div>
-                  <h3 className="text-xl font-semibold text-white mb-2">{step.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed max-w-[250px] mx-auto">
+                  <h3 className="text-lg md:text-xl font-bold text-white mb-2 tracking-wide uppercase">
+                    {step.title}
+                  </h3>
+
+                  <p className="text-sm text-muted-foreground leading-relaxed">
                     {step.desc}
                   </p>
                 </div>
+
+                <div className="mt-6 pt-4 border-t border-white/5 flex items-center text-[11px] font-mono text-muted-foreground/60 group-hover:text-brand-300 transition-colors">
+                  <span>Step {step.num} of 06</span>
+                </div>
               </motion.div>
-            ))}
-          </div>
+            );
+          })}
+        </div>
+
+        {/* Bottom CTA Button */}
+        <div className="text-center">
+          <Link
+            href="#contact"
+            className="inline-flex items-center justify-center gap-2.5 bg-brand-600 hover:bg-brand-500 text-white px-8 py-4 rounded-full text-base font-semibold transition-all hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] group"
+          >
+            START WITH YOUR FIRST WORKFLOW
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
 
       </div>

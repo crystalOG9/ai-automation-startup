@@ -7,10 +7,10 @@ import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
   { name: "How It Works", href: "#how-it-works" },
+  { name: "Workflow Demo", href: "#workflow-demo" },
+  { name: "Philosophy", href: "#differentiator" },
   { name: "Solutions", href: "#solutions" },
-  { name: "Industries", href: "#industries" },
   { name: "Why Us", href: "#why-us" },
-  { name: "About", href: "#about" },
 ];
 
 export function Navbar() {
@@ -30,7 +30,7 @@ export function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out border-b border-transparent",
         isScrolled
-          ? "glass py-3 border-border/50 shadow-lg shadow-black/20"
+          ? "glass py-3 border-white/10 shadow-lg shadow-black/30"
           : "bg-transparent py-5"
       )}
     >
@@ -39,8 +39,7 @@ export function Navbar() {
           href="/"
           className="text-xl md:text-2xl font-bold tracking-tighter text-foreground flex items-center gap-2"
         >
-          {/* Temporary text logo */}
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white/90 to-white/70">
             AUTOMATE
           </span>
           <span className="w-2 h-2 rounded-full bg-brand-500 animate-pulse" />
@@ -52,7 +51,7 @@ export function Navbar() {
             <Link
               key={link.name}
               href={link.href}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className="text-sm font-medium text-muted-foreground hover:text-white transition-colors"
             >
               {link.name}
             </Link>
@@ -63,20 +62,20 @@ export function Navbar() {
         <div className="flex items-center gap-4">
           <Link
             href="#contact"
-            className="hidden md:flex items-center gap-2 bg-brand-600 hover:bg-brand-500 text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all hover:shadow-[0_0_15px_rgba(37,99,235,0.4)]"
+            className="hidden md:flex items-center gap-2 bg-brand-600 hover:bg-brand-500 text-white px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold transition-all hover:shadow-[0_0_15px_rgba(37,99,235,0.4)]"
           >
-            Book a Workflow Assessment
-            <ArrowRight className="w-4 h-4" />
+            Show Us Your Workflow
+            <ArrowRight className="w-3.5 h-3.5" />
           </Link>
           <button
-            className="lg:hidden text-foreground p-1"
+            className="lg:hidden text-foreground p-1.5 rounded-lg bg-white/5 border border-white/10"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? (
-              <X className="w-6 h-6" />
+              <X className="w-5 h-5 text-white" />
             ) : (
-              <Menu className="w-6 h-6" />
+              <Menu className="w-5 h-5 text-white" />
             )}
           </button>
         </div>
@@ -84,26 +83,28 @@ export function Navbar() {
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden absolute top-full left-0 right-0 glass border-b border-border/50 animate-in slide-in-from-top-2">
-          <nav className="flex flex-col p-4">
+        <div className="lg:hidden absolute top-full left-0 right-0 glass border-b border-white/10 p-4 animate-in slide-in-from-top-2">
+          <nav className="flex flex-col space-y-1">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className="py-3 px-4 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-white/5 rounded-md transition-colors"
+                className="py-2.5 px-4 text-sm font-medium text-muted-foreground hover:text-white hover:bg-white/5 rounded-xl transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link.name}
               </Link>
             ))}
-            <Link
-              href="#contact"
-              className="mt-4 flex items-center justify-center gap-2 bg-brand-600 text-white px-5 py-3 rounded-md text-sm font-medium"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Book a Workflow Assessment
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+            <div className="pt-2">
+              <Link
+                href="#contact"
+                className="flex items-center justify-center gap-2 bg-brand-600 text-white px-5 py-3 rounded-xl text-sm font-semibold shadow-lg"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Show Us Your Workflow
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
           </nav>
         </div>
       )}

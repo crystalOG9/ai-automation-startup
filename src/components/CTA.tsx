@@ -2,21 +2,47 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, CheckCircle2, MessageSquare } from "lucide-react";
+import { ArrowRight, CheckCircle2, Sparkles, Check } from "lucide-react";
+
+const TOOLS_LIST = [
+  "SAP",
+  "Tally",
+  "Excel / Sheets",
+  "CRM (Salesforce/HubSpot)",
+  "Custom ERP",
+  "Gmail",
+  "Outlook",
+  "Other",
+];
+
+const FREQUENCY_OPTIONS = [
+  "Multiple times per day",
+  "Daily routine",
+  "Weekly batches",
+  "Monthly / Periodic",
+];
 
 export function CTA() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [selectedTools, setSelectedTools] = useState<string[]>([]);
+  const [frequency, setFrequency] = useState<string>("");
+
+  const toggleTool = (tool: string) => {
+    setSelectedTools((prev) =>
+      prev.includes(tool) ? prev.filter((t) => t !== tool) : [...prev, tool]
+    );
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate API call
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSuccess(true);
-    }, 1500);
+    }, 1200);
   };
 
   return (
@@ -24,52 +50,59 @@ export function CTA() {
       <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-brand-500/50 to-transparent" />
       
       <div className="container mx-auto px-4 md:px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start max-w-6xl mx-auto">
           
-          {/* Left Column: CTA Text */}
+          {/* Left Column: Core Outreach & Value */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            className="lg:col-span-5"
           >
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6 leading-tight">
-              What is your team doing every day that a <span className="text-brand-400">computer should be doing?</span>
-            </h2>
-            <p className="text-xl text-muted-foreground mb-10 max-w-lg">
-              Show us the workflow. We&apos;ll help you identify exactly what can be automated, how long it will take, and what it will save you.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-              <button 
-                onClick={() => document.getElementById("lead-form")?.focus()}
-                className="inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-500 text-white px-8 py-4 rounded-full text-base font-semibold transition-all hover:shadow-[0_0_20px_rgba(37,99,235,0.5)] w-full sm:w-auto"
-              >
-                Book a Workflow Assessment
-                <ArrowRight className="w-5 h-5" />
-              </button>
-              
-              <button className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white px-8 py-4 rounded-full text-base font-medium transition-all w-full sm:w-auto">
-                <MessageSquare className="w-5 h-5" />
-                Talk to Us
-              </button>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-brand-500/30 text-brand-300 text-xs font-semibold uppercase tracking-wider mb-6">
+              <Sparkles className="w-3.5 h-3.5 text-brand-400" /> Start With One Workflow
             </div>
-            
-            <div className="mt-12 flex items-center gap-4 text-sm text-muted-foreground">
-              <div className="flex -space-x-2">
-                <div className="w-8 h-8 rounded-full bg-white/10 border border-[#0a0f1c]" />
-                <div className="w-8 h-8 rounded-full bg-white/10 border border-[#0a0f1c]" />
-                <div className="w-8 h-8 rounded-full bg-white/10 border border-[#0a0f1c]" />
+
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-6 uppercase leading-tight">
+              WHAT IS YOUR TEAM DOING EVERY DAY THAT A <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-cyan-300 to-blue-200">COMPUTER SHOULD DO?</span>
+            </h2>
+
+            <p className="text-base md:text-lg text-muted-foreground mb-8 leading-relaxed">
+              Show us the workflow. We&apos;ll help you map the process, isolate repetitive bottlenecks, and design safe automation with built-in human control.
+            </p>
+
+            {/* Task 3: Compliant authentic messaging replacing fake social proof */}
+            <div className="p-5 rounded-2xl glass-card border border-brand-500/30 bg-brand-950/30 mb-8">
+              <div className="text-xs font-bold text-brand-300 uppercase tracking-wider mb-1.5">
+                WE&apos;RE LOOKING FOR BUSINESSES WITH REPETITIVE WORKFLOWS WORTH AUTOMATING.
               </div>
-              <p>Join forward-thinking companies automating their operations.</p>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Whether it is order processing, email triage, invoice extraction, or cross-system syncing — start with one workflow and measure the impact before expanding.
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>Zero system disruption — we integrate around your current tools</span>
+              </div>
+              <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>Strict human-in-the-loop control for all critical actions</span>
+              </div>
+              <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>Clear before-and-after operational throughput measurement</span>
+              </div>
             </div>
           </motion.div>
 
-          {/* Right Column: Lead Form */}
+          {/* Right Column: Upgraded Workflow Assessment Form (Task 9) */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="glass-card p-6 md:p-8 rounded-3xl border border-white/10 shadow-2xl relative"
+            className="lg:col-span-7 glass-card p-6 md:p-8 rounded-3xl border border-white/10 shadow-2xl relative"
           >
             <AnimatePresence mode="wait">
               {!isSuccess ? (
@@ -82,62 +115,132 @@ export function CTA() {
                   exit={{ opacity: 0, scale: 0.95 }}
                   className="space-y-4"
                 >
-                  <h3 className="text-2xl font-bold text-white mb-6">Request Workflow Assessment</h3>
+                  <div>
+                    <h3 className="text-xl md:text-2xl font-bold text-white uppercase tracking-wide">
+                      Request Workflow Assessment
+                    </h3>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Tell us about your team&apos;s current manual steps.
+                    </p>
+                  </div>
                   
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <label htmlFor="name" className="text-xs font-medium text-muted-foreground">Full Name *</label>
-                      <input required type="text" id="name" className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-brand-500 transition-colors" placeholder="John Doe" />
+                  {/* Basic Contact Info */}
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label htmlFor="name" className="text-xs font-semibold text-muted-foreground">
+                        Full Name *
+                      </label>
+                      <input
+                        required
+                        type="text"
+                        id="name"
+                        className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors"
+                        placeholder="e.g. Alex Morgan"
+                      />
                     </div>
-                    <div className="space-y-2">
-                      <label htmlFor="email" className="text-xs font-medium text-muted-foreground">Work Email *</label>
-                      <input required type="email" id="email" className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-brand-500 transition-colors" placeholder="john@company.com" />
+
+                    <div className="space-y-1.5">
+                      <label htmlFor="email" className="text-xs font-semibold text-muted-foreground">
+                        Work Email *
+                      </label>
+                      <input
+                        required
+                        type="email"
+                        id="email"
+                        className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors"
+                        placeholder="alex@company.com"
+                      />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <label htmlFor="company" className="text-xs font-medium text-muted-foreground">Company *</label>
-                      <input required type="text" id="company" className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-brand-500 transition-colors" placeholder="Acme Inc" />
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label htmlFor="company" className="text-xs font-semibold text-muted-foreground">
+                        Company Name *
+                      </label>
+                      <input
+                        required
+                        type="text"
+                        id="company"
+                        className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors"
+                        placeholder="e.g. Acme Logistics"
+                      />
                     </div>
-                    <div className="space-y-2">
-                      <label htmlFor="size" className="text-xs font-medium text-muted-foreground">Company Size</label>
-                      <select id="size" className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 transition-colors appearance-none">
-                        <option value="">Select size</option>
-                        <option value="1-10">1-10 employees</option>
-                        <option value="11-50">11-50 employees</option>
-                        <option value="51-200">51-200 employees</option>
-                        <option value="201+">201+ employees</option>
+
+                    <div className="space-y-1.5">
+                      <label htmlFor="frequency" className="text-xs font-semibold text-muted-foreground">
+                        Process Frequency *
+                      </label>
+                      <select
+                        required
+                        id="frequency"
+                        value={frequency}
+                        onChange={(e) => setFrequency(e.target.value)}
+                        className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors appearance-none"
+                      >
+                        <option value="">Select frequency</option>
+                        {FREQUENCY_OPTIONS.map((opt) => (
+                          <option key={opt} value={opt} className="bg-slate-900 text-white">
+                            {opt}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <label htmlFor="industry" className="text-xs font-medium text-muted-foreground">Industry *</label>
-                    <select required id="industry" className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 transition-colors appearance-none">
-                      <option value="">Select industry</option>
-                      <option value="ecommerce">E-commerce</option>
-                      <option value="logistics">Logistics</option>
-                      <option value="finance">Finance / Accounting</option>
-                      <option value="support">Customer Support</option>
-                      <option value="other">Other</option>
-                    </select>
+                  {/* Task 9: Current Tools / Systems */}
+                  <div className="space-y-2 pt-1">
+                    <label className="text-xs font-semibold text-muted-foreground block">
+                      Current Tools / Systems Involved
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {TOOLS_LIST.map((tool) => {
+                        const isSelected = selectedTools.includes(tool);
+                        return (
+                          <button
+                            type="button"
+                            key={tool}
+                            onClick={() => toggleTool(tool)}
+                            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-all flex items-center gap-1.5 cursor-pointer ${
+                              isSelected
+                                ? "bg-brand-600 text-white border-brand-500 shadow-sm"
+                                : "bg-black/40 border-white/10 text-muted-foreground hover:border-white/20 hover:text-white"
+                            }`}
+                          >
+                            {isSelected && <Check className="w-3 h-3" />}
+                            {tool}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <label htmlFor="process" className="text-xs font-medium text-muted-foreground">What process takes the most time? *</label>
-                    <textarea required id="process" rows={3} className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 transition-colors resize-none" placeholder="E.g. We spend hours copying order data from emails into our ERP..."></textarea>
+                  {/* Task 9: Workflow Details */}
+                  <div className="space-y-1.5 pt-1">
+                    <label htmlFor="process" className="text-xs font-semibold text-muted-foreground">
+                      Describe the Repetitive Workflow *
+                    </label>
+                    <textarea
+                      required
+                      id="process"
+                      rows={3}
+                      className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors resize-none"
+                      placeholder="e.g. Our team spends 3 hours every day reading supplier emails, manually verifying tracking numbers against our ERP, and copying data into Excel sheets..."
+                    />
                   </div>
 
                   <button 
                     type="submit" 
                     disabled={isSubmitting}
-                    className="w-full bg-brand-600 hover:bg-brand-500 text-white rounded-lg px-4 py-3 font-medium transition-all hover:shadow-[0_0_15px_rgba(37,99,235,0.4)] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-4"
+                    className="w-full bg-brand-600 hover:bg-brand-500 text-white rounded-xl px-6 py-4 font-semibold text-sm transition-all hover:shadow-[0_0_20px_rgba(37,99,235,0.45)] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-4 cursor-pointer uppercase tracking-wider"
                   >
                     {isSubmitting ? (
                       <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                     ) : (
-                      "Request Workflow Assessment"
+                      <>
+                        REQUEST WORKFLOW ASSESSMENT
+                        <ArrowRight className="w-4 h-4" />
+                      </>
                     )}
                   </button>
                 </motion.form>
@@ -148,18 +251,22 @@ export function CTA() {
                   animate={{ opacity: 1, scale: 1 }}
                   className="py-12 flex flex-col items-center text-center h-full justify-center space-y-4"
                 >
-                  <div className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 mb-2">
+                  <div className="w-16 h-16 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-2 shadow-[0_0_25px_rgba(16,185,129,0.3)]">
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white">Assessment Requested</h3>
-                  <p className="text-muted-foreground max-w-sm">
-                    Thank you for reaching out. We will review your workflow and get back to you within 24 hours to schedule a deep dive.
+                  <h3 className="text-2xl font-bold text-white uppercase">Assessment Requested</h3>
+                  <p className="text-sm text-muted-foreground max-w-sm">
+                    Thank you for sharing your workflow details. We will review your process and reach out within 24 hours to explore automation opportunities.
                   </p>
                   <button 
-                    onClick={() => setIsSuccess(false)}
-                    className="mt-6 text-brand-400 hover:text-brand-300 font-medium text-sm transition-colors"
+                    onClick={() => {
+                      setIsSuccess(false);
+                      setSelectedTools([]);
+                      setFrequency("");
+                    }}
+                    className="mt-6 text-brand-400 hover:text-brand-300 font-medium text-xs underline underline-offset-4 transition-colors cursor-pointer"
                   >
-                    Submit another request
+                    Submit another workflow
                   </button>
                 </motion.div>
               )}

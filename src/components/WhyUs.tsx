@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Building2, ShieldCheck, Link2, BarChart2, Check, X } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 const REASONS = [
   {
