@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Globe, Mail, MessageSquare } from "lucide-react";
+import { FlowzenLogo } from "@/components/FlowzenLogo";
 
 export function Footer() {
   return (
@@ -10,10 +11,10 @@ export function Footer() {
           <div className="lg:col-span-2">
             <Link
               href="/"
-              className="text-2xl font-bold tracking-tighter text-white flex items-center gap-2 mb-4 inline-flex"
+              className="text-2xl font-bold tracking-tighter text-white flex items-center gap-2.5 mb-4 inline-flex group"
             >
-              AUTOMATE
-              <span className="w-2 h-2 rounded-full bg-brand-500" />
+              <FlowzenLogo size={36} />
+              <span className="font-bold tracking-tight text-white">Flowzen</span>
             </Link>
             <p className="text-muted-foreground max-w-sm text-sm leading-relaxed">
               We discover repetitive business workflows and build AI-powered automation around the way your company actually works.
@@ -43,7 +44,7 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-white/5 text-sm text-muted-foreground gap-4">
-          <p>© 2026 Automate. All rights reserved.</p>
+          <p>© 2026 Flowzen. All rights reserved.</p>
           
           <div className="flex items-center gap-4">
             <a href="#contact" className="hover:text-white transition-colors" aria-label="Website">

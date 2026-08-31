@@ -5,6 +5,8 @@ import Link from "next/link";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+import { FlowzenLogo } from "@/components/FlowzenLogo";
+
 const NAV_LINKS = [
   { name: "How It Works", href: "#how-it-works" },
   { name: "Workflow Demo", href: "#workflow-demo" },
@@ -37,12 +39,12 @@ export function Navbar() {
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
         <Link
           href="/"
-          className="text-xl md:text-2xl font-bold tracking-tighter text-foreground flex items-center gap-2"
+          className="text-xl md:text-2xl font-bold tracking-tighter text-foreground flex items-center gap-2.5 group"
         >
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white/90 to-white/70">
-            AUTOMATE
+          <FlowzenLogo size={34} />
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 font-bold tracking-tight">
+            Flowzen
           </span>
-          <span className="w-2 h-2 rounded-full bg-brand-500 animate-pulse" />
         </Link>
 
         {/* Desktop Navigation */}
