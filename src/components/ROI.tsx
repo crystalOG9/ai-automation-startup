@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Building2, ShieldCheck, Link2, BarChart2, CheckCircle2 } from "lucide-react";
+import { Building2, ShieldCheck, Link2, BarChart2 } from "lucide-react";
 
 const PILLARS = [
   {
@@ -25,7 +25,7 @@ const PILLARS = [
   {
     title: "SYSTEM-INTEGRATED",
     subtitle: "Connected directly into your stack",
-    desc: "We connect seamlessly with the tools your team already uses daily: SAP, Tally, custom ERPs, CRMs, Excel, and enterprise inboxes without friction.",
+    desc: "We design automation around the tools your team already uses — including ERP, CRM, spreadsheets, email and custom systems.",
     icon: Link2,
     color: "text-cyan-400",
     border: "border-cyan-500/30",
@@ -80,7 +80,7 @@ export function ROI() {
           </motion.p>
         </div>
 
-        {/* 4 Pillars Grid (Task 1) */}
+        {/* 4 Pillars Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
           {PILLARS.map((pillar, idx) => {
             const Icon = pillar.icon;
@@ -109,11 +109,6 @@ export function ROI() {
                   <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
                     {pillar.desc}
                   </p>
-                </div>
-
-                <div className="mt-6 pt-4 border-t border-white/5 flex items-center gap-1.5 text-xs text-muted-foreground">
-                  <CheckCircle2 className={`w-3.5 h-3.5 ${pillar.color}`} />
-                  <span className="font-mono text-[11px]">Guaranteed Focus</span>
                 </div>
               </motion.div>
             );

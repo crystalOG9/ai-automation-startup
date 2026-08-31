@@ -10,6 +10,7 @@ import { Industries } from "@/components/Industries";
 import { HumanInTheLoop } from "@/components/HumanInTheLoop";
 import { ROI } from "@/components/ROI";
 import { WhyUs } from "@/components/WhyUs";
+import { CustomerDiscovery } from "@/components/CustomerDiscovery";
 import { CTA } from "@/components/CTA";
 import { Footer } from "@/components/Footer";
 
@@ -29,6 +30,7 @@ export default function Home() {
         <HumanInTheLoop />
         <ROI />
         <WhyUs />
+        <CustomerDiscovery />
         <CTA />
       </main>
       <Footer />

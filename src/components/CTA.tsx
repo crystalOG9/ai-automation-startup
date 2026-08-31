@@ -84,7 +84,7 @@ export function CTA() {
             <div className="space-y-3">
               <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>Zero system disruption — we integrate around your current tools</span>
+                <span>Designed around your current tools — without forcing a complete system replacement.</span>
               </div>
               <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
