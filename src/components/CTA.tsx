@@ -25,6 +25,7 @@ const FREQUENCY_OPTIONS = [
 export function CTA() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [selectedTools, setSelectedTools] = useState<string[]>([]);
   const [frequency, setFrequency] = useState<string>("");
 
@@ -34,15 +35,50 @@ export function CTA() {
     );
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setErrorMessage(null);
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const payload = {
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      company: formData.get("company") as string,
+      frequency,
+      tools: selectedTools,
+      process: formData.get("process") as string,
+    };
+
+    try {
+      const response = await fetch("/api/workflow", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.error || "Failed to submit workflow assessment. Please try again."
+        );
+      }
+
       setIsSuccess(true);
-    }, 1200);
+    } catch (err: unknown) {
+      setErrorMessage(
+        err instanceof Error
+          ? err.message
+          : "An unexpected error occurred. Please try again."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -134,6 +170,7 @@ export function CTA() {
                         required
                         type="text"
                         id="name"
+                        name="name"
                         className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors"
                         placeholder="e.g. Alex Morgan"
                       />
@@ -147,6 +184,7 @@ export function CTA() {
                         required
                         type="email"
                         id="email"
+                        name="email"
                         className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors"
                         placeholder="alex@company.com"
                       />
@@ -162,6 +200,7 @@ export function CTA() {
                         required
                         type="text"
                         id="company"
+                        name="company"
                         className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors"
                         placeholder="e.g. Acme Logistics"
                       />
@@ -174,6 +213,7 @@ export function CTA() {
                       <select
                         required
                         id="frequency"
+                        name="frequency"
                         value={frequency}
                         onChange={(e) => setFrequency(e.target.value)}
                         className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors appearance-none"
@@ -223,11 +263,19 @@ export function CTA() {
                     <textarea
                       required
                       id="process"
+                      name="process"
                       rows={3}
                       className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors resize-none"
                       placeholder="e.g. Our team spends 3 hours every day reading supplier emails, manually verifying tracking numbers against our ERP, and copying data into Excel sheets..."
                     />
                   </div>
+
+                  {errorMessage && (
+                    <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-rose-400 shrink-0" />
+                      <span>{errorMessage}</span>
+                    </div>
+                  )}
 
                   <button 
                     type="submit" 
@@ -263,6 +311,7 @@ export function CTA() {
                       setIsSuccess(false);
                       setSelectedTools([]);
                       setFrequency("");
+                      setErrorMessage(null);
                     }}
                     className="mt-6 text-brand-400 hover:text-brand-300 font-medium text-xs underline underline-offset-4 transition-colors cursor-pointer"
                   >

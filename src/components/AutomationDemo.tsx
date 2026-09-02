@@ -214,7 +214,7 @@ const DEMO_STEPS = [
   { id: 1, title: "AI Understands", icon: Bot },
   { id: 2, title: "System Check", icon: Database },
   { id: 3, title: "AI Prepares", icon: Send },
-  { id: 4, title: "Human Control", icon: UserCheck },
+  { id: 4, title: "Human Review / Approval", icon: UserCheck },
   { id: 5, title: "Result Executed", icon: CheckCircle2 },
 ];
 
@@ -222,15 +222,21 @@ export function AutomationDemo() {
   const [activeScenarioIdx, setActiveScenarioIdx] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
+  const [isExecuting, setIsExecuting] = useState(false);
 
   const scenario = SCENARIOS[activeScenarioIdx];
 
-  // Auto-play interval
+  // Auto-play interval: stops and waits for human approval at Step 4
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (isAutoPlaying) {
       timer = setInterval(() => {
         setActiveStep((prev) => {
+          // Pause simulation after "AI Prepares" to require human review & approval
+          if (prev === 3) {
+            setIsAutoPlaying(false);
+            return 4;
+          }
           if (prev >= DEMO_STEPS.length - 1) {
             setIsAutoPlaying(false);
             return prev;
@@ -246,22 +252,27 @@ export function AutomationDemo() {
     setActiveScenarioIdx(idx);
     setActiveStep(0);
     setIsAutoPlaying(false);
+    setIsExecuting(false);
   };
 
   const handleStartSimulation = () => {
     setActiveStep(0);
     setIsAutoPlaying(true);
+    setIsExecuting(false);
   };
 
   const handleReset = () => {
     setActiveStep(0);
     setIsAutoPlaying(false);
+    setIsExecuting(false);
   };
 
   const handleApprove = () => {
+    setIsExecuting(true);
     setTimeout(() => {
+      setIsExecuting(false);
       setActiveStep(5);
-    }, 400);
+    }, 500);
   };
 
   return (
@@ -359,8 +370,8 @@ export function AutomationDemo() {
                       </span>
 
                       {idx === 4 && (
-                        <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase">
-                          Human
+                        <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 uppercase">
+                          Approval
                         </span>
                       )}
                     </button>
@@ -551,16 +562,19 @@ export function AutomationDemo() {
 
                   <div className="flex items-center justify-end">
                     <button
-                      onClick={() => setActiveStep(4)}
-                      className="inline-flex items-center gap-2 text-xs font-semibold text-emerald-300 hover:text-white bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/30 px-4 py-2 rounded-lg transition-colors"
+                      onClick={() => {
+                        setIsAutoPlaying(false);
+                        setActiveStep(4);
+                      }}
+                      className="inline-flex items-center gap-2 text-xs font-semibold text-emerald-300 hover:text-white bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/30 px-4 py-2 rounded-lg transition-colors cursor-pointer"
                     >
-                      Next: Human Approval Step <ArrowRight className="w-3.5 h-3.5" />
+                      Next: Human Review / Approval <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </motion.div>
               )}
 
-              {/* STEP 4: Human Control (Task 2 & Task 7: Human in the loop) */}
+              {/* STEP 4: Human Review / Approval (Simulation blocks here until human approves) */}
               {activeStep === 4 && (
                 <motion.div
                   key="step-4"
@@ -569,40 +583,68 @@ export function AutomationDemo() {
                   exit={{ opacity: 0, y: -15 }}
                   className="space-y-4 my-auto"
                 >
-                  <div className="inline-flex items-center gap-2 text-xs font-semibold text-emerald-400 uppercase tracking-wide">
-                    <ShieldCheck className="w-4 h-4" /> 05 — Human Verification & Approval
+                  <div className="flex items-center justify-between">
+                    <div className="inline-flex items-center gap-2 text-xs font-semibold text-emerald-400 uppercase tracking-wide">
+                      <ShieldCheck className="w-4 h-4" /> 05 — Human Review / Approval
+                    </div>
+                    <span className="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 animate-pulse">
+                      Waiting for Human Approval
+                    </span>
                   </div>
 
                   <div className="glass p-6 rounded-2xl border border-emerald-500/40 bg-emerald-950/20 space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="text-xs font-bold text-white uppercase tracking-wider">
-                        {scenario.humanStep.role}
+                    {/* Clear communication of Human Review requirement */}
+                    <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-200/90 leading-relaxed flex items-start gap-2.5">
+                      <UserCheck className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                      <div>
+                        <span className="font-semibold text-amber-300">Human Review Required: </span>
+                        AI has prepared this action. Execution is held until authorized by a human supervisor.
                       </div>
-                      <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 animate-pulse">
-                        Authorization Required
-                      </span>
                     </div>
 
-                    <p className="text-xs text-muted-foreground">
-                      {scenario.humanStep.actionPrompt}
-                    </p>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-bold text-white uppercase tracking-wider">
+                          {scenario.humanStep.role}
+                        </span>
+                        <span className="text-muted-foreground text-[11px]">
+                          {scenario.humanStep.actionPrompt}
+                        </span>
+                      </div>
 
-                    <div className="p-3.5 rounded-xl bg-black/60 border border-white/5 text-xs text-white/80 line-clamp-3">
-                      {scenario.aiDraft.content}
+                      {/* Clearly show AI prepared information */}
+                      <div className="p-3.5 rounded-xl bg-black/60 border border-white/10 text-xs text-white/90 whitespace-pre-line leading-relaxed font-sans">
+                        <span className="text-[10px] text-brand-400 block mb-1 font-semibold uppercase tracking-wider font-mono">
+                          AI Prepared Action:
+                        </span>
+                        {scenario.aiDraft.content}
+                      </div>
                     </div>
 
                     <div className="pt-2 flex flex-col sm:flex-row gap-3">
+                      {/* Prominent Approve & Execute button */}
                       <button
                         onClick={handleApprove}
-                        className="flex-1 inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white py-3 px-4 rounded-xl text-xs md:text-sm font-semibold transition-all hover:shadow-[0_0_15px_rgba(16,185,129,0.4)] cursor-pointer"
+                        disabled={isExecuting}
+                        className="flex-1 inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white py-3.5 px-5 rounded-xl text-xs md:text-sm font-semibold transition-all hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed uppercase tracking-wider"
                       >
-                        <CheckCircle2 className="w-4 h-4" />
-                        {scenario.humanStep.primaryAction}
+                        {isExecuting ? (
+                          <>
+                            <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                            <span>Executing Approved Action...</span>
+                          </>
+                        ) : (
+                          <>
+                            <CheckCircle2 className="w-4 h-4" />
+                            <span>Approve & Execute</span>
+                          </>
+                        )}
                       </button>
 
                       <button
-                        onClick={() => setActiveStep(5)}
-                        className="flex-1 inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 py-3 px-4 rounded-xl text-xs md:text-sm font-medium transition-colors cursor-pointer"
+                        type="button"
+                        onClick={() => setIsAutoPlaying(false)}
+                        className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-muted-foreground hover:text-white border border-white/10 py-3.5 px-4 rounded-xl text-xs md:text-sm font-medium transition-colors cursor-pointer"
                       >
                         {scenario.humanStep.secondaryAction}
                       </button>
@@ -624,11 +666,14 @@ export function AutomationDemo() {
                   </div>
 
                   <div>
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-mono uppercase tracking-wider mb-3">
+                      <CheckCircle2 className="w-3.5 h-3.5" /> Result Executed
+                    </div>
                     <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
                       {scenario.result.summary}
                     </h3>
-                    <p className="text-xs md:text-sm text-muted-foreground max-w-md mx-auto">
-                      AI prepared the data, the human authorized the decision, and the systems executed simultaneously.
+                    <p className="text-xs md:text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
+                      AI prepared the work • Human reviewed and approved • System executed the approved action.
                     </p>
                   </div>
 
