@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-import { FlowzenLogo } from "@/components/FlowzenLogo";
+import { SpartanLogo } from "@/components/SpartanLogo";
 
 const NAV_LINKS = [
   { name: "How It Works", href: "#how-it-works" },
@@ -41,9 +41,9 @@ export function Navbar() {
           href="/"
           className="text-xl md:text-2xl font-bold tracking-tighter text-foreground flex items-center gap-2.5 group"
         >
-          <FlowzenLogo size={34} />
+          <SpartanLogo size={34} priority />
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white/95 to-white/80 font-bold tracking-tight">
-            Flowzen
+            SPARTAN
           </span>
         </Link>
 

@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "AUTOMATE | AI Business Automation",
+  title: "SPARTAN | AI Business Automation",
   description: "We discover repetitive business workflows and build AI-powered automation around them.",
 };
 
