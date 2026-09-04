@@ -1,10 +1,10 @@
-# AI Business Workflow Automation
+# SPARTAN — AI Business Automation
 
 > **"We don't replace people. We automate the repetitive work around them."**
 
-AI Business Workflow Automation is an early-stage project focused on identifying repetitive computer-based work inside businesses and designing custom automation that reduces manual workload while keeping humans in control of important decisions.
+**SPARTAN** is an early-stage AI automation company focused on identifying repetitive computer-based work inside businesses and designing custom automations that reduce manual workload while keeping humans in control of important decisions.
 
-Rather than building a generic, one-size-fits-all software tool, this project approaches automation from the ground up: understanding how an individual business actually operates, mapping its real-world bottlenecks, and engineering workflow-specific solutions.
+Rather than building a generic, one-size-fits-all software tool, SPARTAN approaches automation from the ground up: understanding how an individual business actually operates, mapping its real-world bottlenecks, and engineering workflow-specific solutions.
 
 ---
 
@@ -22,13 +22,13 @@ Employees in small and medium businesses spend significant portions of their wor
 - Separating orders or service requests into distinct categories
 - Performing repetitive data entry, copy-pasting, and validation
 
-The goal of this project is **not to replace employees**. The goal is to eliminate repetitive digital friction so team members can focus on higher-value problem solving, customer relationships, and critical business judgments.
+The goal is **not to replace employees**. The goal is to eliminate repetitive digital friction so team members can focus on higher-value problem solving, customer relationships, and critical business judgments.
 
 ---
 
 ## Our Approach
 
-Every business operates with unique software, approval processes, operational rules, and constraints. We employ a **workflow-first methodology**:
+Every business operates with unique software, approval processes, operational rules, and constraints. SPARTAN employs a **workflow-first methodology**:
 
 1. **Talk to the business** — Conduct discovery conversations with business owners and team members.
 2. **Understand the actual workflow** — Observe and document the day-to-day process as it really happens.
@@ -82,9 +82,9 @@ Customer Email → AI Classification → Information Extraction → Business Rul
 
 ---
 
-## Why We Are Different
+## Why SPARTAN Is Different
 
-Different companies face distinct bottlenecks. By focusing on workflow discovery before writing code, we build targeted, practical automations that solve real operational friction instead of introducing complex software nobody uses. We are not starting by building a generic AI product and asking businesses to adapt to it. We start with the business, understand its workflow, and then determine what should be automated.
+Different companies face distinct bottlenecks. By focusing on workflow discovery before writing code, SPARTAN builds targeted, practical automations that solve real operational friction instead of introducing complex software nobody uses. We don't start by building a generic AI product and asking businesses to adapt to it — we start with the business, understand its workflow, and then determine what should be automated.
 
 ---
 
@@ -92,13 +92,13 @@ Different companies face distinct bottlenecks. By focusing on workflow discovery
 
 - **Status**: Early-Stage / Customer Discovery
 
-*Note: This project is in active customer discovery and validation. We do not have existing customers, production deployments, enterprise readiness, or live revenue yet.*
+*Note: SPARTAN is in active customer discovery and validation. We do not have existing customers, production deployments, enterprise readiness, or live revenue yet.*
 
 ---
 
 ## Customer Discovery
 
-We are actively meeting with business owners and operators to study repetitive daily workflows, employee time consumption, bottlenecks, error-prone manual processes, existing software stacks, high-impact automation opportunities, and target metrics for measurable business impact. 
+We are actively meeting with business owners and operators to study repetitive daily workflows, employee time consumption, bottlenecks, error-prone manual processes, existing software stacks, high-impact automation opportunities, and target metrics for measurable business impact.
 
 Our priority is deep learning and problem validation before scaling development.
 
@@ -122,6 +122,8 @@ The website and interactive workflow demonstrations in this repository are built
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/) (v4)
 - **Icons**: [Lucide React](https://lucide.dev/)
 - **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Database**: [Supabase](https://supabase.com/) (waitlist storage)
+- **Email**: [Resend](https://resend.com/) (transactional emails)
 - **Utilities**: `clsx`, `tailwind-merge`
 
 ---
@@ -130,9 +132,13 @@ The website and interactive workflow demonstrations in this repository are built
 
 ```
 src/
-├── app/                # Next.js App Router (layout, globals, page)
+├── app/                # Next.js App Router (layout, globals, page, API routes)
+│   └── api/            # Backend API routes (workflow demo, waitlist)
 ├── components/         # Modular UI, presentation components, and sections
-└── lib/                # Shared utilities (e.g., utils.ts)
+└── lib/                # Shared utilities (Supabase client, utils)
+
+public/
+└── branding/           # Brand assets (SPARTAN logo)
 ```
 
 ---
@@ -146,23 +152,31 @@ Ensure you have Node.js installed.
    npm install
    ```
 
-2. **Start the local development server:**
+2. **Set up environment variables:**
+   Create a `.env.local` file in the project root (never commit this file):
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   RESEND_API_KEY=your_resend_api_key
+   ```
+
+3. **Start the local development server:**
    ```bash
    npm run dev
    ```
    Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-3. **Run code linting:**
+4. **Run code linting:**
    ```bash
    npm run lint
    ```
 
-4. **Build for production:**
+5. **Build for production:**
    ```bash
    npm run build
    ```
 
-5. **Start production server locally:**
+6. **Start production server locally:**
    ```bash
    npm start
    ```
@@ -171,13 +185,19 @@ Ensure you have Node.js installed.
 
 ## Environment Variables
 
-No environment variables are currently required for the public website. (Secret values are never committed to this repository).
+| Variable | Description |
+|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anonymous public key |
+| `RESEND_API_KEY` | Resend API key for transactional emails |
+
+> ⚠️ **Never commit `.env.local` or any secret keys to this repository.**
 
 ---
 
 ## Deployment
 
-The frontend web application is deployed and hosted on Vercel as a Next.js application.
+The frontend web application is deployed and hosted on **Vercel** as a Next.js application. Deployments are triggered automatically on pushes to the `main` branch.
 
 ---
 
@@ -195,7 +215,7 @@ The frontend web application is deployed and hosted on Vercel as a Next.js appli
 
 ## Responsible Automation
 
-We adhere to clear ethical and operational guidelines when designing automations. High-stakes decisions always require explicit human verification. Systems only request permissions strictly required to perform the intended task. Sensitive credentials are never exposed in client code. Actions performed by automated systems are logged with full traceability. Workflows are designed with fail-safes allowing manual execution if an unexpected condition occurs.
+SPARTAN adheres to clear ethical and operational guidelines when designing automations. High-stakes decisions always require explicit human verification. Systems only request permissions strictly required to perform the intended task. Sensitive credentials are never exposed in client code. Actions performed by automated systems are logged with full traceability. Workflows are designed with fail-safes allowing manual execution if an unexpected condition occurs.
 
 ---
 
@@ -213,4 +233,4 @@ Piyush & Harshad
 
 ## Important Disclaimer
 
-This project is currently in the customer-discovery and validation stage. Features, architecture, and automation approaches may evolve based on feedback and real operational data gathered from businesses.
+SPARTAN is currently in the customer-discovery and validation stage. Features, architecture, and automation approaches may evolve based on feedback and real operational data gathered from businesses.
