@@ -37,10 +37,11 @@ export function CustomerDiscovery() {
           <div>
             <Link
               href="#contact"
-              className="inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-500 text-white px-7 py-3.5 rounded-full text-sm md:text-base font-semibold transition-all hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] group"
+              className="relative overflow-hidden inline-flex items-center justify-center gap-2.5 bg-brand-600 hover:bg-brand-500 text-white px-8 py-3.5 rounded-xl text-sm md:text-base font-semibold uppercase font-mono tracking-wider border border-brand-400/60 shadow-[0_0_0_1px_rgba(59,130,246,0.35)] hover:shadow-[0_0_25px_rgba(37,99,235,0.65),0_0_0_1.5px_rgba(96,165,250,0.9)] hover:-translate-y-0.5 hover:scale-[1.015] active:translate-y-0 active:scale-[0.98] transition-all duration-150 ease-out group"
             >
-              SHOW US YOUR WORKFLOW
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none" />
+              <span className="relative z-10">SHOW US YOUR WORKFLOW</span>
+              <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform duration-150" />
             </Link>
           </div>
         </motion.div>

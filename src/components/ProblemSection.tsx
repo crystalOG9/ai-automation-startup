@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, Clock, CheckCircle2, User, Bot, AlertTriangle, Mail, Settings, Database, UserCheck } from "lucide-react";
+import { PrecisionCard } from "@/components/PrecisionCard";
 
 const TODAY_STEPS = [
   { text: "Employee", icon: User },
@@ -58,32 +59,37 @@ export function ProblemSection() {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="glass-card p-8 rounded-2xl border border-white/5 relative overflow-hidden"
+            className="h-full"
           >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/5 blur-[80px] rounded-full" />
-            <h3 className="text-xl font-semibold mb-6 flex items-center gap-2 text-white/80">
-              <span className="w-2 h-2 rounded-full bg-red-500/80"></span>
-              TODAY
-            </h3>
-            
-            <div className="space-y-3">
-              {TODAY_STEPS.map((step, idx) => (
-                <div key={idx} className="flex items-center gap-3 text-muted-foreground">
-                  <div className="w-8 flex justify-center">
-                    {idx === 0 ? (
-                      <step.icon className="w-5 h-5 text-white/50" />
-                    ) : idx === TODAY_STEPS.length - 1 ? (
-                      <step.icon className="w-4 h-4 text-red-400/70" />
-                    ) : (
-                      <ArrowRight className="w-4 h-4 text-white/20" />
-                    )}
+            <PrecisionCard
+              glowColor="rgba(239, 68, 68, 0.08)"
+              className="glass-card p-8 rounded-2xl border border-white/10 relative overflow-hidden h-full"
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/5 blur-[80px] rounded-full pointer-events-none" />
+              <h3 className="text-xl font-semibold mb-6 flex items-center gap-2 text-white/80">
+                <span className="w-2 h-2 rounded-full bg-red-500/80"></span>
+                TODAY
+              </h3>
+              
+              <div className="space-y-3">
+                {TODAY_STEPS.map((step, idx) => (
+                  <div key={idx} className="flex items-center gap-3 text-muted-foreground">
+                    <div className="w-8 flex justify-center">
+                      {idx === 0 ? (
+                        <step.icon className="w-5 h-5 text-white/50" />
+                      ) : idx === TODAY_STEPS.length - 1 ? (
+                        <step.icon className="w-4 h-4 text-red-400/70" />
+                      ) : (
+                        <ArrowRight className="w-4 h-4 text-white/20" />
+                      )}
+                    </div>
+                    <span className={`text-sm md:text-base font-medium ${step.color || ""}`}>
+                      {step.text}
+                    </span>
                   </div>
-                  <span className={`text-sm md:text-base font-medium ${step.color || ""}`}>
-                    {step.text}
-                  </span>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            </PrecisionCard>
           </motion.div>
 
           {/* With Automation Column */}
@@ -91,31 +97,36 @@ export function ProblemSection() {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="glass-card p-8 rounded-2xl border border-brand-500/20 bg-brand-950/10 relative overflow-hidden"
+            className="h-full"
           >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-brand-500/10 blur-[80px] rounded-full" />
-            <h3 className="text-xl font-semibold mb-6 flex items-center gap-2 text-white">
-              <span className="w-2 h-2 rounded-full bg-brand-500"></span>
-              WITH AUTOMATION
-            </h3>
-            
-            <div className="space-y-4">
-              {AUTOMATION_STEPS.map((step, idx) => (
-                <div key={idx} className="flex items-start gap-4">
-                  <div className={`p-2 rounded-lg bg-white/5 ${step.color || "text-white/60"}`}>
-                    <step.icon className="w-5 h-5" />
+            <PrecisionCard
+              glowColor="rgba(59, 130, 246, 0.15)"
+              className="glass-card p-8 rounded-2xl border border-brand-500/30 bg-brand-950/10 relative overflow-hidden h-full"
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-brand-500/10 blur-[80px] rounded-full pointer-events-none" />
+              <h3 className="text-xl font-semibold mb-6 flex items-center gap-2 text-white">
+                <span className="w-2 h-2 rounded-full bg-brand-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></span>
+                WITH AUTOMATION
+              </h3>
+              
+              <div className="space-y-4">
+                {AUTOMATION_STEPS.map((step, idx) => (
+                  <div key={idx} className="flex items-start gap-4">
+                    <div className={`p-2 rounded-lg bg-white/5 ${step.color || "text-white/60"}`}>
+                      <step.icon className="w-5 h-5" />
+                    </div>
+                    <div className="pt-1.5 flex-1">
+                      <span className="text-sm md:text-base font-medium text-white">
+                        {step.text}
+                      </span>
+                      {idx < AUTOMATION_STEPS.length - 1 && (
+                        <div className="h-4 border-l-2 border-white/10 ml-2 mt-2 border-dashed" />
+                      )}
+                    </div>
                   </div>
-                  <div className="pt-1.5 flex-1">
-                    <span className="text-sm md:text-base font-medium text-white">
-                      {step.text}
-                    </span>
-                    {idx < AUTOMATION_STEPS.length - 1 && (
-                      <div className="h-4 border-l-2 border-white/10 ml-2 mt-2 border-dashed" />
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            </PrecisionCard>
           </motion.div>
 
         </div>

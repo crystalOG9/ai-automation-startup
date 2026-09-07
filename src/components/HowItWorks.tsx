@@ -11,6 +11,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
+import { PrecisionCard } from "@/components/PrecisionCard";
 
 const WORKFLOW_STEPS = [
   {
@@ -110,30 +111,35 @@ export function HowItWorks() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ delay: idx * 0.1 }}
-                className="glass-card p-6 md:p-8 rounded-2xl border border-white/5 hover:border-brand-500/30 transition-all duration-300 group relative flex flex-col justify-between hover:bg-white/5"
+                className="h-full"
               >
-                <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${step.glow} ${step.color} border border-white/5`}>
-                      <Icon className="w-6 h-6" />
+                <PrecisionCard
+                  glowColor="rgba(59, 130, 246, 0.09)"
+                  className="glass-card p-6 md:p-8 rounded-2xl border border-white/5 hover:border-brand-500/30 transition-all duration-300 group h-full flex flex-col justify-between hover:bg-white/[0.04]"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-6">
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${step.glow} ${step.color} border border-white/5`}>
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <span className="font-mono font-bold text-xs text-brand-400 bg-brand-500/10 px-2.5 py-1 rounded-full border border-brand-500/20">
+                        {step.num}
+                      </span>
                     </div>
-                    <span className="font-mono font-bold text-xs text-brand-400 bg-brand-500/10 px-2.5 py-1 rounded-full border border-brand-500/20">
-                      {step.num}
-                    </span>
+
+                    <h3 className="text-lg md:text-xl font-bold text-white mb-2 tracking-wide uppercase">
+                      {step.title}
+                    </h3>
+
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {step.desc}
+                    </p>
                   </div>
 
-                  <h3 className="text-lg md:text-xl font-bold text-white mb-2 tracking-wide uppercase">
-                    {step.title}
-                  </h3>
-
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {step.desc}
-                  </p>
-                </div>
-
-                <div className="mt-6 pt-4 border-t border-white/5 flex items-center text-[11px] font-mono text-muted-foreground/60 group-hover:text-brand-300 transition-colors">
-                  <span>Step {step.num} of 06</span>
-                </div>
+                  <div className="mt-6 pt-4 border-t border-white/5 flex items-center text-[11px] font-mono text-muted-foreground/60 group-hover:text-brand-300 transition-colors">
+                    <span>Step {step.num} of 06</span>
+                  </div>
+                </PrecisionCard>
               </motion.div>
             );
           })}
@@ -143,10 +149,11 @@ export function HowItWorks() {
         <div className="text-center">
           <Link
             href="#contact"
-            className="inline-flex items-center justify-center gap-2.5 bg-brand-600 hover:bg-brand-500 text-white px-8 py-4 rounded-full text-base font-semibold transition-all hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] group"
+            className="relative overflow-hidden inline-flex items-center justify-center gap-2.5 bg-brand-600 hover:bg-brand-500 text-white px-8 py-4 rounded-xl text-sm md:text-base font-semibold uppercase font-mono tracking-wider border border-brand-400/60 shadow-[0_0_0_1px_rgba(59,130,246,0.35)] hover:shadow-[0_0_25px_rgba(37,99,235,0.65),0_0_0_1.5px_rgba(96,165,250,0.9)] hover:-translate-y-0.5 hover:scale-[1.015] active:translate-y-0 active:scale-[0.98] transition-all duration-150 ease-out group"
           >
-            START WITH YOUR FIRST WORKFLOW
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none" />
+            <span className="relative z-10">START WITH YOUR FIRST WORKFLOW</span>
+            <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform duration-150" />
           </Link>
         </div>
 

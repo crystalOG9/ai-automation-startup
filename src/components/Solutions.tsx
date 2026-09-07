@@ -14,6 +14,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import Link from "next/link";
+import { PrecisionCard } from "@/components/PrecisionCard";
 
 const SOLUTIONS = [
   {
@@ -109,26 +110,31 @@ export function Solutions() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.08 }}
-              className={`glass-card p-6 rounded-2xl transition-all duration-300 border flex flex-col justify-between group cursor-default ${
-                sol.highlight
-                  ? "border-emerald-500/30 bg-emerald-950/10 hover:border-emerald-500/50"
-                  : "border-white/5 hover:border-brand-500/30 hover:bg-white/5"
-              }`}
+              className="h-full"
             >
-              <div>
-                <div className="flex items-center justify-between mb-6">
-                  <sol.icon className={`w-8 h-8 ${sol.highlight ? "text-emerald-400" : "text-muted-foreground group-hover:text-brand-400"} transition-colors`} />
-                  {sol.highlight && (
-                    <span className="inline-flex items-center gap-1 text-[10px] font-mono text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded border border-emerald-500/30">
-                      <ShieldCheck className="w-3 h-3" /> Safe Action
-                    </span>
-                  )}
+              <PrecisionCard
+                glowColor={sol.highlight ? "rgba(16, 185, 129, 0.12)" : "rgba(59, 130, 246, 0.09)"}
+                className={`glass-card p-6 rounded-2xl transition-all duration-300 border flex flex-col justify-between group cursor-default h-full ${
+                  sol.highlight
+                    ? "border-emerald-500/30 bg-emerald-950/10 hover:border-emerald-500/50"
+                    : "border-white/5 hover:border-brand-500/30 hover:bg-white/5"
+                }`}
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <sol.icon className={`w-8 h-8 ${sol.highlight ? "text-emerald-400" : "text-muted-foreground group-hover:text-brand-400"} transition-colors`} />
+                    {sol.highlight && (
+                      <span className="inline-flex items-center gap-1 text-[10px] font-mono text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded border border-emerald-500/30">
+                        <ShieldCheck className="w-3 h-3" /> Safe Action
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-3">{sol.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {sol.desc}
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold text-white mb-3">{sol.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {sol.desc}
-                </p>
-              </div>
+              </PrecisionCard>
             </motion.div>
           ))}
 
@@ -138,29 +144,35 @@ export function Solutions() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: SOLUTIONS.length * 0.08 }}
-            className="md:col-span-2 lg:col-span-4 glass-card p-8 rounded-2xl border border-brand-500/40 bg-brand-900/15 hover:bg-brand-900/25 transition-all group relative overflow-hidden"
+            className="md:col-span-2 lg:col-span-4"
           >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-brand-500/10 blur-[80px] rounded-full" />
-            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-              <div className="flex items-start gap-5">
-                <div className="p-3.5 rounded-xl bg-brand-500/20 text-brand-400 shrink-0">
-                  <Settings2 className="w-7 h-7" />
+            <PrecisionCard
+              glowColor="rgba(59, 130, 246, 0.14)"
+              className="glass-card p-8 rounded-2xl border border-brand-500/40 bg-brand-900/15 hover:bg-brand-900/25 transition-all group relative overflow-hidden h-full"
+            >
+              <div className="absolute top-0 right-0 w-64 h-64 bg-brand-500/10 blur-[80px] rounded-full pointer-events-none" />
+              <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                <div className="flex items-start gap-5">
+                  <div className="p-3.5 rounded-xl bg-brand-500/20 text-brand-400 shrink-0">
+                    <Settings2 className="w-7 h-7" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-2">Custom Proprietary Workflow</h3>
+                    <p className="text-muted-foreground max-w-xl text-sm leading-relaxed">
+                      If your operational process doesn&apos;t fit a predefined category, we build the automation specifically around your internal systems, spreadsheets, and unique business logic.
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-2">Custom Proprietary Workflow</h3>
-                  <p className="text-muted-foreground max-w-xl text-sm leading-relaxed">
-                    If your operational process doesn&apos;t fit a predefined category, we build the automation specifically around your internal systems, spreadsheets, and unique business logic.
-                  </p>
-                </div>
+                <Link
+                  href="#contact"
+                  className="relative overflow-hidden px-6 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs sm:text-sm font-semibold uppercase font-mono tracking-wider border border-brand-400/60 shadow-[0_0_0_1px_rgba(59,130,246,0.35)] hover:shadow-[0_0_24px_rgba(37,99,235,0.65),0_0_0_1.5px_rgba(96,165,250,0.9)] hover:-translate-y-0.5 hover:scale-[1.015] active:translate-y-0 active:scale-[0.98] whitespace-nowrap inline-flex items-center gap-2 shrink-0 group transition-all duration-150 ease-out"
+                >
+                  <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none" />
+                  <span className="relative z-10">SHOW US YOUR WORKFLOW</span>
+                  <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform duration-150" />
+                </Link>
               </div>
-              <Link
-                href="#contact"
-                className="px-6 py-3.5 rounded-full bg-brand-600 hover:bg-brand-500 text-white text-sm font-semibold transition-all hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] whitespace-nowrap inline-flex items-center gap-2 shrink-0"
-              >
-                SHOW US YOUR WORKFLOW
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
+            </PrecisionCard>
           </motion.div>
         </div>
 

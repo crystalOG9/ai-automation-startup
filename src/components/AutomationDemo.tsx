@@ -503,7 +503,7 @@ export function AutomationDemo() {
             <div className="pt-6 border-t border-white/10 mt-6 flex items-center gap-2">
               <button
                 onClick={isAutoPlaying ? handleReset : handleStartSimulation}
-                className="flex-1 inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white px-4 py-2.5 rounded-xl text-xs font-semibold transition-colors cursor-pointer"
+                className="flex-1 inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white px-4 py-2.5 rounded-xl text-xs font-semibold border border-white/10 hover:border-brand-400/60 hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-150 cursor-pointer"
               >
                 {isAutoPlaying ? (
                   <>
@@ -856,7 +856,7 @@ export function AutomationDemo() {
                       <button
                         onClick={handleApprove}
                         disabled={isExecuting}
-                        className="flex-1 inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white py-3.5 px-5 rounded-xl text-xs md:text-sm font-semibold transition-all hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed uppercase tracking-wider"
+                        className="flex-1 inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white py-3.5 px-5 rounded-xl text-xs md:text-sm font-semibold transition-all duration-150 hover:shadow-[0_0_24px_rgba(16,185,129,0.5)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed uppercase tracking-wider"
                       >
                         {isExecuting ? (
                           <>
@@ -877,7 +877,7 @@ export function AutomationDemo() {
                           setIsAutoPlaying(false);
                           draftInputRef.current?.focus();
                         }}
-                        className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-muted-foreground hover:text-white border border-white/10 py-3.5 px-4 rounded-xl text-xs md:text-sm font-medium transition-colors cursor-pointer"
+                        className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-muted-foreground hover:text-white border border-white/10 hover:border-brand-400/60 py-3.5 px-4 rounded-xl text-xs md:text-sm font-medium transition-all duration-150 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                         title="Click to edit message directly"
                       >
                         <PenLine className="w-3.5 h-3.5 text-brand-400" />
