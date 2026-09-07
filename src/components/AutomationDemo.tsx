@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Mail,
@@ -17,6 +17,8 @@ import {
   MessageSquare,
   ArrowRight,
   ShieldCheck,
+  AlertCircle,
+  PenLine,
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -56,6 +58,33 @@ interface Scenario {
     summary: string;
     actions: string[];
   };
+}
+
+function getDynamicScenarioData(scenario: Scenario, userMessage: string) {
+  const idMatch = userMessage.match(/(?:order|invoice|ticket|ref|id)?\s*#?([0-9]{4,8})\b/i);
+
+  let reference = scenario.aiExtraction.reference;
+  let draftContent = scenario.aiDraft.content;
+
+  if (idMatch) {
+    const newId = idMatch[1];
+    if (scenario.id === "delivery") {
+      reference = `Order #${newId}`;
+      draftContent = draftContent.replace(/#48291/g, `#${newId}`).replace(/48291/g, newId);
+    } else if (scenario.id === "refund") {
+      reference = `Invoice #${newId}`;
+      draftContent = draftContent.replace(/#91024/g, `#${newId}`).replace(/91024/g, newId);
+    } else if (scenario.id === "cancellation") {
+      reference = `Order #${newId}`;
+      draftContent = draftContent.replace(/#67120/g, `#${newId}`).replace(/67120/g, newId);
+    } else {
+      reference = `#${newId}`;
+    }
+  } else if (userMessage.trim() !== scenario.email.body.trim()) {
+    reference = "Custom Request";
+  }
+
+  return { reference, draftContent };
 }
 
 const SCENARIOS: Scenario[] = [
@@ -224,7 +253,72 @@ export function AutomationDemo() {
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   const [isExecuting, setIsExecuting] = useState(false);
 
+  // Frontend simulation state for user-editable customer message per scenario
+  const [customMessages, setCustomMessages] = useState<Record<string, string>>(() => {
+    const initial: Record<string, string> = {};
+    SCENARIOS.forEach((s) => {
+      initial[s.id] = s.email.body;
+    });
+    return initial;
+  });
+  const [validationError, setValidationError] = useState<string | null>(null);
+
+  // Frontend simulation state for user-editable prepared action message (Human Review stage)
+  const [customActionDrafts, setCustomActionDrafts] = useState<Record<string, string>>({});
+  const [draftValidationError, setDraftValidationError] = useState<string | null>(null);
+  const draftInputRef = useRef<HTMLTextAreaElement | null>(null);
+
   const scenario = SCENARIOS[activeScenarioIdx];
+  const currentMessage = customMessages[scenario.id] ?? scenario.email.body;
+  const dynamicData = getDynamicScenarioData(scenario, currentMessage);
+  const currentActionDraft = customActionDrafts[scenario.id] ?? dynamicData.draftContent;
+
+  const handleMessageChange = (newText: string) => {
+    setCustomMessages((prev) => ({
+      ...prev,
+      [scenario.id]: newText,
+    }));
+    if (newText.trim().length > 0) {
+      setValidationError(null);
+    }
+  };
+
+  const handleActionDraftChange = (newDraft: string) => {
+    setCustomActionDrafts((prev) => ({
+      ...prev,
+      [scenario.id]: newDraft,
+    }));
+    if (newDraft.trim().length > 0) {
+      setDraftValidationError(null);
+    }
+  };
+
+  const handleResetDraft = (scenarioId: string) => {
+    setCustomActionDrafts((prev) => {
+      const updated = { ...prev };
+      delete updated[scenarioId];
+      return updated;
+    });
+    setDraftValidationError(null);
+  };
+
+  const handleResetMessage = (scenarioId: string) => {
+    const defaultBody = SCENARIOS.find((s) => s.id === scenarioId)?.email.body ?? "";
+    setCustomMessages((prev) => ({
+      ...prev,
+      [scenarioId]: defaultBody,
+    }));
+    setValidationError(null);
+  };
+
+  const handleNextFromInput = () => {
+    if (!currentMessage.trim()) {
+      setValidationError("Please enter a customer message before proceeding.");
+      return;
+    }
+    setValidationError(null);
+    setActiveStep(1);
+  };
 
   // Auto-play interval: stops and waits for human approval at Step 4
   useEffect(() => {
@@ -232,6 +326,11 @@ export function AutomationDemo() {
     if (isAutoPlaying) {
       timer = setInterval(() => {
         setActiveStep((prev) => {
+          if (prev === 0 && !currentMessage.trim()) {
+            setIsAutoPlaying(false);
+            setValidationError("Please enter a customer message before proceeding.");
+            return 0;
+          }
           // Pause simulation after "AI Prepares" to require human review & approval
           if (prev === 3) {
             setIsAutoPlaying(false);
@@ -246,16 +345,23 @@ export function AutomationDemo() {
       }, 2000);
     }
     return () => clearInterval(timer);
-  }, [isAutoPlaying]);
+  }, [isAutoPlaying, currentMessage]);
 
   const handleTabChange = (idx: number) => {
     setActiveScenarioIdx(idx);
     setActiveStep(0);
     setIsAutoPlaying(false);
     setIsExecuting(false);
+    setValidationError(null);
+    setDraftValidationError(null);
   };
 
   const handleStartSimulation = () => {
+    if (!currentMessage.trim()) {
+      setValidationError("Please enter a customer message before proceeding.");
+      return;
+    }
+    setValidationError(null);
     setActiveStep(0);
     setIsAutoPlaying(true);
     setIsExecuting(false);
@@ -265,9 +371,17 @@ export function AutomationDemo() {
     setActiveStep(0);
     setIsAutoPlaying(false);
     setIsExecuting(false);
+    setValidationError(null);
+    setDraftValidationError(null);
   };
 
   const handleApprove = () => {
+    if (!currentActionDraft.trim()) {
+      setDraftValidationError("Please enter an action message before approving.");
+      draftInputRef.current?.focus();
+      return;
+    }
+    setDraftValidationError(null);
     setIsExecuting(true);
     setTimeout(() => {
       setIsExecuting(false);
@@ -340,6 +454,11 @@ export function AutomationDemo() {
                     <button
                       key={step.id}
                       onClick={() => {
+                        if (idx > 0 && !currentMessage.trim()) {
+                          setValidationError("Please enter a customer message before proceeding.");
+                          return;
+                        }
+                        setValidationError(null);
                         setIsAutoPlaying(false);
                         setActiveStep(idx);
                       }}
@@ -384,7 +503,7 @@ export function AutomationDemo() {
             <div className="pt-6 border-t border-white/10 mt-6 flex items-center gap-2">
               <button
                 onClick={isAutoPlaying ? handleReset : handleStartSimulation}
-                className="flex-1 inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white px-4 py-2.5 rounded-xl text-xs font-semibold transition-colors"
+                className="flex-1 inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white px-4 py-2.5 rounded-xl text-xs font-semibold transition-colors cursor-pointer"
               >
                 {isAutoPlaying ? (
                   <>
@@ -418,8 +537,8 @@ export function AutomationDemo() {
                     <Mail className="w-4 h-4" /> 01 — Incoming Customer Request
                   </div>
 
-                  <div className="glass p-6 rounded-2xl border border-white/10 bg-black/40">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-4 border-b border-white/10 gap-2 text-xs text-muted-foreground">
+                  <div className="glass p-6 rounded-2xl border border-white/10 bg-black/40 space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-white/10 gap-2 text-xs text-muted-foreground">
                       <div>
                         <span className="font-semibold text-white">From:</span> {scenario.email.from}
                       </div>
@@ -427,15 +546,56 @@ export function AutomationDemo() {
                         <span className="font-semibold text-white">Subject:</span> {scenario.email.subject}
                       </div>
                     </div>
-                    <div className="p-4 rounded-xl bg-white/5 border border-white/5 text-base md:text-lg text-white font-medium italic">
-                      &ldquo;{scenario.email.body}&rdquo;
+
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <label
+                          htmlFor="customer-message-input"
+                          className="text-xs font-semibold text-brand-300 flex items-center gap-1.5"
+                        >
+                          <PenLine className="w-3.5 h-3.5 text-brand-400" />
+                          <span>Customer Message (User-Editable):</span>
+                        </label>
+                        {currentMessage !== scenario.email.body && (
+                          <button
+                            type="button"
+                            onClick={() => handleResetMessage(scenario.id)}
+                            className="text-[11px] text-muted-foreground hover:text-brand-300 transition-colors cursor-pointer"
+                          >
+                            Reset to default
+                          </button>
+                        )}
+                      </div>
+
+                      <div className="relative">
+                        <textarea
+                          id="customer-message-input"
+                          value={currentMessage}
+                          onChange={(e) => handleMessageChange(e.target.value)}
+                          rows={3}
+                          placeholder="Type customer message here..."
+                          className={cn(
+                            "w-full p-4 rounded-xl bg-white/5 border text-base md:text-lg text-white font-medium italic transition-all focus:outline-none resize-none leading-relaxed",
+                            validationError
+                              ? "border-rose-500/70 focus:border-rose-500 focus:ring-1 focus:ring-rose-500/30 bg-rose-950/15"
+                              : "border-white/10 focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 hover:border-white/20 focus:bg-white/[0.07]"
+                          )}
+                        />
+                      </div>
+
+                      {validationError && (
+                        <p className="text-xs text-rose-400 flex items-center gap-1.5 font-medium pt-1">
+                          <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                          {validationError}
+                        </p>
+                      )}
                     </div>
                   </div>
 
                   <div className="flex items-center justify-end">
                     <button
-                      onClick={() => setActiveStep(1)}
-                      className="inline-flex items-center gap-2 text-xs font-semibold text-brand-300 hover:text-white bg-brand-600/20 hover:bg-brand-600/30 border border-brand-500/30 px-4 py-2 rounded-lg transition-colors"
+                      onClick={handleNextFromInput}
+                      className="inline-flex items-center gap-2 text-xs font-semibold text-brand-300 hover:text-white bg-brand-600/20 hover:bg-brand-600/30 border border-brand-500/30 px-4 py-2 rounded-lg transition-colors cursor-pointer"
                     >
                       Next: AI Understands <ArrowRight className="w-3.5 h-3.5" />
                     </button>
@@ -457,6 +617,18 @@ export function AutomationDemo() {
                   </div>
 
                   <div className="glass p-6 rounded-2xl border border-cyan-500/30 bg-cyan-950/20 space-y-3">
+                    <div className="p-3 rounded-xl bg-black/50 border border-white/5">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-muted-foreground">Analyzed Customer Message:</span>
+                        <span className="text-[10px] font-mono text-cyan-400 bg-cyan-500/10 px-1.5 py-0.5 rounded border border-cyan-500/20">
+                          Received
+                        </span>
+                      </div>
+                      <p className="text-xs font-medium text-white/90 italic line-clamp-2">
+                        &ldquo;{currentMessage}&rdquo;
+                      </p>
+                    </div>
+
                     <div className="flex justify-between items-center p-3 rounded-xl bg-black/50 border border-white/5">
                       <span className="text-xs text-muted-foreground">Classified Intent:</span>
                       <span className="text-sm font-bold text-white bg-cyan-500/20 px-2.5 py-1 rounded border border-cyan-500/30">
@@ -467,7 +639,7 @@ export function AutomationDemo() {
                     <div className="flex justify-between items-center p-3 rounded-xl bg-black/50 border border-white/5">
                       <span className="text-xs text-muted-foreground">Extracted Identifier:</span>
                       <span className="text-sm font-mono font-bold text-brand-300">
-                        {scenario.aiExtraction.reference}
+                        {dynamicData.reference}
                       </span>
                     </div>
 
@@ -482,7 +654,7 @@ export function AutomationDemo() {
                   <div className="flex items-center justify-end">
                     <button
                       onClick={() => setActiveStep(2)}
-                      className="inline-flex items-center gap-2 text-xs font-semibold text-brand-300 hover:text-white bg-brand-600/20 hover:bg-brand-600/30 border border-brand-500/30 px-4 py-2 rounded-lg transition-colors"
+                      className="inline-flex items-center gap-2 text-xs font-semibold text-brand-300 hover:text-white bg-brand-600/20 hover:bg-brand-600/30 border border-brand-500/30 px-4 py-2 rounded-lg transition-colors cursor-pointer"
                     >
                       Next: System Check <ArrowRight className="w-3.5 h-3.5" />
                     </button>
@@ -526,7 +698,7 @@ export function AutomationDemo() {
                   <div className="flex items-center justify-end">
                     <button
                       onClick={() => setActiveStep(3)}
-                      className="inline-flex items-center gap-2 text-xs font-semibold text-brand-300 hover:text-white bg-brand-600/20 hover:bg-brand-600/30 border border-brand-500/30 px-4 py-2 rounded-lg transition-colors"
+                      className="inline-flex items-center gap-2 text-xs font-semibold text-brand-300 hover:text-white bg-brand-600/20 hover:bg-brand-600/30 border border-brand-500/30 px-4 py-2 rounded-lg transition-colors cursor-pointer"
                     >
                       Next: AI Prepares Action <ArrowRight className="w-3.5 h-3.5" />
                     </button>
@@ -555,8 +727,15 @@ export function AutomationDemo() {
                       </span>
                     </div>
 
+                    <div className="text-[11px] text-muted-foreground flex items-center gap-1.5 px-1">
+                      <MessageSquare className="w-3.5 h-3.5 text-brand-400 shrink-0" />
+                      <span className="truncate">
+                        Responding to: <span className="text-white/80 italic">&ldquo;{currentMessage}&rdquo;</span>
+                      </span>
+                    </div>
+
                     <div className="p-4 rounded-xl bg-black/60 border border-white/5 text-sm text-white/90 whitespace-pre-line leading-relaxed font-sans">
-                      {scenario.aiDraft.content}
+                      {currentActionDraft}
                     </div>
                   </div>
 
@@ -612,12 +791,63 @@ export function AutomationDemo() {
                         </span>
                       </div>
 
-                      {/* Clearly show AI prepared information */}
-                      <div className="p-3.5 rounded-xl bg-black/60 border border-white/10 text-xs text-white/90 whitespace-pre-line leading-relaxed font-sans">
-                        <span className="text-[10px] text-brand-400 block mb-1 font-semibold uppercase tracking-wider font-mono">
-                          AI Prepared Action:
+                      {/* Customer request reminder */}
+                      <div className="text-[11px] text-muted-foreground flex items-center gap-1.5 px-1">
+                        <MessageSquare className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                        <span className="truncate">
+                          Customer Request: <span className="text-white/80 italic">&ldquo;{currentMessage}&rdquo;</span>
                         </span>
-                        {scenario.aiDraft.content}
+                      </div>
+
+                      {/* Clearly show AI prepared information with manual user editability */}
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between text-xs">
+                          <label
+                            htmlFor="human-review-action-input"
+                            className="text-[10px] text-brand-400 font-semibold uppercase tracking-wider font-mono flex items-center gap-1.5"
+                          >
+                            <PenLine className="w-3 h-3 text-brand-400" />
+                            <span>AI Prepared Action (User-Editable):</span>
+                          </label>
+                          <div className="flex items-center gap-2">
+                            {customActionDrafts[scenario.id] !== undefined && (
+                              <button
+                                type="button"
+                                onClick={() => handleResetDraft(scenario.id)}
+                                className="text-[10px] text-amber-300 hover:text-amber-200 transition-colors cursor-pointer"
+                              >
+                                Reset to AI draft
+                              </button>
+                            )}
+                            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                              Directly Editable
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="relative">
+                          <textarea
+                            ref={draftInputRef}
+                            id="human-review-action-input"
+                            value={currentActionDraft}
+                            onChange={(e) => handleActionDraftChange(e.target.value)}
+                            rows={4}
+                            placeholder="Edit the message here before approving..."
+                            className={cn(
+                              "w-full p-3.5 rounded-xl bg-black/60 border text-xs md:text-sm text-white/90 leading-relaxed font-sans transition-all focus:outline-none resize-y min-h-[110px]",
+                              draftValidationError
+                                ? "border-rose-500/70 focus:border-rose-500 focus:ring-1 focus:ring-rose-500/30 bg-rose-950/15"
+                                : "border-white/15 focus:border-brand-400 focus:ring-1 focus:ring-brand-400/40 hover:border-white/25 focus:bg-white/[0.04]"
+                            )}
+                          />
+                        </div>
+
+                        {draftValidationError && (
+                          <p className="text-xs text-rose-400 flex items-center gap-1.5 font-medium pt-0.5">
+                            <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                            {draftValidationError}
+                          </p>
+                        )}
                       </div>
                     </div>
 
@@ -643,10 +873,15 @@ export function AutomationDemo() {
 
                       <button
                         type="button"
-                        onClick={() => setIsAutoPlaying(false)}
+                        onClick={() => {
+                          setIsAutoPlaying(false);
+                          draftInputRef.current?.focus();
+                        }}
                         className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-muted-foreground hover:text-white border border-white/10 py-3.5 px-4 rounded-xl text-xs md:text-sm font-medium transition-colors cursor-pointer"
+                        title="Click to edit message directly"
                       >
-                        {scenario.humanStep.secondaryAction}
+                        <PenLine className="w-3.5 h-3.5 text-brand-400" />
+                        <span>{scenario.humanStep.secondaryAction}</span>
                       </button>
                     </div>
                   </div>
@@ -674,6 +909,17 @@ export function AutomationDemo() {
                     </h3>
                     <p className="text-xs md:text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
                       AI prepared the work • Human reviewed and approved • System executed the approved action.
+                    </p>
+                  </div>
+
+                  {/* Show the approved and executed action content */}
+                  <div className="p-3.5 rounded-xl bg-black/50 border border-emerald-500/20 max-w-lg mx-auto text-left space-y-1">
+                    <span className="text-[10px] text-emerald-400 font-mono uppercase block font-semibold flex items-center gap-1.5">
+                      <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                      Approved & Executed Action Content:
+                    </span>
+                    <p className="italic text-white/90 whitespace-pre-line text-xs font-sans">
+                      &ldquo;{currentActionDraft}&rdquo;
                     </p>
                   </div>
 
