@@ -4,16 +4,7 @@ import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ArrowDown, ShieldCheck, Database, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
-import dynamic from "next/dynamic";
-import { Hero3DFallback } from "./Hero3DFallback";
-
-const Hero3DExperience = dynamic(
-  () => import("./Hero3DExperience").then((mod) => mod.Hero3DExperience),
-  {
-    ssr: false,
-    loading: () => <Hero3DFallback />,
-  }
-);
+import { HeroWorkflowEngine } from "./HeroWorkflowEngine";
 
 export function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -216,7 +207,7 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
               className="w-full relative"
             >
-              <Hero3DExperience />
+              <HeroWorkflowEngine />
             </motion.div>
           </div>
           

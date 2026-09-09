@@ -107,14 +107,20 @@ export function CTA() {
               Show us the workflow. We&apos;ll help you map the process, isolate repetitive bottlenecks, and design safe automation with built-in human control.
             </p>
 
-            {/* Task 3: Compliant authentic messaging replacing fake social proof */}
-            <div className="p-5 rounded-2xl glass-card border border-brand-500/30 bg-brand-950/30 mb-8">
-              <div className="text-xs font-bold text-brand-300 uppercase tracking-wider mb-1.5">
-                WE&apos;RE LOOKING FOR BUSINESSES WITH REPETITIVE WORKFLOWS WORTH AUTOMATING.
+            {/* Qualified Workflow Criteria Card */}
+            <div className="p-5 rounded-2xl glass-card border border-brand-500/20 bg-brand-950/20 mb-8 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-28 h-28 bg-brand-500/10 blur-[50px] rounded-full pointer-events-none" />
+              <div className="flex items-start gap-3">
+                <div className="w-2 h-2 rounded-full bg-brand-400 mt-1.5 shrink-0 shadow-[0_0_8px_rgba(96,165,250,0.8)]" />
+                <div>
+                  <div className="text-xs font-bold text-white tracking-wide uppercase mb-1">
+                    Target Repetitive Workflows
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Order reconciliation, email triage, invoice data extraction, or cross-system synchronization — start with one high-friction workflow and validate measurable ROI.
+                  </p>
+                </div>
               </div>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                Whether it is order processing, email triage, invoice extraction, or cross-system syncing — start with one workflow and measure the impact before expanding.
-              </p>
             </div>
 
             <div className="space-y-3">
@@ -172,7 +178,7 @@ export function CTA() {
                         id="name"
                         name="name"
                         className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors"
-                        placeholder="e.g. Alex Morgan"
+                        placeholder="Your full name"
                       />
                     </div>
 
@@ -186,7 +192,7 @@ export function CTA() {
                         id="email"
                         name="email"
                         className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors"
-                        placeholder="alex@company.com"
+                        placeholder="name@company.com"
                       />
                     </div>
                   </div>
@@ -202,7 +208,7 @@ export function CTA() {
                         id="company"
                         name="company"
                         className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors"
-                        placeholder="e.g. Acme Logistics"
+                        placeholder="Your company name"
                       />
                     </div>
 
@@ -266,7 +272,7 @@ export function CTA() {
                       name="process"
                       rows={3}
                       className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors resize-none"
-                      placeholder="e.g. Our team spends 3 hours every day reading supplier emails, manually verifying tracking numbers against our ERP, and copying data into Excel sheets..."
+                      placeholder="Describe your current manual steps, tools used, and where bottlenecks occur..."
                     />
                   </div>
 
