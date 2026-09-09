@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ArrowDown, ShieldCheck, Database, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
-import { HeroWorkflowEngine } from "./HeroWorkflowEngine";
+import { WorkflowNetwork } from "./WorkflowNetwork";
 
 export function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -207,7 +207,7 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
               className="w-full relative"
             >
-              <HeroWorkflowEngine />
+              <WorkflowNetwork />
             </motion.div>
           </div>
           
