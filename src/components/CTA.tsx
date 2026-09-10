@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, CheckCircle2, Sparkles, Check, Mail } from "lucide-react";
+import { ArrowRight, CheckCircle2, Sparkles, Check, Mail, Calendar } from "lucide-react";
 import { InstagramIcon } from "@/components/InstagramIcon";
 
 const TOOLS_LIST = [
@@ -29,6 +29,8 @@ export function CTA() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [selectedTools, setSelectedTools] = useState<string[]>([]);
   const [frequency, setFrequency] = useState<string>("");
+  const [submittedEmail, setSubmittedEmail] = useState<string>("");
+  const [meetingDecision, setMeetingDecision] = useState<"pending" | "scheduled" | "email_only">("pending");
 
   const toggleTool = (tool: string) => {
     setSelectedTools((prev) =>
@@ -70,6 +72,8 @@ export function CTA() {
         );
       }
 
+      setSubmittedEmail((formData.get("email") as string) || "");
+      setMeetingDecision("pending");
       setIsSuccess(true);
     } catch (err: unknown) {
       setErrorMessage(
@@ -344,23 +348,78 @@ export function CTA() {
                   key="success"
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="py-12 flex flex-col items-center text-center h-full justify-center space-y-4"
+                  className="py-8 flex flex-col items-center text-center h-full justify-center space-y-4"
                 >
-                  <div className="w-16 h-16 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-2 shadow-[0_0_25px_rgba(16,185,129,0.3)]">
-                    <CheckCircle2 className="w-8 h-8" />
+                  <div className="w-14 h-14 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-1 shadow-[0_0_25px_rgba(16,185,129,0.3)]">
+                    <CheckCircle2 className="w-7 h-7" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white uppercase">Assessment Requested</h3>
-                  <p className="text-sm text-muted-foreground max-w-sm">
-                    Thank you for sharing your workflow details. We will review your process and reach out within 24 hours to explore automation opportunities.
+                  <h3 className="text-xl md:text-2xl font-bold text-white uppercase">Assessment Requested</h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground max-w-sm leading-relaxed">
+                    Thank you for sharing your workflow details. We have received your parameters and will reach out within 24 hours.
                   </p>
+
+                  {/* Follow-up question: Schedule a meeting? */}
+                  {meetingDecision === "pending" && (
+                    <div className="w-full max-w-md p-5 rounded-2xl bg-white/[0.03] border border-brand-500/30 text-left space-y-3.5 shadow-xl mt-3">
+                      <div className="flex items-start gap-3">
+                        <div className="w-9 h-9 rounded-xl bg-brand-500/20 border border-brand-500/30 flex items-center justify-center text-brand-400 shrink-0">
+                          <Calendar className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <h4 className="text-xs font-bold text-white uppercase tracking-wider">
+                            Would you like to schedule a 15-min discovery call?
+                          </h4>
+                          <p className="text-[11px] text-muted-foreground mt-0.5 leading-relaxed">
+                            Connect directly with our automation engineer to review bottlenecks and map your architecture live.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="grid sm:grid-cols-2 gap-2.5 pt-1">
+                        <a
+                          href={`mailto:sparten.tech26@gmail.com?subject=Schedule%20Discovery%20Meeting%20-%20SPARTAN&body=Hi%20SPARTAN%20Team,%0A%0AI%20just%20submitted%20a%20workflow%20assessment%20request%20(${submittedEmail})%20and%20would%20like%20to%20schedule%20a%2015-minute%20introductory%20meeting.%0A%0AMy%20preferred%20days%20and%20times%20are:%20`}
+                          onClick={() => setMeetingDecision("scheduled")}
+                          className="flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl bg-brand-500 hover:bg-brand-400 text-white font-semibold text-xs uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] text-center"
+                        >
+                          <Calendar className="w-3.5 h-3.5" />
+                          <span>Yes, Schedule Call</span>
+                        </a>
+
+                        <button
+                          type="button"
+                          onClick={() => setMeetingDecision("email_only")}
+                          className="py-2.5 px-3.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-muted-foreground hover:text-white font-medium text-xs transition-colors text-center"
+                        >
+                          No, email is fine
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {meetingDecision === "scheduled" && (
+                    <div className="w-full max-w-md p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-xs text-emerald-300 flex items-center gap-2.5 text-left mt-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                      <span>Meeting request prepared! Check your email client or send to lock in your call slot.</span>
+                    </div>
+                  )}
+
+                  {meetingDecision === "email_only" && (
+                    <div className="w-full max-w-md p-4 rounded-2xl bg-white/[0.02] border border-white/10 text-xs text-muted-foreground flex items-center gap-2.5 text-left mt-2">
+                      <Mail className="w-4 h-4 text-brand-400 shrink-0" />
+                      <span>Noted! We&apos;ll prepare your assessment and email you directly within 24 hours.</span>
+                    </div>
+                  )}
+
                   <button 
                     onClick={() => {
                       setIsSuccess(false);
                       setSelectedTools([]);
                       setFrequency("");
                       setErrorMessage(null);
+                      setSubmittedEmail("");
+                      setMeetingDecision("pending");
                     }}
-                    className="mt-6 text-brand-400 hover:text-brand-300 font-medium text-xs underline underline-offset-4 transition-colors cursor-pointer"
+                    className="mt-4 text-brand-400 hover:text-brand-300 font-medium text-xs underline underline-offset-4 transition-colors cursor-pointer"
                   >
                     Submit another workflow
                   </button>
