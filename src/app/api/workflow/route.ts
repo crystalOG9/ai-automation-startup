@@ -106,8 +106,12 @@ export async function POST(req: NextRequest) {
 
     // 3. Optional Resend Email Notification
     const resendApiKey = process.env.RESEND_API_KEY;
+    const configuredEmail = process.env.NOTIFICATION_EMAIL;
+    // Strictly override any stale old address with sparten.tech26@gmail.com
     const notificationEmail =
-      process.env.NOTIFICATION_EMAIL || "sparten.tech26@gmail.com";
+      configuredEmail && configuredEmail !== "pawarpiyush172@gmail.com"
+        ? configuredEmail
+        : "sparten.tech26@gmail.com";
 
     if (resendApiKey && notificationEmail) {
       try {
@@ -118,7 +122,7 @@ export async function POST(req: NextRequest) {
         const toolsDisplay =
           cleanedTools.length > 0 ? cleanedTools.join(", ") : "None specified";
 
-        await resend.emails.send({
+        const { data: resendData, error: resendError } = await resend.emails.send({
           from: fromEmail,
           to: notificationEmail,
           subject: `⚡ [SPARTAN] New Workflow Assessment Request: ${trimmedCompany}`,
@@ -163,9 +167,14 @@ export async function POST(req: NextRequest) {
             </div>
           `,
         });
+
+        if (resendError) {
+          console.error("[Resend API Error]", resendError);
+        } else {
+          console.log("[Resend Email Dispatched]", resendData?.id);
+        }
       } catch (emailErr) {
         console.error("[Resend Notification Error]", emailErr);
-        // We log the error but still return success since the submission was safely saved to DB
       }
     }
 
