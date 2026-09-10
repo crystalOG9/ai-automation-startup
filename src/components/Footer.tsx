@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Globe, Mail, MessageSquare } from "lucide-react";
+import { Globe, Mail } from "lucide-react";
 import { SpartanLogo } from "@/components/SpartanLogo";
+import { InstagramIcon } from "@/components/InstagramIcon";
 
 export function Footer() {
   return (
@@ -8,7 +9,7 @@ export function Footer() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-1">
             <Link
               href="/"
               className="text-2xl font-bold tracking-tighter text-white flex items-center gap-2.5 mb-4 inline-flex group"
@@ -16,7 +17,7 @@ export function Footer() {
               <SpartanLogo size={36} />
               <span className="font-bold tracking-tight text-white">SPARTAN</span>
             </Link>
-            <p className="text-muted-foreground max-w-sm text-sm leading-relaxed">
+            <p className="text-muted-foreground text-sm leading-relaxed">
               We discover repetitive business workflows and build AI-powered automation around the way your company actually works.
             </p>
           </div>
@@ -40,6 +41,35 @@ export function Footer() {
               <li><Link href="#contact" className="text-muted-foreground hover:text-white transition-colors text-sm">Start With One Workflow</Link></li>
             </ul>
           </div>
+
+          <div>
+            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Contact & Connect</h4>
+            <ul className="space-y-3">
+              <li>
+                <a
+                  href="mailto:sparten.tech26@gmail.com"
+                  className="flex items-center gap-2.5 text-muted-foreground hover:text-white transition-colors text-sm group"
+                >
+                  <Mail className="w-4 h-4 text-brand-400 shrink-0 group-hover:scale-110 transition-transform" />
+                  <span className="break-all">sparten.tech26@gmail.com</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/sparten.tech/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2.5 text-muted-foreground hover:text-white transition-colors text-sm group"
+                >
+                  <InstagramIcon className="w-4 h-4 text-pink-400 shrink-0 group-hover:scale-110 transition-transform" />
+                  <span>@sparten.tech</span>
+                </a>
+              </li>
+            </ul>
+            <p className="text-xs text-muted-foreground/60 mt-4 leading-relaxed">
+              Available for custom enterprise workflow engineering inquiries.
+            </p>
+          </div>
           
         </div>
 
@@ -47,14 +77,24 @@ export function Footer() {
           <p>© 2026 SPARTAN. All rights reserved.</p>
           
           <div className="flex items-center gap-4">
-            <a href="#contact" className="hover:text-white transition-colors" aria-label="Website">
+            <Link href="/" className="hover:text-white transition-colors" aria-label="Website">
               <Globe className="w-4 h-4" />
-            </a>
-            <a href="#contact" className="hover:text-white transition-colors" aria-label="Contact">
+            </Link>
+            <a
+              href="mailto:sparten.tech26@gmail.com"
+              className="hover:text-white transition-colors"
+              aria-label="Email SPARTAN"
+            >
               <Mail className="w-4 h-4" />
             </a>
-            <a href="#contact" className="hover:text-white transition-colors" aria-label="Community">
-              <MessageSquare className="w-4 h-4" />
+            <a
+              href="https://www.instagram.com/sparten.tech/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors"
+              aria-label="SPARTAN Instagram"
+            >
+              <InstagramIcon className="w-4 h-4" />
             </a>
           </div>
         </div>

@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, CheckCircle2, Sparkles, Check } from "lucide-react";
+import { ArrowRight, CheckCircle2, Sparkles, Check, Mail } from "lucide-react";
+import { InstagramIcon } from "@/components/InstagramIcon";
 
 const TOOLS_LIST = [
   "SAP",
@@ -135,6 +136,46 @@ export function CTA() {
               <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span>Clear before-and-after operational throughput measurement</span>
+              </div>
+            </div>
+
+            {/* Direct Contact Options */}
+            <div className="mt-8 pt-6 border-t border-white/10">
+              <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                Direct Contact & Connect
+              </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-3">
+                <a
+                  href="mailto:sparten.tech26@gmail.com"
+                  className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-brand-500/40 transition-all group"
+                >
+                  <div className="w-9 h-9 rounded-lg bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-400 group-hover:scale-105 transition-transform shrink-0">
+                    <Mail className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Email Us Directly</div>
+                    <div className="text-xs font-medium text-white truncate group-hover:text-brand-300 transition-colors">
+                      sparten.tech26@gmail.com
+                    </div>
+                  </div>
+                </a>
+
+                <a
+                  href="https://www.instagram.com/sparten.tech/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-pink-500/40 transition-all group"
+                >
+                  <div className="w-9 h-9 rounded-lg bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400 group-hover:scale-105 transition-transform shrink-0">
+                    <InstagramIcon className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Instagram</div>
+                    <div className="text-xs font-medium text-white truncate group-hover:text-pink-300 transition-colors">
+                      @sparten.tech
+                    </div>
+                  </div>
+                </a>
               </div>
             </div>
           </motion.div>
