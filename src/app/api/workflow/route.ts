@@ -125,7 +125,9 @@ export async function POST(req: NextRequest) {
         const { data: resendData, error: resendError } = await resend.emails.send({
           from: fromEmail,
           to: notificationEmail,
-          subject: `⚡ [SPARTAN] New Workflow Assessment Request: ${trimmedCompany}`,
+          replyTo: trimmedEmail,
+          subject: `New Workflow Assessment: ${trimmedCompany} (${trimmedName})`,
+          text: `SPARTAN AI Automation — New Lead Request\n\nName: ${trimmedName}\nWork Email: ${trimmedEmail}\nCompany: ${trimmedCompany}\nProcess Frequency: ${trimmedFrequency}\nTools & Systems: ${toolsDisplay}\nSubmission Time: ${submissionTime}\n\nWorkflow Description:\n${trimmedProcess}\n`,
           html: `
             <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #111; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
               <div style="background-color: #0f172a; padding: 20px 24px; color: #ffffff;">
