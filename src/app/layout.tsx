@@ -15,6 +15,8 @@ export const metadata: Metadata = {
 
 import { BackgroundVisuals } from "@/components/BackgroundVisuals";
 import { PrecisionMouseSystem } from "@/components/PrecisionMouseSystem";
+import { ToastProvider } from "@/context/ToastContext";
+import { WorkflowStateProvider } from "@/context/WorkflowStateContext";
 
 export default function RootLayout({
   children,
@@ -24,9 +26,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} antialiased scroll-smooth`}>
       <body className="min-h-full flex flex-col bg-background text-foreground overflow-x-hidden selection:bg-brand-500/30 selection:text-brand-50">
-        <BackgroundVisuals />
-        <PrecisionMouseSystem />
-        {children}
+        <ToastProvider>
+          <WorkflowStateProvider>
+            <BackgroundVisuals />
+            <PrecisionMouseSystem />
+            {children}
+          </WorkflowStateProvider>
+        </ToastProvider>
       </body>
     </html>
   );

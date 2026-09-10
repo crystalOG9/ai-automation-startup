@@ -9,976 +9,1034 @@ import {
   ShieldCheck,
   CheckCircle2,
   Play,
+  Pause,
   RotateCcw,
   Truck,
-  RotateCcw as RefundIcon,
-  XCircle,
+  FileText,
   MessageSquare,
   ArrowRight,
+  ArrowLeft,
   AlertCircle,
-  PenLine,
-  Zap,
-  Lock,
+  XCircle,
   Cpu,
   Layers,
   Sparkles,
+  Activity,
+  Code2,
+  Edit3,
+  Check,
+  Clock,
+  Zap,
   type LucideIcon,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useToast } from "@/context/ToastContext";
 
 interface Scenario {
   id: string;
+  code: string;
   name: string;
-  tag: string;
+  category: string;
   icon: LucideIcon;
-  email: {
-    from: string;
-    subject: string;
-    body: string;
+  trigger: {
+    protocol: string;
     source: string;
+    topic: string;
+    payloadSize: string;
+    rawPayload: string;
+    timestamp: string;
   };
-  aiExtraction: {
+  aiAnalysis: {
     intent: string;
-    reference: string;
     confidence: string;
-    priority: "CRITICAL" | "HIGH" | "STANDARD";
-    entities: { label: string; value: string }[];
+    model: string;
+    latency: string;
+    structuredJson: Record<string, unknown>;
+    extractedEntities: { label: string; value: string }[];
   };
-  systemCheck: {
-    systemName: string;
-    status: string;
-    statusBadge: string;
-    statusColor: string;
-    verifiedRecords: { label: string; value: string }[];
+  humanGate: {
+    supervisorRole: string;
+    supervisorId: string;
+    policyRule: string;
+    riskLevel: "LOW" | "MEDIUM" | "HIGH";
+    defaultParams: {
+      action: string;
+      targetSystem: string;
+      recipient: string;
+      notes: string;
+      financialCommit?: string;
+    };
   };
-  aiDraft: {
-    actionType: string;
-    targetSystem: string;
-    content: string;
-  };
-  humanStep: {
-    role: string;
-    supervisor: string;
-    actionPrompt: string;
-    primaryAction: string;
-    secondaryAction: string;
-  };
-  executionResult: {
+  execution: {
     title: string;
     summary: string;
-    metrics: { label: string; before: string; after: string };
-    dispatchedActions: string[];
+    metrics: { label: string; manual: string; automated: string };
+    dispatchedSystems: {
+      name: string;
+      action: string;
+      status: "SYNCED" | "DISPATCHED" | "COMMITTED";
+      badgeColor: string;
+    }[];
+    auditLog: string[];
   };
 }
 
 const SCENARIOS: Scenario[] = [
   {
-    id: "delivery",
+    id: "logistics",
+    code: "SCENARIO A",
     name: "Logistics Delay Triage",
-    tag: "Supply Chain",
+    category: "Supply Chain & Ops",
     icon: Truck,
-    email: {
-      from: "ops@apexlogistics.com",
-      subject: "Urgent: Order #48291 Tracking Discrepancy",
-      body: "Order #48291 has not reached Regional Hub 4. Weather hold was cleared 6 hours ago. Please update client ETA and verify carrier status.",
-      source: "EDI Carrier Webhook & Inbound Email",
+    trigger: {
+      protocol: "EDI Webhook / HTTPS POST",
+      source: "FedEx Fleet Telemetry & SAP Carrier Ingestion",
+      topic: "v1.logistics.freight.exception",
+      payloadSize: "1.42 KB",
+      rawPayload: `{\n  "event": "CARRIER_DISCREPANCY",\n  "tracking_id": "1Z999482910394",\n  "order_ref": "ORD-48291",\n  "status": "WEATHER_HOLD_CLEARED",\n  "hub": "Regional Hub 4 (Denver)",\n  "revised_eta": "2026-09-12T10:30:00Z",\n  "client_tier": "Enterprise Tier-1",\n  "notification_flag": true\n}`,
+      timestamp: "2026-09-11 02:14:08 UTC",
     },
-    aiExtraction: {
+    aiAnalysis: {
       intent: "Transit Delay & Delivery Rescheduling",
-      reference: "Order #48291",
-      confidence: "99.6%",
-      priority: "HIGH",
-      entities: [
-        { label: "Entity ID", value: "#48291" },
-        { label: "Destination", value: "Regional Hub 4" },
-        { label: "Client Tier", value: "Tier 1 Priority" },
+      confidence: "99.8%",
+      model: "SPARTAN DeepReason v4",
+      latency: "14.2 ms",
+      structuredJson: {
+        orderId: "ORD-48291",
+        trackingNumber: "1Z999482910394",
+        originStatus: "Weather Delay Released",
+        currentHub: "Denver Hub #4",
+        resolvedEta: "Tomorrow at 10:30 AM MDT",
+        urgency: "HIGH",
+        clientEscalationRisk: "Low (Sub-24h clearance)",
+      },
+      extractedEntities: [
+        { label: "Order Number", value: "ORD-48291" },
+        { label: "Carrier Tracking", value: "1Z999482910394" },
+        { label: "Updated Arrival", value: "Tomorrow 10:30 AM" },
+        { label: "Account SLA", value: "Tier 1 Priority SLA" },
       ],
     },
-    systemCheck: {
-      systemName: "SAP Logistics & FedEx Fleet API",
-      status: "Delayed in Transit — Weather Hold Cleared",
-      statusBadge: "VERIFIED IN TRANSIT",
-      statusColor: "text-amber-400 border-amber-500/30 bg-amber-500/10",
-      verifiedRecords: [
-        { label: "Carrier Tracking", value: "1Z99999999999948291" },
-        { label: "Revised ETA", value: "Tomorrow at 10:30 AM" },
-        { label: "Inventory Hold", value: "None (In Final Mile Transit)" },
+    humanGate: {
+      supervisorRole: "Logistics Operations Lead",
+      supervisorId: "Supervisor #412",
+      policyRule: "Mandatory human review for Tier-1 customer SLA notifications",
+      riskLevel: "MEDIUM",
+      defaultParams: {
+        action: "Client ETA Dispatch & ERP Status Sync",
+        targetSystem: "SAP S/4HANA & Zendesk Support",
+        recipient: "logistics-ops@apexglobal.com",
+        notes: "Weather delay cleared. Final mile delivery rescheduled for tomorrow 10:30 AM. GPS link attached.",
+      },
+    },
+    execution: {
+      title: "Carrier Telemetry Synced & Client Updated",
+      summary: "SAP ERP delivery schedule updated. Customer notification delivered via automated portal ticket with real-time GPS tracking.",
+      metrics: { label: "Resolution Cycle", manual: "38 minutes", automated: "14 seconds" },
+      dispatchedSystems: [
+        { name: "SAP S/4HANA", action: "Delivery ETA updated to tomorrow 10:30 AM", status: "SYNCED", badgeColor: "text-blue-400 border-blue-500/30 bg-blue-500/10" },
+        { name: "Zendesk Support", action: "High-priority client alert dispatched", status: "DISPATCHED", badgeColor: "text-emerald-400 border-emerald-500/30 bg-emerald-500/10" },
+        { name: "Fleet Telemetry Bus", action: "Exception ticket auto-closed", status: "COMMITTED", badgeColor: "text-cyan-400 border-cyan-500/30 bg-cyan-500/10" },
+      ],
+      auditLog: [
+        "02:14:08.120 - Webhook received from FedEx Fleet API (1.42 KB)",
+        "02:14:08.134 - AI parsed tracking #1Z999482910394 with 99.8% confidence",
+        "02:14:08.140 - Human supervisor approved action payload",
+        "02:14:08.158 - Dispatched updates to SAP ERP & Zendesk concurrently",
       ],
     },
-    aiDraft: {
-      actionType: "Client Rescheduling Notice & Dispatch",
-      targetSystem: "Customer Portal & Zendesk CRM",
-      content:
-        "Hello Apex Operations,\n\nOrder #48291 was briefly held due to regional weather conditions. The hold has officially cleared and your shipment is now in final-mile delivery, scheduled to arrive tomorrow at 10:30 AM.\n\nLive GPS tracking: track.shipping.com/48291\nWe apologize for the delay.",
+  },
+  {
+    id: "invoice",
+    code: "SCENARIO B",
+    name: "Invoice & Receipt Data Extraction",
+    category: "Finance & Accounts",
+    icon: FileText,
+    trigger: {
+      protocol: "Email Ingestion / PDF Parser Webhook",
+      source: "AP Inbound Mailbox (invoices@spartan.tech)",
+      topic: "v2.finance.ap.invoice_ingestion",
+      payloadSize: "3.18 KB (Base64 OCR Stream)",
+      rawPayload: `{\n  "document_id": "DOC-INV-2026-8812",\n  "vendor": "Acme Industrial Hardware Inc.",\n  "vendor_tax_id": "US-84-9920194",\n  "po_reference": "PO-99104",\n  "line_items_count": 4,\n  "subtotal": 14250.00,\n  "tax": 1140.00,\n  "total_amount": 15390.00,\n  "currency": "USD",\n  "due_date": "2026-10-15"\n}`,
+      timestamp: "2026-09-11 02:15:30 UTC",
     },
-    humanStep: {
-      role: "Logistics Operations Lead",
-      supervisor: "Human Supervisor #412",
-      actionPrompt: "Review carrier telemetry and authorize automated customer dispatch",
-      primaryAction: "Authorize & Dispatch Update",
-      secondaryAction: "Edit Message",
+    aiAnalysis: {
+      intent: "3-Way PO Match & Accounts Payable Extraction",
+      confidence: "99.5%",
+      model: "SPARTAN VisionDoc OCR v3",
+      latency: "18.6 ms",
+      structuredJson: {
+        vendorName: "Acme Industrial Hardware Inc.",
+        invoiceNumber: "INV-2026-8812",
+        poNumber: "PO-99104",
+        amountDue: "$15,390.00 USD",
+        matchStatus: "3-Way PO Match Verified (0.00 variance)",
+        glCode: "GL-5100-RawMaterials",
+        taxCalculatedCorrectly: true,
+      },
+      extractedEntities: [
+        { label: "Vendor", value: "Acme Industrial Hardware" },
+        { label: "Invoice Amount", value: "$15,390.00 USD" },
+        { label: "Purchase Order", value: "PO-99104 (Approved)" },
+        { label: "GL Account", value: "5100 - Raw Materials" },
+      ],
     },
-    executionResult: {
-      title: "Carrier Status Synced & Client Notified",
-      summary: "Customer notification delivered via email and portal. ERP ticket marked resolved with revised ETA.",
-      metrics: { label: "Resolution Time", before: "35 mins manual", after: "14 seconds" },
-      dispatchedActions: [
-        "Real-time client status email dispatched",
-        "SAP ERP delivery timeline updated to tomorrow 10:30 AM",
-        "CRM priority ticket automatically closed",
+    humanGate: {
+      supervisorRole: "Finance Operations Manager",
+      supervisorId: "Controller #88",
+      policyRule: "Invoices exceeding $10,000 require explicit controller sign-off",
+      riskLevel: "HIGH",
+      defaultParams: {
+        action: "Post Bill to NetSuite & Schedule ACH Batch",
+        targetSystem: "Oracle NetSuite Financials & Tipalti",
+        recipient: "ap-accounting@acmeindustrial.com",
+        notes: "3-way PO match confirmed against Receiving Slip #RCV-4018. Bill ready for scheduled batch run.",
+        financialCommit: "$15,390.00 USD",
+      },
+    },
+    execution: {
+      title: "Ledger Committed & AP Voucher Created",
+      summary: "NetSuite posted General Ledger voucher #VCH-88120. Vendor payment scheduled for net-30 ACH batch.",
+      metrics: { label: "Processing Time", manual: "45 minutes", automated: "18 seconds" },
+      dispatchedSystems: [
+        { name: "Oracle NetSuite", action: "AP Voucher #VCH-88120 posted to GL-5100", status: "COMMITTED", badgeColor: "text-emerald-400 border-emerald-500/30 bg-emerald-500/10" },
+        { name: "Tipalti ACH Hub", action: "Payment scheduled for Net-30 run (Oct 15)", status: "SYNCED", badgeColor: "text-blue-400 border-blue-500/30 bg-blue-500/10" },
+        { name: "Document Archive", action: "Invoice PDF & OCR audit payload encrypted", status: "COMMITTED", badgeColor: "text-cyan-400 border-cyan-500/30 bg-cyan-500/10" },
+      ],
+      auditLog: [
+        "02:15:30.012 - Inbound invoice PDF ingested via OCR stream",
+        "02:15:30.031 - 3-way match verified against ERP purchase order PO-99104",
+        "02:15:30.038 - Financial controller authorized voucher commit ($15,390.00)",
+        "02:15:30.055 - Ledger updated in Oracle NetSuite; remittance sent",
+      ],
+    },
+  },
+  {
+    id: "leads",
+    code: "SCENARIO C",
+    name: "Inbound Lead Triage & Enrichment",
+    category: "Revenue & Sales Ops",
+    icon: MessageSquare,
+    trigger: {
+      protocol: "REST API Ingestion / HubSpot Webhook",
+      source: "Enterprise Website Quote Form",
+      topic: "v1.sales.inbound_lead.created",
+      payloadSize: "0.98 KB",
+      rawPayload: `{\n  "first_name": "Marcus",\n  "last_name": "Thorne",\n  "work_email": "marcus.t@supplyhub.io",\n  "company": "SupplyHub International",\n  "headcount_range": "100-250",\n  "notes": "Looking to automate 500+ monthly EDI freight manifests across our North American warehouses.",\n  "utm_source": "google_search"\n}`,
+      timestamp: "2026-09-11 02:16:04 UTC",
+    },
+    aiAnalysis: {
+      intent: "High-Volume Enterprise Contract Inquiry",
+      confidence: "99.4%",
+      model: "SPARTAN LeadReason v4",
+      latency: "11.8 ms",
+      structuredJson: {
+        leadScore: "96 / 100 (Tier-1 Enterprise)",
+        enrichmentProvider: "Apollo.io & Clearbit API",
+        estimatedAcv: "$42,000 / year",
+        suggestedRep: "Sarah Lin (Strategic Accounts)",
+        recommendedPlan: "Enterprise Dedicated Concurrency",
+        priority: "CRITICAL",
+      },
+      extractedEntities: [
+        { label: "Company", value: "SupplyHub International" },
+        { label: "Estimated ACV", value: "$42,000 USD/yr" },
+        { label: "Account Score", value: "96 / 100 (Tier-1)" },
+        { label: "Assigned Rep", value: "Sarah Lin (Enterprise AE)" },
+      ],
+    },
+    humanGate: {
+      supervisorRole: "Enterprise Sales Director",
+      supervisorId: "SDR Lead #14",
+      policyRule: "Review AI enterprise dossier before auto-scheduling and Slack dispatch",
+      riskLevel: "LOW",
+      defaultParams: {
+        action: "Create HubSpot Deal & Send Personalized Executive Dossier",
+        targetSystem: "HubSpot CRM & Sales Outreach Slack",
+        recipient: "marcus.t@supplyhub.io",
+        notes: "Enriched with 180 employees, Series-B logistics firm. Personalized intro with dedicated architecture deck.",
+      },
+    },
+    execution: {
+      title: "HubSpot Opportunity Staged & Slack Alert Dispatched",
+      summary: "Enterprise opportunity created with $42K ACV projection. Personalized rate card sent with calendar booking link.",
+      metrics: { label: "Lead Response Time", manual: "3.5 hours", automated: "22 seconds" },
+      dispatchedSystems: [
+        { name: "HubSpot CRM", action: "Enterprise Deal staged at 'Qualified Prospect'", status: "COMMITTED", badgeColor: "text-emerald-400 border-emerald-500/30 bg-emerald-500/10" },
+        { name: "Slack #enterprise-leads", action: "Dossier & instant claiming thread generated", status: "DISPATCHED", badgeColor: "text-blue-400 border-blue-500/30 bg-blue-500/10" },
+        { name: "Personalized Outreach", action: "Executive email delivered with direct booking link", status: "DISPATCHED", badgeColor: "text-cyan-400 border-cyan-500/30 bg-cyan-500/10" },
+      ],
+      auditLog: [
+        "02:16:04.004 - Inbound form submission received from SupplyHub.io",
+        "02:16:04.016 - Apollo enrichment completed: 180 employees, Series B, $42K ACV",
+        "02:16:04.022 - Sales Director approved personalized dispatch",
+        "02:16:04.040 - HubSpot deal created and executive email sent",
       ],
     },
   },
   {
     id: "refund",
-    name: "Damaged Goods Claim",
-    tag: "Finance & CS",
-    icon: RefundIcon,
-    email: {
-      from: "accounts@meridian-retail.com",
-      subject: "Claim: Invoice #91024 Damaged Packaging",
-      body: "Invoice #91024 arrived with damaged outer cases. Requesting an expedited refund or ledger credit of $84.50.",
-      source: "Customer Support Portal",
+    code: "SCENARIO D",
+    name: "Customer Refund Verification",
+    category: "Customer Support & Risk",
+    icon: RotateCcw,
+    trigger: {
+      protocol: "Zendesk API / Stripe Dispute Webhook",
+      source: "Help Center Customer Portal",
+      topic: "v1.support.ticket.refund_requested",
+      payloadSize: "1.15 KB",
+      rawPayload: `{\n  "ticket_id": "ZD-991204",\n  "customer_email": "elena.r@meridian-retail.com",\n  "order_id": "ORD-77192",\n  "claim_reason": "Damaged exterior packaging on arrival",\n  "requested_refund_amount": 142.50,\n  "currency": "USD",\n  "delivery_timestamp": "2026-09-08T14:20:00Z"\n}`,
+      timestamp: "2026-09-11 02:17:15 UTC",
     },
-    aiExtraction: {
-      intent: "Refund / Damage Claim",
-      reference: "Invoice #91024",
-      confidence: "99.2%",
-      priority: "STANDARD",
-      entities: [
-        { label: "Claim ID", value: "INV-91024" },
-        { label: "Amount", value: "$84.50 USD" },
-        { label: "Warranty Window", value: "Within 30 Days (Day 4)" },
+    aiAnalysis: {
+      intent: "Refund Validation & Policy Compliance Check",
+      confidence: "99.7%",
+      model: "SPARTAN RiskGuard v2",
+      latency: "13.5 ms",
+      structuredJson: {
+        orderId: "ORD-77192",
+        originalChargeId: "ch_3N99120488ST",
+        chargeAmount: "$142.50 USD",
+        customerDisputeHistory: "0 prior disputes (Trust Score: 98/100)",
+        warrantyWindowValid: true,
+        policyCompliance: "PASSED: Within 30-day return policy",
+      },
+      extractedEntities: [
+        { label: "Order ID", value: "ORD-77192" },
+        { label: "Refund Amount", value: "$142.50 USD" },
+        { label: "Customer Trust", value: "98/100 (0 prior disputes)" },
+        { label: "Policy Check", value: "PASSED (Valid 30d window)" },
       ],
     },
-    systemCheck: {
-      systemName: "Stripe Gateway & Oracle NetSuite",
-      status: "Eligible for Refund • Policy Auto-Validated",
-      statusBadge: "POLICY COMPLIANT",
-      statusColor: "text-emerald-400 border-emerald-500/30 bg-emerald-500/10",
-      verifiedRecords: [
-        { label: "Original Charge", value: "$84.50 on Visa ****4129" },
-        { label: "Delivery Date", value: "3 days ago (Valid claim window)" },
-        { label: "Account Standing", value: "Good standing • 0 prior disputes" },
+    humanGate: {
+      supervisorRole: "Support Team Lead",
+      supervisorId: "CS Lead #29",
+      policyRule: "Strict zero unauthorized financial commits without human verification",
+      riskLevel: "MEDIUM",
+      defaultParams: {
+        action: "Execute Stripe Refund & Customer Apology Notice",
+        targetSystem: "Stripe API & Zendesk Support",
+        recipient: "elena.r@meridian-retail.com",
+        notes: "Packaging damage verified with delivery photo. Full credit of $142.50 to original payment method.",
+        financialCommit: "$142.50 USD",
+      },
+    },
+    execution: {
+      title: "Stripe Refund Processed & Customer Credited",
+      summary: "Stripe payment gateway issued $142.50 refund to Visa ending in 8192. Zendesk ticket resolved with receipt.",
+      metrics: { label: "Dispute Turnaround", manual: "2.5 days", automated: "16 seconds" },
+      dispatchedSystems: [
+        { name: "Stripe Gateway", action: "Refund #re_3N991204 committed to Visa ****8192", status: "COMMITTED", badgeColor: "text-emerald-400 border-emerald-500/30 bg-emerald-500/10" },
+        { name: "Zendesk Support", action: "Ticket marked 'Resolved • Refund Issued'", status: "SYNCED", badgeColor: "text-blue-400 border-blue-500/30 bg-blue-500/10" },
+        { name: "Customer Notification", action: "Receipt PDF & apology email delivered", status: "DISPATCHED", badgeColor: "text-cyan-400 border-cyan-500/30 bg-cyan-500/10" },
       ],
-    },
-    aiDraft: {
-      actionType: "Payment Gateway Refund Payload & Customer Reply",
-      targetSystem: "Stripe API & NetSuite Financials",
-      content:
-        "Hello Meridian Accounts,\n\nWe sincerely apologize for the damaged package. A refund of $84.50 has been approved and issued back to your original payment method (Visa ending in 4129).\n\nTransaction Receipt: REF-91024-ST\nFunds will reflect within 2-3 business days.",
-    },
-    humanStep: {
-      role: "Finance Operations Manager",
-      supervisor: "Financial Controller #88",
-      actionPrompt: "Authorize payment gateway transaction of $84.50 (Zero financial commits without human consent)",
-      primaryAction: "Authorize $84.50 Refund",
-      secondaryAction: "Adjust Amount",
-    },
-    executionResult: {
-      title: "Financial Transaction Executed & Ledger Balanced",
-      summary: "Stripe gateway processed $84.50 refund. Credit memo generated in NetSuite and confirmation sent.",
-      metrics: { label: "Processing Cycle", before: "3 business days", after: "18 seconds" },
-      dispatchedActions: [
-        "Stripe Gateway initiated $84.50 refund to Visa ****4129",
-        "NetSuite general ledger credit memo posted",
-        "Customer confirmation email dispatched with receipt PDF",
-      ],
-    },
-  },
-  {
-    id: "cancellation",
-    name: "Fulfillment Line Halt",
-    tag: "Warehouse Ops",
-    icon: XCircle,
-    email: {
-      from: "alicia.v@studio-nordic.com",
-      subject: "CANCEL Order #67120 immediately",
-      body: "Accidentally placed Order #67120 with incorrect shipping address 10 minutes ago. Please stop fulfillment and cancel before pickup.",
-      source: "Urgent Webhook / Live Chat",
-    },
-    aiExtraction: {
-      intent: "Immediate Order Cancellation",
-      reference: "Order #67120",
-      confidence: "99.8%",
-      priority: "CRITICAL",
-      entities: [
-        { label: "Order Ref", value: "#67120" },
-        { label: "Elapsed Time", value: "10 mins post-checkout" },
-        { label: "Warehouse Bay", value: "Bay 12 (Queue #34)" },
-      ],
-    },
-    systemCheck: {
-      systemName: "Warehouse Management System (WMS)",
-      status: "Fulfillment Halt Eligible • Unpicked in Bay 12",
-      statusBadge: "LINE HALT SAFE",
-      statusColor: "text-cyan-400 border-cyan-500/30 bg-cyan-500/10",
-      verifiedRecords: [
-        { label: "Picking Status", value: "Queue Position #34 (Not Picked)" },
-        { label: "Payment Hold", value: "Authorized, Not Captured" },
-        { label: "Carrier Manifest", value: "Manifest not yet generated" },
-      ],
-    },
-    aiDraft: {
-      actionType: "WMS Bay Lock & Void Authorization",
-      targetSystem: "Manhattan WMS & ERP Inventory Engine",
-      content:
-        "Action Payload for WMS:\n- Command: CANCEL_PICKING_TASK_67120\n- Bay: 12, Bin: 4B-99\n- Void Pre-Auth: Stripe #AUTH_67120\n\nClient Notice: 'Order #67120 was successfully intercepted and cancelled. Your card pre-authorization has been released.'",
-    },
-    humanStep: {
-      role: "Warehouse Operations Supervisor",
-      supervisor: "Floor Supervisor Bay 12",
-      actionPrompt: "Authorize WMS line stoppage and inventory lock release",
-      primaryAction: "Authorize Line Stoppage",
-      secondaryAction: "Hold Order",
-    },
-    executionResult: {
-      title: "Fulfillment Line Halted & Inventory Restocked",
-      summary: "Picking task cancelled in WMS before item packaging. Pre-authorization released and confirmation sent.",
-      metrics: { label: "Interception Speed", before: "Missed cutoff (Returned later)", after: "Instant (0 wasted shipping)" },
-      dispatchedActions: [
-        "WMS picking task cancelled in Bay 12",
-        "Inventory reserved allocation released to available stock",
-        "Payment authorization voided with zero fee penalty",
-      ],
-    },
-  },
-  {
-    id: "sales",
-    name: "Enterprise Inbound Quote",
-    tag: "Revenue Ops",
-    icon: MessageSquare,
-    email: {
-      from: "marcus.t@supplyhub.io",
-      subject: "Inquiry: High-Volume Dedicated Rate Card (500+ shipments/mo)",
-      body: "We are scaling logistics operations and need pricing for 500+ monthly automated manifests across North America. Do you have dedicated tier pricing?",
-      source: "Contact Sales Form",
-    },
-    aiExtraction: {
-      intent: "High-Volume Contract Inquiry",
-      reference: "SupplyHub Logistics",
-      confidence: "99.4%",
-      priority: "HIGH",
-      entities: [
-        { label: "Prospect", value: "SupplyHub International" },
-        { label: "Anticipated Volume", value: "500+ manifests/mo" },
-        { label: "Matched Tier", value: "Enterprise Volume Tier 2" },
-      ],
-    },
-    systemCheck: {
-      systemName: "HubSpot CRM & ZoomInfo Intelligence",
-      status: "Qualified Tier-1 Account • Regional Rep Assigned",
-      statusBadge: "HIGH VALUE LEAD",
-      statusColor: "text-purple-400 border-purple-500/30 bg-purple-500/10",
-      verifiedRecords: [
-        { label: "Account Size", value: "150 Employees • Series B" },
-        { label: "Assigned Executive", value: "Rachel Vance (Enterprise AE)" },
-        { label: "Rate Card", value: "Enterprise Tier 2 ($1.85 / manifest)" },
-      ],
-    },
-    aiDraft: {
-      actionType: "Personalized Executive Dossier & Proposal Reply",
-      targetSystem: "HubSpot Sales Suite & Outreach",
-      content:
-        "Hi Marcus,\n\nThank you for reaching out. Based on your projection of 500+ monthly manifests, you qualify for our Enterprise Tier 2 volume rate ($1.85 / manifest with dedicated API concurrency).\n\nI have prepared a custom pricing overview and would be glad to walk through the architecture this week:\ncalendar.spartan-automation.com/rachel-vance",
-    },
-    humanStep: {
-      role: "Account Executive Review",
-      supervisor: "Rachel Vance (Account Executive)",
-      actionPrompt: "Review company briefing dossier and approve personalized rate card dispatch",
-      primaryAction: "Approve & Send Proposal",
-      secondaryAction: "Modify Proposal",
-    },
-    executionResult: {
-      title: "HubSpot Deal Created & Proposal Dispatched",
-      summary: "Enterprise opportunity created in CRM with Tier 2 quote. Proposal email sent with scheduling link.",
-      metrics: { label: "Lead Response Time", before: "4 hours average", after: "30 seconds" },
-      dispatchedActions: [
-        "HubSpot CRM deal created ($18,500 ACV projection)",
-        "Personalized proposal delivered to Marcus with calendar link",
-        "Executive Slack alert triggered for Account Executive team",
+      auditLog: [
+        "02:17:15.010 - Inbound refund request received for order ORD-77192",
+        "02:17:15.023 - Stripe transaction validated; customer trust rating 98/100",
+        "02:17:15.030 - Support Lead approved $142.50 gateway transaction",
+        "02:17:15.048 - Stripe refund processed and confirmation sent to customer",
       ],
     },
   },
 ];
 
-const PIPELINE_STAGES = [
-  { id: 0, number: "01", name: "Inbound Trigger", shortName: "Trigger", icon: Mail, tag: "Ingestion" },
-  { id: 1, number: "02", name: "AI Understanding", shortName: "AI Reason", icon: Bot, tag: "Analysis" },
-  { id: 2, number: "03", name: "System Validation", shortName: "Sys Check", icon: Database, tag: "ERP / CRM" },
-  { id: 3, number: "04", name: "Human Review Gate", shortName: "Human Gate", icon: ShieldCheck, tag: "Supervisor" },
-  { id: 4, number: "05", name: "Safe Execution", shortName: "Execution", icon: CheckCircle2, tag: "Sync & Send" },
+const STAGES = [
+  { id: 0, number: "01", name: "Trigger Ingestion", short: "Trigger", icon: Mail, tag: "Live Event" },
+  { id: 1, number: "02", name: "AI Classification", short: "AI Parsing", icon: Bot, tag: "DeepReason" },
+  { id: 2, number: "03", name: "Human-in-the-Loop", short: "Gatekeeper", icon: ShieldCheck, tag: "Operator Approval" },
+  { id: 3, number: "04", name: "Execution Telemetry", short: "Telemetry", icon: CheckCircle2, tag: "CRM / ERP Sync" },
 ];
 
 export function AutomationDemo() {
+  const { toast } = useToast();
   const [activeScenarioIdx, setActiveScenarioIdx] = useState(0);
   const [activeStage, setActiveStage] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(false);
-  const [isExecuting, setIsExecuting] = useState(false);
-
-  // Editable customer input per scenario
-  const [customMessages, setCustomMessages] = useState<Record<string, string>>(() => {
-    const init: Record<string, string> = {};
-    SCENARIOS.forEach((s) => {
-      init[s.id] = s.email.body;
-    });
-    return init;
-  });
-
-  // Editable AI prepared draft action per scenario
-  const [customActionDrafts, setCustomActionDrafts] = useState<Record<string, string>>({});
-  const [draftError, setDraftError] = useState<string | null>(null);
-  const draftTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [viewMode, setViewMode] = useState<"raw" | "json">("json");
+  const [isEditingParams, setIsEditingParams] = useState(false);
+  const [customParams, setCustomParams] = useState<Record<string, { notes: string; recipient: string; action: string }>>({});
+  const [liveLatency, setLiveLatency] = useState(14.2);
 
   const scenario = SCENARIOS[activeScenarioIdx];
-  const currentMessage = customMessages[scenario.id] ?? scenario.email.body;
-  const currentDraft = customActionDrafts[scenario.id] ?? scenario.aiDraft.content;
+  const currentParam = customParams[scenario.id] || {
+    notes: scenario.humanGate.defaultParams.notes,
+    recipient: scenario.humanGate.defaultParams.recipient,
+    action: scenario.humanGate.defaultParams.action,
+  };
 
-  // Auto-run simulation step progression
+  // Subtle live latency telemetry jitter for realistic enterprise monitoring
   useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (isAutoPlaying) {
-      if (activeStage === 3) {
-        // Pauses automatically at Stage 4 (Human Review Gate) to emphasize human oversight
-        setIsAutoPlaying(false);
-      } else if (activeStage < 4) {
-        timer = setTimeout(() => {
-          setActiveStage((prev) => prev + 1);
-        }, 1800);
-      }
-    }
-    return () => clearTimeout(timer);
-  }, [isAutoPlaying, activeStage]);
+    const interval = setInterval(() => {
+      setLiveLatency((prev) => {
+        const delta = (Math.random() - 0.5) * 1.2;
+        return Number(Math.max(10.2, Math.min(18.9, prev + delta)).toFixed(1));
+      });
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
 
-  const handleScenarioChange = (idx: number) => {
-    setIsAutoPlaying(false);
+  // Auto-play simulation control (automatically pauses at Human Gatekeeper to emphasize oversight)
+  useEffect(() => {
+    if (!isPlaying) return;
+
+    if (activeStage === 2) {
+      // Stage 3 (index 2: Human Gatekeeper) requires explicit human choice
+      const timeout = setTimeout(() => {
+        setIsPlaying(false);
+        toast.info("Human Gatekeeper Reached", "Awaiting human operator authorization");
+      }, 300);
+      return () => clearTimeout(timeout);
+    }
+
+    if (activeStage < 3) {
+      const timer = setTimeout(() => {
+        setActiveStage((prev) => prev + 1);
+      }, 2200);
+      return () => clearTimeout(timer);
+    } else {
+      const timeout = setTimeout(() => {
+        setIsPlaying(false);
+      }, 500);
+      return () => clearTimeout(timeout);
+    }
+  }, [isPlaying, activeStage, toast]);
+
+  const handleScenarioSwitch = (idx: number) => {
+    setIsPlaying(false);
     setActiveScenarioIdx(idx);
     setActiveStage(0);
-    setDraftError(null);
+    setIsEditingParams(false);
+    toast.info(`Switched to: ${SCENARIOS[idx].name}`, SCENARIOS[idx].category);
   };
 
-  const handleRunSimulation = () => {
-    setActiveStage(0);
-    setIsAutoPlaying(true);
+  const handleApprove = () => {
+    toast.success(
+      "Action Authorized",
+      `Dispatched to ${scenario.humanGate.defaultParams.targetSystem}`
+    );
+    setActiveStage(3);
+    setIsEditingParams(false);
   };
 
-  const handleReset = () => {
-    setIsAutoPlaying(false);
-    setActiveStage(0);
-    setDraftError(null);
+  const handleReject = () => {
+    toast.warning(
+      "Action Rejected",
+      "Task routed to Senior Supervisor queue for manual review"
+    );
+    setIsEditingParams(false);
   };
 
-  const handleApproveAndExecute = () => {
-    if (!currentDraft.trim()) {
-      setDraftError("Please provide an action draft before authorizing execution.");
-      draftTextareaRef.current?.focus();
-      return;
-    }
-    setDraftError(null);
-    setIsExecuting(true);
-    setTimeout(() => {
-      setIsExecuting(false);
-      setActiveStage(4);
-    }, 600);
-  };
-
-  const handleDraftChange = (text: string) => {
-    setCustomActionDrafts((prev) => ({
-      ...prev,
-      [scenario.id]: text,
-    }));
-    if (text.trim().length > 0) {
-      setDraftError(null);
-    }
-  };
-
-  const handleResetDraft = () => {
-    setCustomActionDrafts((prev) => {
-      const copy = { ...prev };
-      delete copy[scenario.id];
-      return copy;
-    });
+  const handleSaveParams = () => {
+    setIsEditingParams(false);
+    toast.info("Parameters Updated", "Customized action payload ready for authorization");
   };
 
   return (
-    <section id="workflow-demo" className="py-24 relative overflow-hidden bg-brand-950/20 border-y border-white/5">
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-brand-500/10 blur-[140px] rounded-full pointer-events-none" />
+    <section id="workflow-demo" className="py-24 relative overflow-hidden bg-[#02050a] border-t border-white/5">
+      {/* Subtle background gradient glow */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-brand-500/5 blur-[120px] rounded-full pointer-events-none" />
 
-      <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-6xl">
-        
+      <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-7xl">
         {/* Section Header */}
-        <div className="max-w-4xl mx-auto text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-brand-500/30 text-brand-300 text-xs font-semibold uppercase tracking-wider mb-4">
-            <Cpu className="w-3.5 h-3.5 text-brand-400" />
-            Interactive Automation Engine
-          </div>
+        <div className="max-w-3xl mx-auto text-center mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-brand-500/30 text-brand-300 text-xs font-semibold uppercase tracking-wider mb-4"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-brand-400" /> Interactive Workflow Engine
+          </motion.div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4 text-white uppercase">
-            HOW WORKFLOW AUTOMATION <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-cyan-300 to-blue-200">ACTUALLY WORKS.</span>
-          </h2>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-6 uppercase"
+          >
+            SEE REAL-TIME AI WITH <br className="hidden sm:inline" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-cyan-300 to-blue-200">
+              HUMAN GATEKEEPER GOVERNANCE
+            </span>
+          </motion.h2>
 
-          <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Select a live enterprise scenario to watch AI parse, query systems, and draft work — with execution strictly gated behind human authorization.
-          </p>
-
-          {/* Scenario Tabs */}
-          <div className="flex flex-wrap items-center justify-center gap-2 md:gap-3 p-1.5 rounded-2xl glass-card border border-white/10 max-w-3xl mx-auto mt-8">
-            {SCENARIOS.map((s, idx) => {
-              const isActive = activeScenarioIdx === idx;
-              const Icon = s.icon;
-              return (
-                <button
-                  key={s.id}
-                  onClick={() => handleScenarioChange(idx)}
-                  className={cn(
-                    "flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer",
-                    isActive
-                      ? "bg-brand-600 text-white shadow-[0_0_18px_rgba(37,99,235,0.45)] border border-brand-400/40"
-                      : "text-muted-foreground hover:text-white hover:bg-white/5 border border-transparent"
-                  )}
-                >
-                  <Icon className="w-3.5 h-3.5 shrink-0" />
-                  <span>{s.name}</span>
-                  <span className={cn(
-                    "text-[10px] font-mono px-1.5 py-0.2 rounded uppercase",
-                    isActive ? "bg-white/20 text-white" : "bg-white/5 text-muted-foreground"
-                  )}>
-                    {s.tag}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-base md:text-lg text-muted-foreground leading-relaxed"
+          >
+            Select an enterprise scenario below and step through the 4-stage pipeline. Every critical action requires explicit operator authorization.
+          </motion.p>
         </div>
 
-        {/* Dynamic Interactive Pipeline Tracker (Horizontal Flow) */}
-        <div className="glass-card rounded-2xl border border-white/10 p-3 md:p-4 mb-6 shadow-xl">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
-            {PIPELINE_STAGES.map((stage) => {
-              const isActive = activeStage === stage.id;
-              const isPassed = activeStage > stage.id;
-              const Icon = stage.icon;
-
-              return (
-                <button
-                  key={stage.id}
-                  onClick={() => {
-                    setIsAutoPlaying(false);
-                    setActiveStage(stage.id);
-                  }}
-                  className={cn(
-                    "relative flex items-center gap-2.5 p-3 rounded-xl text-left transition-all duration-200 cursor-pointer overflow-hidden border",
-                    isActive
-                      ? "bg-brand-500/15 border-brand-400/60 shadow-[0_0_15px_rgba(59,130,246,0.25)] text-white"
-                      : isPassed
-                      ? "bg-emerald-950/10 border-emerald-500/30 text-slate-300 hover:bg-white/5"
-                      : "bg-black/20 border-white/5 text-muted-foreground hover:text-slate-200 hover:bg-white/5"
-                  )}
-                >
-                  {/* Active highlight top sheen */}
-                  {isActive && (
-                    <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-brand-400 to-transparent" />
-                  )}
-
+        {/* Scenario Selector Tabs */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-8 max-w-5xl mx-auto">
+          {SCENARIOS.map((s, idx) => {
+            const Icon = s.icon;
+            const isActive = activeScenarioIdx === idx;
+            return (
+              <button
+                key={s.id}
+                onClick={() => handleScenarioSwitch(idx)}
+                className={`p-3.5 md:p-4 rounded-2xl border text-left transition-all duration-300 relative group overflow-hidden ${
+                  isActive
+                    ? "bg-brand-950/40 border-brand-500/50 shadow-[0_0_25px_rgba(59,130,246,0.2)]"
+                    : "bg-white/[0.02] border-white/10 hover:border-white/20 hover:bg-white/[0.04]"
+                }`}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] font-mono font-semibold tracking-wider text-muted-foreground uppercase">
+                    {s.code}
+                  </span>
                   <div
-                    className={cn(
-                      "w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-xs font-mono font-bold transition-colors",
+                    className={`w-7 h-7 rounded-lg flex items-center justify-center border ${
                       isActive
-                        ? "bg-brand-500 text-white shadow-[0_0_10px_rgba(59,130,246,0.6)]"
-                        : isPassed
-                        ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
-                        : "bg-white/5 text-white/40 border border-white/5"
-                    )}
+                        ? "bg-brand-500/20 border-brand-500/40 text-brand-300"
+                        : "bg-white/5 border-white/10 text-muted-foreground group-hover:text-white"
+                    }`}
                   >
-                    {isPassed ? <CheckCircle2 className="w-4 h-4" /> : <Icon className="w-4 h-4" />}
+                    <Icon className="w-3.5 h-3.5" />
                   </div>
+                </div>
+                <div className="text-sm font-bold text-white tracking-tight truncate mb-0.5">
+                  {s.name}
+                </div>
+                <div className="text-xs text-muted-foreground truncate">
+                  {s.category}
+                </div>
+                {isActive && (
+                  <motion.div
+                    layoutId="activeScenarioIndicator"
+                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-brand-400 via-cyan-400 to-blue-500"
+                  />
+                )}
+              </button>
+            );
+          })}
+        </div>
 
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-[10px] font-mono text-muted-foreground">{stage.number}</span>
-                      {stage.id === 3 && (
-                        <span className="text-[9px] font-mono px-1 py-0 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 uppercase">
-                          Gate
-                        </span>
-                      )}
-                    </div>
-                    <div className="text-xs font-semibold truncate">
-                      {stage.name}
-                    </div>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Pipeline Control Strip */}
-          <div className="mt-3 pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-3 px-1">
-            <div className="flex items-center gap-3 text-xs text-muted-foreground">
-              <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="font-mono text-white/90">Autonomous Protocol: Active</span>
-              </span>
-              <span className="hidden sm:inline text-white/20">•</span>
-              <span className="hidden sm:inline">Scenario: <strong className="text-white font-medium">{scenario.name}</strong></span>
+        {/* Interactive Simulation Console Container */}
+        <div className="glass-card rounded-3xl border border-white/10 overflow-hidden shadow-2xl bg-[#060a12]/90 backdrop-blur-2xl">
+          {/* Console Header Bar */}
+          <div className="flex flex-wrap items-center justify-between gap-4 px-6 py-4 border-b border-white/10 bg-white/[0.02]">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1.5">
+                <span className="w-3 h-3 rounded-full bg-rose-500/70 inline-block" />
+                <span className="w-3 h-3 rounded-full bg-amber-500/70 inline-block" />
+                <span className="w-3 h-3 rounded-full bg-emerald-500/70 inline-block" />
+              </div>
+              <div className="h-4 w-[1px] bg-white/10 mx-1" />
+              <div className="flex items-center gap-2">
+                <Activity className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
+                <span className="text-xs font-mono text-slate-300">
+                  LATENCY: <strong className="text-emerald-400 font-semibold">{liveLatency}ms</strong>
+                </span>
+              </div>
+              <div className="hidden sm:flex items-center gap-2 text-xs font-mono text-muted-foreground">
+                <span>•</span>
+                <span>PKT: {scenario.trigger.payloadSize}</span>
+                <span>•</span>
+                <span>{scenario.trigger.protocol}</span>
+              </div>
             </div>
 
+            {/* Playback Controls */}
             <div className="flex items-center gap-2">
               <button
-                type="button"
-                onClick={handleRunSimulation}
-                disabled={isAutoPlaying}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-600/20 hover:bg-brand-600/30 text-brand-300 border border-brand-500/30 text-xs font-semibold transition-all cursor-pointer hover:text-white disabled:opacity-50"
+                onClick={() => setIsPlaying(!isPlaying)}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all ${
+                  isPlaying
+                    ? "bg-amber-500/20 text-amber-300 border border-amber-500/40"
+                    : "bg-brand-500/20 text-brand-300 border border-brand-500/40 hover:bg-brand-500/30"
+                }`}
               >
-                <Play className="w-3 h-3 text-brand-400" />
-                {isAutoPlaying ? "Simulating..." : "Auto-Run Pipeline"}
+                {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+                <span>{isPlaying ? "Pause" : "Auto-Run"}</span>
               </button>
+
               <button
-                type="button"
-                onClick={handleReset}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-muted-foreground hover:text-white border border-white/10 text-xs font-medium transition-all cursor-pointer"
+                onClick={() => {
+                  setActiveStage(0);
+                  setIsPlaying(false);
+                  setIsEditingParams(false);
+                }}
+                className="p-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-muted-foreground hover:text-white transition-colors"
+                title="Reset simulation"
               >
-                <RotateCcw className="w-3 h-3" />
-                Reset
+                <RotateCcw className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+
+          {/* 4-Stage Progress Stepper Header */}
+          <div className="grid grid-cols-2 md:grid-cols-4 border-b border-white/10 bg-black/30">
+            {STAGES.map((st, idx) => {
+              const StageIcon = st.icon;
+              const isCurrent = activeStage === idx;
+              const isCompleted = activeStage > idx;
+              return (
+                <button
+                  key={st.id}
+                  onClick={() => {
+                    setActiveStage(idx);
+                    setIsPlaying(false);
+                  }}
+                  className={`p-4 text-left border-r border-white/5 last:border-r-0 transition-all relative ${
+                    isCurrent
+                      ? "bg-white/[0.04]"
+                      : isCompleted
+                      ? "opacity-80 hover:opacity-100"
+                      : "opacity-40 hover:opacity-70"
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-[10px] font-mono font-bold text-muted-foreground">
+                      STAGE {st.number}
+                    </span>
+                    {isCompleted ? (
+                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                    ) : isCurrent ? (
+                      <span className="w-2 h-2 rounded-full bg-brand-400 shadow-[0_0_8px_rgba(96,165,250,1)] animate-ping" />
+                    ) : (
+                      <Clock className="w-3.5 h-3.5 text-muted-foreground" />
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <StageIcon className={`w-4 h-4 ${isCurrent ? "text-brand-400" : "text-muted-foreground"}`} />
+                    <span className="text-xs md:text-sm font-semibold text-white truncate">
+                      {st.name}
+                    </span>
+                  </div>
+                  {isCurrent && (
+                    <motion.div
+                      layoutId="activeStageBar"
+                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-brand-400 shadow-[0_0_10px_rgba(96,165,250,0.8)]"
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Main Stage Display Canvas */}
+          <div className="p-6 md:p-8 min-h-[460px] flex flex-col justify-between">
+            <AnimatePresence mode="wait">
+              {/* STAGE 1: TRIGGER INGESTION */}
+              {activeStage === 0 && (
+                <motion.div
+                  key="stage-0"
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  className="space-y-6"
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-white/5">
+                    <div>
+                      <div className="text-xs font-mono uppercase tracking-wider text-brand-400 mb-1">
+                        Stage 01 • Inbound Event Ingestion
+                      </div>
+                      <h3 className="text-xl md:text-2xl font-bold text-white">
+                        Webhook Trigger: {scenario.trigger.topic}
+                      </h3>
+                    </div>
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-medium">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                      LIVE STREAM ACTIVE
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-3 gap-4">
+                    <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5">
+                      <div className="text-[11px] text-muted-foreground uppercase font-mono">Ingestion Protocol</div>
+                      <div className="text-sm font-semibold text-white mt-1">{scenario.trigger.protocol}</div>
+                    </div>
+                    <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5">
+                      <div className="text-[11px] text-muted-foreground uppercase font-mono">Source Origin</div>
+                      <div className="text-sm font-semibold text-white mt-1">{scenario.trigger.source}</div>
+                    </div>
+                    <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5">
+                      <div className="text-[11px] text-muted-foreground uppercase font-mono">Telemetry Timestamp</div>
+                      <div className="text-sm font-semibold text-white mt-1 font-mono">{scenario.trigger.timestamp}</div>
+                    </div>
+                  </div>
+
+                  {/* Raw Inbound Payload Window */}
+                  <div>
+                    <div className="text-xs font-mono text-muted-foreground mb-2 flex items-center justify-between">
+                      <span>Inbound Event Payload ({scenario.trigger.payloadSize})</span>
+                      <span className="text-emerald-400 font-mono">200 OK • Verified Signature</span>
+                    </div>
+                    <pre className="p-4 rounded-2xl bg-black/60 border border-white/10 text-xs font-mono text-brand-200 overflow-x-auto leading-relaxed shadow-inner">
+                      {scenario.trigger.rawPayload}
+                    </pre>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* STAGE 2: AI PARSING & CLASSIFICATION */}
+              {activeStage === 1 && (
+                <motion.div
+                  key="stage-1"
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  className="space-y-6"
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-white/5">
+                    <div>
+                      <div className="text-xs font-mono uppercase tracking-wider text-cyan-400 mb-1">
+                        Stage 02 • AI Reasoning & Entity Extraction
+                      </div>
+                      <h3 className="text-xl md:text-2xl font-bold text-white">
+                        Classified Intent: {scenario.aiAnalysis.intent}
+                      </h3>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => setViewMode("json")}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all ${
+                          viewMode === "json"
+                            ? "bg-brand-500/20 text-brand-300 border border-brand-500/40"
+                            : "bg-white/5 text-muted-foreground hover:text-white"
+                        }`}
+                      >
+                        <Code2 className="w-3.5 h-3.5 inline mr-1" /> Structured JSON
+                      </button>
+                      <button
+                        onClick={() => setViewMode("raw")}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-mono font-semibold transition-all ${
+                          viewMode === "raw"
+                            ? "bg-brand-500/20 text-brand-300 border border-brand-500/40"
+                            : "bg-white/5 text-muted-foreground hover:text-white"
+                        }`}
+                      >
+                        Raw Payload
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Extraction Metrics */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/5">
+                      <div className="text-[10px] text-muted-foreground uppercase font-mono">Model Engine</div>
+                      <div className="text-xs sm:text-sm font-semibold text-white mt-1">{scenario.aiAnalysis.model}</div>
+                    </div>
+                    <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/5">
+                      <div className="text-[10px] text-muted-foreground uppercase font-mono">Confidence Score</div>
+                      <div className="text-xs sm:text-sm font-semibold text-emerald-400 mt-1">{scenario.aiAnalysis.confidence}</div>
+                    </div>
+                    <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/5">
+                      <div className="text-[10px] text-muted-foreground uppercase font-mono">Inference Latency</div>
+                      <div className="text-xs sm:text-sm font-semibold text-cyan-400 mt-1">{scenario.aiAnalysis.latency}</div>
+                    </div>
+                    <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/5">
+                      <div className="text-[10px] text-muted-foreground uppercase font-mono">Extraction Status</div>
+                      <div className="text-xs sm:text-sm font-semibold text-purple-400 mt-1">100% SCHEMA MATCH</div>
+                    </div>
+                  </div>
+
+                  {/* Extracted Entities Grid */}
+                  <div>
+                    <div className="text-xs font-mono text-muted-foreground mb-2">
+                      Extracted Business Entities
+                    </div>
+                    <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-3">
+                      {scenario.aiAnalysis.extractedEntities.map((ent) => (
+                        <div key={ent.label} className="p-3 rounded-xl bg-brand-950/20 border border-brand-500/20">
+                          <div className="text-[10px] text-muted-foreground font-mono uppercase">{ent.label}</div>
+                          <div className="text-xs font-semibold text-brand-200 mt-0.5 truncate">{ent.value}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Code View Toggle */}
+                  <div>
+                    <pre className="p-4 rounded-2xl bg-black/60 border border-white/10 text-xs font-mono text-cyan-200 overflow-x-auto leading-relaxed shadow-inner max-h-[160px]">
+                      {viewMode === "json"
+                        ? JSON.stringify(scenario.aiAnalysis.structuredJson, null, 2)
+                        : scenario.trigger.rawPayload}
+                    </pre>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* STAGE 3: HUMAN-IN-THE-LOOP GATEKEEPER */}
+              {activeStage === 2 && (
+                <motion.div
+                  key="stage-2"
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  className="space-y-6"
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-white/5">
+                    <div>
+                      <div className="text-xs font-mono uppercase tracking-wider text-amber-400 mb-1 flex items-center gap-1.5">
+                        <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
+                        Stage 03 • Human-in-the-Loop Gatekeeper
+                      </div>
+                      <h3 className="text-xl md:text-2xl font-bold text-white">
+                        Operator Authorization Checkpoint
+                      </h3>
+                    </div>
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono">
+                      <span>RISK LEVEL: {scenario.humanGate.riskLevel}</span>
+                      <span>•</span>
+                      <span>{scenario.humanGate.supervisorId}</span>
+                    </div>
+                  </div>
+
+                  {/* Policy Rule Notice */}
+                  <div className="p-4 rounded-2xl bg-amber-500/[0.04] border border-amber-500/20 flex items-start gap-3">
+                    <AlertCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                    <div>
+                      <div className="text-xs font-semibold text-white uppercase tracking-wider">
+                        Active Governance Policy
+                      </div>
+                      <div className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
+                        {scenario.humanGate.policyRule}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Action Parameters (Editable or Readonly) */}
+                  <div className="p-5 rounded-2xl bg-black/40 border border-white/10 space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="text-xs font-mono text-muted-foreground uppercase">
+                        AI Prepared Action Payload
+                      </div>
+                      <button
+                        onClick={() => setIsEditingParams(!isEditingParams)}
+                        className="inline-flex items-center gap-1.5 text-xs text-brand-400 hover:text-brand-300 transition-colors font-medium"
+                      >
+                        <Edit3 className="w-3 h-3" />
+                        <span>{isEditingParams ? "Cancel Edit" : "Edit Parameters"}</span>
+                      </button>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-[10px] font-mono text-muted-foreground uppercase">Target Systems</label>
+                        <div className="text-xs font-semibold text-white mt-1 p-2.5 rounded-xl bg-white/[0.02] border border-white/5">
+                          {scenario.humanGate.defaultParams.targetSystem}
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-[10px] font-mono text-muted-foreground uppercase">Recipient / Destination</label>
+                        {isEditingParams ? (
+                          <input
+                            type="text"
+                            value={currentParam.recipient}
+                            onChange={(e) =>
+                              setCustomParams((prev) => ({
+                                ...prev,
+                                [scenario.id]: { ...currentParam, recipient: e.target.value },
+                              }))
+                            }
+                            className="w-full mt-1 p-2 rounded-xl bg-black/60 border border-brand-500/40 text-xs text-white focus:outline-none"
+                          />
+                        ) : (
+                          <div className="text-xs font-semibold text-white mt-1 p-2.5 rounded-xl bg-white/[0.02] border border-white/5 truncate">
+                            {currentParam.recipient}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="text-[10px] font-mono text-muted-foreground uppercase">Action Dispatch Notes / Message</label>
+                      {isEditingParams ? (
+                        <textarea
+                          rows={3}
+                          value={currentParam.notes}
+                          onChange={(e) =>
+                            setCustomParams((prev) => ({
+                              ...prev,
+                              [scenario.id]: { ...currentParam, notes: e.target.value },
+                            }))
+                          }
+                          className="w-full mt-1 p-2.5 rounded-xl bg-black/60 border border-brand-500/40 text-xs text-white focus:outline-none font-sans"
+                        />
+                      ) : (
+                        <div className="text-xs text-slate-300 mt-1 p-3 rounded-xl bg-white/[0.02] border border-white/5 leading-relaxed font-mono">
+                          {currentParam.notes}
+                        </div>
+                      )}
+                    </div>
+
+                    {scenario.humanGate.defaultParams.financialCommit && (
+                      <div className="flex items-center justify-between p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs">
+                        <span className="font-semibold">Authorizing Financial Commitment:</span>
+                        <span className="font-mono font-bold text-sm">{scenario.humanGate.defaultParams.financialCommit}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Gatekeeper Decision Action Buttons */}
+                  <div className="flex flex-wrap items-center justify-end gap-3 pt-2">
+                    {isEditingParams && (
+                      <button
+                        onClick={handleSaveParams}
+                        className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold uppercase tracking-wider transition-all"
+                      >
+                        Save Adjusted Parameters
+                      </button>
+                    )}
+                    <button
+                      onClick={handleReject}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-400 hover:text-rose-300 text-xs font-semibold uppercase tracking-wider transition-all"
+                    >
+                      <XCircle className="w-4 h-4" /> Reject Action
+                    </button>
+                    <button
+                      onClick={handleApprove}
+                      className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black text-xs font-bold uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)]"
+                    >
+                      <CheckCircle2 className="w-4 h-4" /> Authorize & Dispatch
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* STAGE 4: EXECUTION TELEMETRY */}
+              {activeStage === 3 && (
+                <motion.div
+                  key="stage-3"
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  className="space-y-6"
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-white/5">
+                    <div>
+                      <div className="text-xs font-mono uppercase tracking-wider text-emerald-400 mb-1 flex items-center gap-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                        Stage 04 • Safe Execution Telemetry
+                      </div>
+                      <h3 className="text-xl md:text-2xl font-bold text-white">
+                        {scenario.execution.title}
+                      </h3>
+                    </div>
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-medium">
+                      <span>AUDIT HASH: 0x8F9B2...</span>
+                      <span>•</span>
+                      <span>ALL SYSTEMS SYNCED</span>
+                    </div>
+                  </div>
+
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {scenario.execution.summary}
+                  </p>
+
+                  {/* System Status Badges */}
+                  <div>
+                    <div className="text-xs font-mono text-muted-foreground mb-3">
+                      Dispatched System Updates & Status Badges
+                    </div>
+                    <div className="grid sm:grid-cols-3 gap-3">
+                      {scenario.execution.dispatchedSystems.map((sys) => (
+                        <div key={sys.name} className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 flex flex-col justify-between">
+                          <div>
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="text-xs font-bold text-white">{sys.name}</span>
+                              <span className={`text-[10px] font-mono px-2 py-0.5 rounded-md border font-semibold ${sys.badgeColor}`}>
+                                {sys.status}
+                              </span>
+                            </div>
+                            <p className="text-xs text-muted-foreground leading-relaxed">
+                              {sys.action}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Speed & ROI Delta Callout */}
+                  <div className="p-4 rounded-2xl bg-brand-950/30 border border-brand-500/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-brand-500/20 border border-brand-500/30 flex items-center justify-center text-brand-300">
+                        <Zap className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-semibold text-white uppercase tracking-wider">
+                          Operational Speed Gain
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          {scenario.execution.metrics.label}: Reduced from {scenario.execution.metrics.manual} down to{" "}
+                          <strong className="text-emerald-400 font-bold">{scenario.execution.metrics.automated}</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => {
+                        const contact = document.getElementById("contact");
+                        if (contact) contact.scrollIntoView({ behavior: "smooth" });
+                      }}
+                      className="px-4 py-2 rounded-xl bg-brand-500 hover:bg-brand-400 text-white text-xs font-bold uppercase tracking-wider transition-all shrink-0"
+                    >
+                      Automate Similar Workflow
+                    </button>
+                  </div>
+
+                  {/* Real-Time Immutable Audit Log */}
+                  <div>
+                    <div className="text-xs font-mono text-muted-foreground mb-2">
+                      Immutable Audit Trail
+                    </div>
+                    <div className="p-3.5 rounded-2xl bg-black/60 border border-white/10 space-y-1 text-xs font-mono text-slate-400">
+                      {scenario.execution.auditLog.map((log, i) => (
+                        <div key={i} className="flex items-center gap-2">
+                          <span className="text-brand-400">›</span>
+                          <span>{log}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Stepper Navigation Footer */}
+            <div className="flex items-center justify-between pt-6 mt-6 border-t border-white/10">
+              <button
+                disabled={activeStage === 0}
+                onClick={() => {
+                  setActiveStage((prev) => Math.max(0, prev - 1));
+                  setIsPlaying(false);
+                }}
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors ${
+                  activeStage === 0
+                    ? "opacity-30 cursor-not-allowed text-muted-foreground"
+                    : "text-muted-foreground hover:text-white bg-white/5 hover:bg-white/10 border border-white/5"
+                }`}
+              >
+                <ArrowLeft className="w-3.5 h-3.5" /> Previous Stage
+              </button>
+
+              <div className="text-xs font-mono text-muted-foreground">
+                Step {activeStage + 1} of {STAGES.length}
+              </div>
+
+              <button
+                disabled={activeStage === STAGES.length - 1}
+                onClick={() => {
+                  setActiveStage((prev) => Math.min(STAGES.length - 1, prev + 1));
+                  setIsPlaying(false);
+                }}
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors ${
+                  activeStage === STAGES.length - 1
+                    ? "opacity-30 cursor-not-allowed text-muted-foreground"
+                    : "text-white bg-brand-500/20 hover:bg-brand-500/30 border border-brand-500/40"
+                }`}
+              >
+                Next Stage <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
         </div>
-
-        {/* Main Interactive Stage Display Container */}
-        <div className="glass-card rounded-3xl border border-white/10 shadow-2xl overflow-hidden bg-[#060b17] min-h-[460px] flex flex-col justify-between p-5 md:p-8">
-          <AnimatePresence mode="wait">
-
-            {/* STAGE 01: Inbound Customer Input */}
-            {activeStage === 0 && (
-              <motion.div
-                key="stage-0"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                className="space-y-5"
-              >
-                <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
-                  <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 rounded bg-brand-500/20 text-brand-300 font-mono text-xs font-bold">
-                      STAGE 01
-                    </span>
-                    <h3 className="text-sm md:text-base font-bold text-white uppercase tracking-wide">
-                      Inbound Trigger Ingestion
-                    </h3>
-                  </div>
-                  <span className="text-[11px] font-mono text-muted-foreground flex items-center gap-1">
-                    <Layers className="w-3 h-3 text-brand-400" /> Source: {scenario.email.source}
-                  </span>
-                </div>
-
-                {/* Ingestion Payload Card */}
-                <div className="grid md:grid-cols-12 gap-5">
-                  <div className="md:col-span-8 glass p-5 rounded-2xl border border-white/10 bg-black/40 space-y-3">
-                    <div className="flex flex-wrap items-center justify-between text-xs text-muted-foreground pb-2.5 border-b border-white/10 gap-2">
-                      <div><strong className="text-white">Sender:</strong> {scenario.email.from}</div>
-                      <div><strong className="text-white">Subject:</strong> {scenario.email.subject}</div>
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <div className="flex items-center justify-between">
-                        <label className="text-xs font-semibold text-brand-300 flex items-center gap-1.5">
-                          <PenLine className="w-3 h-3 text-brand-400" />
-                          <span>Customer / Partner Message Payload (Editable):</span>
-                        </label>
-                        {customMessages[scenario.id] && customMessages[scenario.id] !== scenario.email.body && (
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setCustomMessages((prev) => ({ ...prev, [scenario.id]: scenario.email.body }));
-                            }}
-                            className="text-[10px] text-muted-foreground hover:text-brand-300 transition-colors"
-                          >
-                            Reset text
-                          </button>
-                        )}
-                      </div>
-                      <textarea
-                        rows={3}
-                        value={currentMessage}
-                        onChange={(e) => {
-                          const val = e.target.value;
-                          setCustomMessages((prev) => ({ ...prev, [scenario.id]: val }));
-                        }}
-                        className="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 resize-none font-sans leading-relaxed"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="md:col-span-4 glass p-5 rounded-2xl border border-white/10 bg-black/40 flex flex-col justify-between space-y-4">
-                    <div>
-                      <div className="text-xs font-bold text-white uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                        <Sparkles className="w-3.5 h-3.5 text-brand-400" /> Ingestion Telemetry
-                      </div>
-                      <div className="space-y-2 text-xs">
-                        <div className="flex justify-between py-1 border-b border-white/5">
-                          <span className="text-muted-foreground">Payload Protocol:</span>
-                          <span className="font-mono text-white">JSON / REST Webhook</span>
-                        </div>
-                        <div className="flex justify-between py-1 border-b border-white/5">
-                          <span className="text-muted-foreground">Encryption:</span>
-                          <span className="font-mono text-emerald-400">TLS 1.3 End-to-End</span>
-                        </div>
-                        <div className="flex justify-between py-1 border-b border-white/5">
-                          <span className="text-muted-foreground">Latency:</span>
-                          <span className="font-mono text-cyan-300">18 ms</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={() => setActiveStage(1)}
-                      className="w-full py-2.5 px-4 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md"
-                    >
-                      Next: AI Extraction <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-
-            {/* STAGE 02: AI Intent & Entity Extraction */}
-            {activeStage === 1 && (
-              <motion.div
-                key="stage-1"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                className="space-y-5"
-              >
-                <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
-                  <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-mono text-xs font-bold">
-                      STAGE 02
-                    </span>
-                    <h3 className="text-sm md:text-base font-bold text-white uppercase tracking-wide">
-                      AI Intent Parsing & Entity Extraction
-                    </h3>
-                  </div>
-                  <span className="text-[11px] font-mono text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">
-                    Confidence: {scenario.aiExtraction.confidence}
-                  </span>
-                </div>
-
-                <div className="grid md:grid-cols-3 gap-4">
-                  <div className="glass p-4 rounded-xl border border-cyan-500/20 bg-cyan-950/10 space-y-1.5">
-                    <span className="text-[10px] font-mono text-muted-foreground uppercase">Classified Intent</span>
-                    <div className="text-sm font-bold text-white flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-                      {scenario.aiExtraction.intent}
-                    </div>
-                  </div>
-
-                  <div className="glass p-4 rounded-xl border border-cyan-500/20 bg-cyan-950/10 space-y-1.5">
-                    <span className="text-[10px] font-mono text-muted-foreground uppercase">Primary Reference</span>
-                    <div className="text-sm font-bold font-mono text-cyan-300">
-                      {scenario.aiExtraction.reference}
-                    </div>
-                  </div>
-
-                  <div className="glass p-4 rounded-xl border border-cyan-500/20 bg-cyan-950/10 space-y-1.5">
-                    <span className="text-[10px] font-mono text-muted-foreground uppercase">Triage Priority</span>
-                    <div className="text-sm font-bold text-amber-300">
-                      {scenario.aiExtraction.priority} LEVEL
-                    </div>
-                  </div>
-                </div>
-
-                <div className="glass p-5 rounded-2xl border border-white/10 bg-black/40 space-y-3">
-                  <div className="text-xs font-semibold text-white uppercase tracking-wider flex items-center gap-2">
-                    <Bot className="w-4 h-4 text-cyan-400" /> Structured Extraction Attributes
-                  </div>
-                  <div className="grid sm:grid-cols-3 gap-3">
-                    {scenario.aiExtraction.entities.map((item, idx) => (
-                      <div key={idx} className="p-3 rounded-xl bg-white/5 border border-white/5">
-                        <div className="text-[10px] font-mono text-muted-foreground uppercase">{item.label}</div>
-                        <div className="text-xs font-semibold text-white mt-1 truncate">{item.value}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between pt-2">
-                  <button
-                    type="button"
-                    onClick={() => setActiveStage(0)}
-                    className="text-xs text-muted-foreground hover:text-white transition-colors"
-                  >
-                    ← Previous Step
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setActiveStage(2)}
-                    className="py-2.5 px-5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer shadow-md"
-                  >
-                    Next: Connected System Check <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </motion.div>
-            )}
-
-            {/* STAGE 03: System Validation & ERP Query */}
-            {activeStage === 2 && (
-              <motion.div
-                key="stage-2"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                className="space-y-5"
-              >
-                <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
-                  <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 font-mono text-xs font-bold">
-                      STAGE 03
-                    </span>
-                    <h3 className="text-sm md:text-base font-bold text-white uppercase tracking-wide">
-                      Connected Enterprise Verification
-                    </h3>
-                  </div>
-                  <span className={cn("text-[10px] font-mono px-2.5 py-0.5 rounded border uppercase", scenario.systemCheck.statusColor)}>
-                    {scenario.systemCheck.statusBadge}
-                  </span>
-                </div>
-
-                <div className="glass p-5 rounded-2xl border border-blue-500/30 bg-blue-950/15 space-y-4">
-                  <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
-                    <div>
-                      <div className="text-[11px] font-mono text-muted-foreground uppercase">Target Infrastructure</div>
-                      <div className="text-sm font-bold text-white mt-0.5 flex items-center gap-2">
-                        <Database className="w-4 h-4 text-brand-400" />
-                        {scenario.systemCheck.systemName}
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-[11px] font-mono text-muted-foreground uppercase">Live Record Status</div>
-                      <div className="text-xs font-semibold text-emerald-400 mt-0.5">
-                        {scenario.systemCheck.status}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="grid sm:grid-cols-3 gap-3">
-                    {scenario.systemCheck.verifiedRecords.map((rec, i) => (
-                      <div key={i} className="p-3.5 rounded-xl bg-black/40 border border-white/5">
-                        <div className="text-[10px] font-mono text-muted-foreground uppercase">{rec.label}</div>
-                        <div className="text-xs font-medium text-white/90 mt-1">{rec.value}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between pt-2">
-                  <button
-                    type="button"
-                    onClick={() => setActiveStage(1)}
-                    className="text-xs text-muted-foreground hover:text-white transition-colors"
-                  >
-                    ← Previous Step
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setActiveStage(3)}
-                    className="py-2.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer shadow-md shadow-emerald-600/20"
-                  >
-                    Proceed to Human Review Gate <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </motion.div>
-            )}
-
-            {/* STAGE 04: Human Review Gate (HITL - Gated Authorization) */}
-            {activeStage === 3 && (
-              <motion.div
-                key="stage-3"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                className="space-y-4"
-              >
-                {/* Header with safety gate warning */}
-                <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
-                  <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono text-xs font-bold border border-amber-500/30">
-                      STAGE 04 / 05
-                    </span>
-                    <h3 className="text-sm md:text-base font-bold text-white uppercase tracking-wide flex items-center gap-2">
-                      <ShieldCheck className="w-4 h-4 text-amber-400" />
-                      Supervised Human Review Gate
-                    </h3>
-                  </div>
-                  <span className="text-[10px] font-mono uppercase px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/40 flex items-center gap-1.5 animate-pulse">
-                    <Lock className="w-3 h-3" /> Awaiting Human Authorization
-                  </span>
-                </div>
-
-                {/* Safety Protocol Banner */}
-                <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-200 flex items-start gap-2.5 leading-relaxed">
-                  <Zap className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="text-amber-300 font-semibold">Strict Human-in-the-Loop Protocol: </strong>
-                    Autonomous execution is suspended. No live financial, CRM, or external communications will execute without explicit supervisor authorization.
-                  </div>
-                </div>
-
-                {/* Action Review Form Card */}
-                <div className="glass p-5 rounded-2xl border border-emerald-500/30 bg-black/40 space-y-3.5">
-                  <div className="flex flex-wrap items-center justify-between text-xs gap-2 pb-2.5 border-b border-white/10">
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-white uppercase">{scenario.humanStep.role}</span>
-                      <span className="text-[10px] font-mono text-muted-foreground">({scenario.humanStep.supervisor})</span>
-                    </div>
-                    <span className="text-[11px] text-muted-foreground">{scenario.humanStep.actionPrompt}</span>
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <div className="flex items-center justify-between text-xs">
-                      <label htmlFor="prepared-action-input" className="font-semibold text-brand-300 flex items-center gap-1.5">
-                        <PenLine className="w-3 h-3 text-brand-400" />
-                        <span>AI Prepared Action (User Editable Before Approval):</span>
-                      </label>
-                      <div className="flex items-center gap-2">
-                        {customActionDrafts[scenario.id] !== undefined && (
-                          <button
-                            type="button"
-                            onClick={handleResetDraft}
-                            className="text-[11px] text-amber-300 hover:text-amber-200 transition-colors cursor-pointer"
-                          >
-                            Reset to AI draft
-                          </button>
-                        )}
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                          Directly Editable
-                        </span>
-                      </div>
-                    </div>
-
-                    <textarea
-                      ref={draftTextareaRef}
-                      id="prepared-action-input"
-                      rows={4}
-                      value={currentDraft}
-                      onChange={(e) => handleDraftChange(e.target.value)}
-                      className={cn(
-                        "w-full p-3.5 rounded-xl bg-black/60 border text-xs md:text-sm text-white/95 leading-relaxed font-sans transition-all focus:outline-none resize-y min-h-[100px]",
-                        draftError
-                          ? "border-rose-500/70 focus:border-rose-500 bg-rose-950/15"
-                          : "border-white/15 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/40"
-                      )}
-                    />
-
-                    {draftError && (
-                      <p className="text-xs text-rose-400 flex items-center gap-1 font-medium pt-0.5">
-                        <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-                        {draftError}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Decision Actions */}
-                  <div className="pt-2 flex flex-col sm:flex-row gap-3">
-                    <button
-                      type="button"
-                      onClick={handleApproveAndExecute}
-                      disabled={isExecuting}
-                      className="flex-1 py-3.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs md:text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-150 hover:shadow-[0_0_25px_rgba(16,185,129,0.5)] cursor-pointer disabled:opacity-60"
-                    >
-                      {isExecuting ? (
-                        <>
-                          <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                          <span>Authorizing & Executing...</span>
-                        </>
-                      ) : (
-                        <>
-                          <CheckCircle2 className="w-4 h-4" />
-                          <span>{scenario.humanStep.primaryAction}</span>
-                        </>
-                      )}
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => draftTextareaRef.current?.focus()}
-                      className="py-3.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 text-muted-foreground hover:text-white border border-white/10 text-xs md:text-sm font-medium transition-all flex items-center justify-center gap-2 cursor-pointer"
-                    >
-                      <PenLine className="w-3.5 h-3.5 text-brand-400" />
-                      <span>{scenario.humanStep.secondaryAction}</span>
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-
-            {/* STAGE 05: Safe Execution Completed */}
-            {activeStage === 4 && (
-              <motion.div
-                key="stage-4"
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                className="space-y-6 text-center py-4"
-              >
-                <div className="w-14 h-14 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 mx-auto shadow-[0_0_28px_rgba(16,185,129,0.35)]">
-                  <CheckCircle2 className="w-7 h-7" />
-                </div>
-
-                <div className="max-w-xl mx-auto space-y-2">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-mono uppercase tracking-wider">
-                    <CheckCircle2 className="w-3.5 h-3.5" /> Authorized Execution Completed
-                  </div>
-                  <h3 className="text-xl md:text-2xl font-bold text-white">
-                    {scenario.executionResult.title}
-                  </h3>
-                  <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
-                    {scenario.executionResult.summary}
-                  </p>
-                </div>
-
-                {/* Performance Metric Tile */}
-                <div className="inline-flex items-center gap-4 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs font-mono mx-auto">
-                  <span className="text-muted-foreground">{scenario.executionResult.metrics.label}:</span>
-                  <span className="text-rose-300 line-through">{scenario.executionResult.metrics.before}</span>
-                  <span className="text-emerald-400 font-bold">{scenario.executionResult.metrics.after}</span>
-                </div>
-
-                {/* Dispatched Items Grid */}
-                <div className="grid sm:grid-cols-3 gap-3 max-w-2xl mx-auto text-left">
-                  {scenario.executionResult.dispatchedActions.map((action, i) => (
-                    <div key={i} className="p-3 rounded-xl bg-black/40 border border-emerald-500/20 flex items-start gap-2 text-xs text-white/90">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
-                      <span>{action}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="pt-2 flex items-center justify-center gap-4">
-                  <button
-                    type="button"
-                    onClick={handleReset}
-                    className="text-xs text-brand-300 hover:text-white underline underline-offset-4 cursor-pointer"
-                  >
-                    Run scenario again
-                  </button>
-                  <span className="text-white/20">•</span>
-                  <button
-                    type="button"
-                    onClick={() => handleScenarioChange((activeScenarioIdx + 1) % SCENARIOS.length)}
-                    className="text-xs text-brand-300 hover:text-white underline underline-offset-4 cursor-pointer font-semibold"
-                  >
-                    Try next scenario →
-                  </button>
-                </div>
-              </motion.div>
-            )}
-
-          </AnimatePresence>
-        </div>
-
       </div>
     </section>
   );
