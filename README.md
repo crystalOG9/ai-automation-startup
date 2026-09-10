@@ -72,9 +72,14 @@ The SPARTAN platform demonstrates these capabilities through interactive, high-p
 - **Digital Scanning Focus Reticle**: Hero interface features a dynamic HUD scanning reticle with corner brackets (`┌ ┐ └ ┘`) snapping to nearest UI elements on cursor proximity.
 - **Accessibility & Motion Guards**: Automatically disabled on touch/mobile devices via `@media (hover: hover) and (pointer: fine)` and strictly respects `prefers-reduced-motion`.
 
-### 4. Interactive Workflow Assessment (`AssessmentForm.tsx`)
-- Discovery tool allowing business operators to calculate potential hours saved, error reduction potential, and workflow automation readiness.
-- Integrated with **Supabase** for secure lead capture and **Resend** for automated confirmation emails.
+### 4. Interactive Workflow Assessment & Intake (`CTA.tsx`)
+- Interactive discovery and assessment form capturing:
+  - Full Name, Work Email, Company Name.
+  - Process Frequency and daily routine volume.
+  - Integrated Tools (SAP, Tally, Excel/Sheets, CRM, ERP, Gmail, Outlook, etc.).
+  - Freeform bottleneck description.
+- **Automated Dispatch**: Integrated with **Supabase** for secure lead capture and **Resend** for instant notifications routed directly to `sparten.tech26@gmail.com`.
+- **Post-Submission Meeting Scheduling**: After submitting, visitors are prompted with an interactive option to instantly schedule a 15-minute architecture discovery call with the engineering team.
 
 ---
 
@@ -98,25 +103,33 @@ The SPARTAN platform demonstrates these capabilities through interactive, high-p
 src/
 ├── app/
 │   ├── api/
-│   │   └── workflow/               # Backend endpoint for workflow simulation
+│   │   └── workflow/               # Backend endpoint for workflow lead submission & email dispatch
 │   ├── favicon.ico
 │   ├── globals.css                 # Design tokens, custom animations, Tailwind CSS v4 setup
 │   ├── layout.tsx                  # Root layout, metadata, PrecisionMouseSystem mounting
 │   └── page.tsx                    # Main landing page combining all section components
 │
 ├── components/
-│   ├── AssessmentForm.tsx          # Interactive workflow readiness assessment tool
 │   ├── AutomationDemo.tsx          # Multi-stage interactive workflow simulation
 │   ├── BackgroundVisuals.tsx       # Subtle ambient gradient backdrops
+│   ├── CTA.tsx                     # Workflow assessment intake form & post-submission meeting prompt
+│   ├── CoreMessage.tsx             # AI vs Human tasks division showcase
 │   ├── CustomerDiscovery.tsx       # Department-by-department automation discovery cards
-│   ├── Footer.tsx                  # Footer navigation, branding, and legal links
+│   ├── Footer.tsx                  # Footer navigation, contact info, and social links
 │   ├── Hero.tsx                    # Hero section with scanning focus reticle & CTA
 │   ├── HowItWorks.tsx              # 6-step engagement roadmap cards
+│   ├── HumanInTheLoop.tsx          # Architectural governance principles
+│   ├── Industries.tsx              # Target enterprise industry verticals
+│   ├── InstagramIcon.tsx           # Reusable SVG icon for Instagram branding
+│   ├── MainDifferentiator.tsx      # System replacement vs custom workflow automation
 │   ├── Navbar.tsx                  # Fixed glass navbar with sliding indicator
 │   ├── PrecisionCard.tsx           # Reusable 3D parallax container with specular edge
 │   ├── PrecisionMouseSystem.tsx    # Performant requestAnimationFrame pointer tracking
 │   ├── ProblemSection.tsx          # Side-by-side comparison: TODAY vs WITH AUTOMATION
+│   ├── ROI.tsx                     # Core operational standards & principles
 │   ├── Solutions.tsx               # Core automation capabilities and safety features
+│   ├── SpartanLogo.tsx             # Brand logo component
+│   ├── WhyUs.tsx                   # Enterprise credibility & engineering philosophy
 │   └── WorkflowNetwork.tsx         # Canvas architectural workflow data bus diagram
 │
 └── lib/
@@ -150,8 +163,10 @@ npm install
 Create a `.env.local` file in the project root:
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
 RESEND_API_KEY=your_resend_api_key
+NOTIFICATION_EMAIL=sparten.tech26@gmail.com
+NOTIFICATION_FROM_EMAIL=SPARTAN <onboarding@resend.dev>
 ```
 > ⚠️ **Security Notice**: Never commit `.env.local` or API keys to GitHub.
 
@@ -176,11 +191,13 @@ npm start
 
 ## Environment Variables Reference
 
-| Variable | Required | Description |
-|---|:---:|---|
-| `NEXT_PUBLIC_SUPABASE_URL` | Optional | Supabase project URL for storing assessment form submissions |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Optional | Supabase anonymous API key |
-| `RESEND_API_KEY` | Optional | Resend API key for sending confirmation emails |
+| Variable | Required | Default | Description |
+|---|:---:|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Optional | — | Supabase project URL for storing assessment form submissions |
+| `SUPABASE_SERVICE_ROLE_KEY` | Optional | — | Supabase service role key for backend lead insertion |
+| `RESEND_API_KEY` | Optional | — | Resend API key for sending confirmation emails |
+| `NOTIFICATION_EMAIL` | Optional | `sparten.tech26@gmail.com` | Destination email where new lead notifications are routed |
+| `NOTIFICATION_FROM_EMAIL` | Optional | `SPARTAN <onboarding@resend.dev>` | Verified sender address for outbound notifications |
 
 *(The website and interactive demos run completely client-side even if backend environment variables are omitted).*
 
@@ -190,7 +207,15 @@ npm start
 
 The application is deployed on **Vercel** with automated continuous integration:
 - Every push to the `main` branch triggers an automated build and edge deployment.
-- Live URL: [https://ai-automation-startup.vercel.app/](https://ai-automation-startup.vercel.app/)
+- **Live URL**: [https://ai-automation-startup.vercel.app/](https://ai-automation-startup.vercel.app/)
+
+---
+
+## Contact & Connect
+
+- **Official Email**: [sparten.tech26@gmail.com](mailto:sparten.tech26@gmail.com)
+- **Instagram**: [@sparten.tech](https://www.instagram.com/sparten.tech/)
+- **Website**: [https://ai-automation-startup.vercel.app/](https://ai-automation-startup.vercel.app/)
 
 ---
 
