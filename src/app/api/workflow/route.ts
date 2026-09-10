@@ -106,13 +106,14 @@ export async function POST(req: NextRequest) {
 
     // 3. Optional Resend Email Notification
     const resendApiKey = process.env.RESEND_API_KEY;
-    const notificationEmail = process.env.NOTIFICATION_EMAIL;
+    const notificationEmail =
+      process.env.NOTIFICATION_EMAIL || "sparten.tech26@gmail.com";
 
     if (resendApiKey && notificationEmail) {
       try {
         const resend = new Resend(resendApiKey);
         const fromEmail =
-          process.env.NOTIFICATION_FROM_EMAIL || "Flowzen <onboarding@resend.dev>";
+          process.env.NOTIFICATION_FROM_EMAIL || "SPARTAN <onboarding@resend.dev>";
 
         const toolsDisplay =
           cleanedTools.length > 0 ? cleanedTools.join(", ") : "None specified";
@@ -120,12 +121,12 @@ export async function POST(req: NextRequest) {
         await resend.emails.send({
           from: fromEmail,
           to: notificationEmail,
-          subject: `⚡ New Workflow Assessment Request: ${trimmedCompany}`,
+          subject: `⚡ [SPARTAN] New Workflow Assessment Request: ${trimmedCompany}`,
           html: `
             <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #111; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
               <div style="background-color: #0f172a; padding: 20px 24px; color: #ffffff;">
                 <h2 style="margin: 0; font-size: 20px;">New Workflow Assessment Request</h2>
-                <p style="margin: 4px 0 0 0; font-size: 13px; color: #94a3b8;">Flowzen Lead Capture</p>
+                <p style="margin: 4px 0 0 0; font-size: 13px; color: #94a3b8;">SPARTAN AI Automation Lead Capture</p>
               </div>
               <div style="padding: 24px;">
                 <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
