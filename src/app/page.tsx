@@ -11,7 +11,6 @@ import { HumanInTheLoop } from "@/components/HumanInTheLoop";
 import { ROI } from "@/components/ROI";
 import { WhyUs } from "@/components/WhyUs";
 import { CustomerDiscovery } from "@/components/CustomerDiscovery";
-import { ROICalculator } from "@/components/ROICalculator";
 import { CTA } from "@/components/CTA";
 import { Footer } from "@/components/Footer";
 
@@ -32,7 +31,6 @@ export default function Home() {
         <ROI />
         <WhyUs />
         <CustomerDiscovery />
-        <ROICalculator />
         <CTA />
       </main>
       <Footer />
