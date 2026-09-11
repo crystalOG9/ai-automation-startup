@@ -18,7 +18,7 @@ import { PrecisionMouseSystem } from "@/components/PrecisionMouseSystem";
 import { DynamicScrollProgress } from "@/components/DynamicScrollProgress";
 import { ScrollMinimap } from "@/components/ScrollMinimap";
 import { ScrollToTop } from "@/components/ScrollToTop";
-import { BrandIntro } from "@/components/BrandIntro";
+import { SpartanIntro } from "@/components/SpartanIntro";
 
 export default function RootLayout({
   children,
@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} antialiased scroll-smooth`}>
       <body className="min-h-full flex flex-col bg-background text-foreground overflow-x-hidden selection:bg-brand-500/30 selection:text-brand-50">
-        <BrandIntro />
+        <SpartanIntro />
         <DynamicScrollProgress />
         <BackgroundVisuals />
         <PrecisionMouseSystem />
