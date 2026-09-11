@@ -44,7 +44,7 @@ const PILLARS = [
 
 export function ROI() {
   return (
-    <section className="py-24 relative border-t border-white/5 bg-brand-950/15 overflow-hidden">
+    <section id="roi" className="py-24 relative border-t border-white/5 bg-brand-950/15 overflow-hidden">
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         
         <div className="max-w-4xl mx-auto text-center mb-16">
@@ -87,10 +87,14 @@ export function ROI() {
             return (
               <motion.div
                 key={pillar.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
+                initial={{ opacity: 0, y: 30, scale: 0.96 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{
+                  duration: 0.5,
+                  delay: idx * 0.1,
+                  ease: [0.21, 0.47, 0.32, 0.98],
+                }}
                 className={`glass-card p-6 md:p-7 rounded-2xl border ${pillar.border} transition-all duration-300 hover:scale-[1.02] hover:bg-white/5 flex flex-col justify-between`}
               >
                 <div>

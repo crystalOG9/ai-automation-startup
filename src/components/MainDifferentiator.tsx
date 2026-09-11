@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import {
   Building2,
   GitBranch,
@@ -72,6 +73,20 @@ const DIFFERENTIATOR_STEPS = [
 ];
 
 export function MainDifferentiator() {
+  const chainRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: chainRef,
+    offset: ["start 75%", "end 60%"],
+  });
+
+  const scaleY = useSpring(scrollYProgress, {
+    stiffness: 220,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
+  const laserTip = useTransform(scaleY, (v) => `${Math.min(100, Math.max(0, v * 100))}%`);
+
   return (
     <section id="differentiator" className="py-24 relative overflow-hidden bg-gradient-to-b from-[#030712] via-brand-950/20 to-[#030712]">
       {/* Background ambient lighting */}
@@ -115,10 +130,24 @@ export function MainDifferentiator() {
         </div>
 
         {/* Visual Workflow Chain */}
-        <div className="max-w-4xl mx-auto">
+        <div ref={chainRef} className="max-w-4xl mx-auto">
           <div className="relative">
-            {/* Desktop Vertical Central Line */}
-            <div className="hidden md:block absolute top-6 bottom-6 left-1/2 -translate-x-1/2 w-[2px] bg-gradient-to-b from-blue-500/30 via-emerald-500/30 to-purple-500/30 -z-0" />
+            {/* Desktop Vertical Central Dynamic Laser Conduit */}
+            <div className="hidden md:block absolute top-6 bottom-6 left-1/2 -translate-x-1/2 w-[2px] bg-white/[0.08] -z-0">
+              {/* Dynamic scroll-driven energy conduit */}
+              <motion.div
+                style={{ scaleY }}
+                className="w-full h-full origin-top bg-gradient-to-b from-blue-500 via-cyan-400 to-emerald-400 shadow-[0_0_12px_rgba(56,189,248,0.7)]"
+              />
+              {/* Traveling Laser Pulse Node */}
+              <motion.div
+                style={{ top: laserTip }}
+                className="absolute -left-[5px] -translate-y-1/2 w-3 h-3 rounded-full bg-cyan-300 shadow-[0_0_10px_#38bdf8,0_0_20px_#2563eb] flex items-center justify-center pointer-events-none"
+              >
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-70" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white" />
+              </motion.div>
+            </div>
 
             <div className="space-y-4 md:space-y-6 relative z-10">
               {DIFFERENTIATOR_STEPS.map((step, idx) => {

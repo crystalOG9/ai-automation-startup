@@ -1,13 +1,20 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, ArrowDown, ShieldCheck, Database, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { WorkflowNetwork } from "./WorkflowNetwork";
 
 export function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const heroContentY = useTransform(scrollYProgress, [0, 1], [0, 50]);
+  const heroContentOpacity = useTransform(scrollYProgress, [0, 0.9], [1, 0.35]);
   const [focusBox, setFocusBox] = useState<{
     top: number;
     left: number;
@@ -59,12 +66,15 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-[90vh] flex items-center pt-32 pb-16 md:pt-36 md:pb-24 overflow-hidden">
+    <section id="hero" ref={sectionRef} className="relative min-h-[90vh] flex items-center pt-32 pb-16 md:pt-36 md:pb-24 overflow-hidden">
       {/* Subtle controlled SPARTAN blue atmospheric lighting */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-[450px] bg-brand-600/[0.06] blur-[160px] rounded-full pointer-events-none select-none" />
       <div className="absolute top-1/3 -right-20 w-80 h-80 bg-brand-900/[0.08] blur-[140px] rounded-full pointer-events-none select-none" />
       
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
+      <motion.div
+        style={{ y: heroContentY, opacity: heroContentOpacity }}
+        className="container mx-auto px-4 md:px-6 relative z-10"
+      >
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
           
           {/* Left Column - Copy & Value Proposition with Digital Focus System */}
@@ -212,7 +222,7 @@ export function Hero() {
           </div>
           
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
