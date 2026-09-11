@@ -56,13 +56,13 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://www.instagram.com/sparten.tech/"
+                  href="https://www.instagram.com/spartantech.ai/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2.5 text-muted-foreground hover:text-white transition-colors text-sm group"
                 >
                   <InstagramIcon className="w-4 h-4 text-pink-400 shrink-0 group-hover:scale-110 transition-transform" />
-                  <span>@sparten.tech</span>
+                  <span>@spartantech.ai</span>
                 </a>
               </li>
             </ul>
@@ -88,7 +88,7 @@ export function Footer() {
               <Mail className="w-4 h-4" />
             </a>
             <a
-              href="https://www.instagram.com/sparten.tech/"
+              href="https://www.instagram.com/spartantech.ai/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white transition-colors"

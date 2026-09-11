@@ -165,7 +165,7 @@ export function CTA() {
                 </a>
 
                 <a
-                  href="https://www.instagram.com/sparten.tech/"
+                  href="https://www.instagram.com/spartantech.ai/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-pink-500/40 transition-all group"
@@ -176,7 +176,7 @@ export function CTA() {
                   <div className="min-w-0">
                     <div className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Instagram</div>
                     <div className="text-xs font-medium text-white truncate group-hover:text-pink-300 transition-colors">
-                      @sparten.tech
+                      @spartantech.ai
                     </div>
                   </div>
                 </a>
