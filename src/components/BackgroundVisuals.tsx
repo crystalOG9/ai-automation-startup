@@ -10,8 +10,6 @@ export function BackgroundVisuals() {
 
   // Multi-tier parallax depth transformations
   const yGrid = useTransform(scrollY, [0, 6000], [0, -320]);
-  const yDots = useTransform(scrollY, [0, 6000], [0, -160]);
-
   // Ambient lighting orbs floating with spatial depth
   const yOrbTop = useTransform(scrollY, [0, 3000], [0, 180]);
   const yOrbMid = useTransform(scrollY, [0, 5000], [0, -240]);
@@ -34,18 +32,6 @@ export function BackgroundVisuals() {
           backgroundSize: "48px 48px",
           maskImage: "radial-gradient(ellipse 80% 80% at 50% 30%, black 40%, transparent 95%)",
           WebkitMaskImage: "radial-gradient(ellipse 80% 80% at 50% 30%, black 40%, transparent 95%)",
-        }}
-      />
-
-      {/* Subtle Micro Dot Crosshairs at secondary depth */}
-      <motion.div
-        className="absolute -inset-y-32 inset-x-0 opacity-20"
-        style={{
-          y: yDots,
-          backgroundImage: `radial-gradient(circle, rgba(96, 165, 250, 0.35) 1px, transparent 1px)`,
-          backgroundSize: "96px 96px",
-          maskImage: "radial-gradient(ellipse 70% 60% at 50% 40%, black 30%, transparent 85%)",
-          WebkitMaskImage: "radial-gradient(ellipse 70% 60% at 50% 40%, black 30%, transparent 85%)",
         }}
       />
 
