@@ -82,15 +82,15 @@ export function ScrollMinimap() {
           className="hidden xl:flex fixed right-4 top-1/2 -translate-y-1/2 z-40 flex-col items-end pointer-events-auto select-none"
         >
           {/* Glass Rail Container */}
-          <div className="relative flex flex-col items-end py-3 px-2 rounded-2xl bg-black/40 backdrop-blur-md border border-white/10 shadow-[0_0_25px_rgba(0,0,0,0.5)] group/rail hover:border-brand-500/30 transition-colors duration-300">
+          <div className="relative flex flex-col items-end py-3 px-2 rounded-2xl bg-[#0B0B0B]/80 backdrop-blur-md border border-white/[0.08] shadow-[0_0_25px_rgba(0,0,0,0.6)] group/rail hover:border-[#C9AEC6]/30 transition-colors duration-300">
             {/* Scroll depth readout badge */}
-            <div className="px-2 py-0.5 mb-2 font-mono text-[9px] font-bold tracking-widest text-slate-400 bg-white/5 rounded-md border border-white/5 flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+            <div className="px-2 py-0.5 mb-2 font-mono text-[9px] font-bold tracking-widest text-[#8E8295] bg-white/[0.04] rounded-md border border-white/[0.06] flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C9AEC6] animate-pulse" />
               <span>{scrollPercent}%</span>
             </div>
 
             {/* Connecting Vertical Track */}
-            <div className="absolute right-[19px] top-11 bottom-6 w-[1px] bg-gradient-to-b from-brand-500/20 via-cyan-400/20 to-brand-500/20 -z-0" />
+            <div className="absolute right-[19px] top-11 bottom-6 w-[1px] bg-gradient-to-b from-[#C9AEC6]/10 via-[#C9AEC6]/30 to-[#C9AEC6]/10 -z-0" />
 
             {/* Interactive Section Nodes */}
             <div className="flex flex-col gap-2.5 relative z-10">
@@ -111,13 +111,13 @@ export function ScrollMinimap() {
                     <div
                       className={`transition-all duration-200 font-mono text-[10px] tracking-wider uppercase whitespace-nowrap px-2 py-0.5 rounded-md ${
                         isActive
-                          ? "opacity-100 text-brand-300 bg-brand-500/10 border border-brand-500/30 shadow-[0_0_10px_rgba(59,130,246,0.2)]"
+                          ? "opacity-100 text-[#C9AEC6] bg-[#C9AEC6]/10 border border-[#C9AEC6]/30 shadow-[0_0_10px_rgba(201,174,198,0.15)]"
                           : isHovered
-                          ? "opacity-100 text-white bg-white/10 border border-white/10"
-                          : "opacity-0 -translate-x-1 pointer-events-none group-hover/rail:opacity-50 text-slate-400"
+                          ? "opacity-100 text-[#F6EFF5] bg-white/10 border border-white/10"
+                          : "opacity-0 -translate-x-1 pointer-events-none group-hover/rail:opacity-50 text-[#8E8295]"
                       }`}
                     >
-                      <span className="text-[8px] text-brand-400/80 mr-1 font-semibold">{section.number}</span>
+                      <span className="text-[8px] text-[#C9AEC6]/80 mr-1 font-semibold">{section.number}</span>
                       <span>{section.name}</span>
                     </div>
 
@@ -126,7 +126,7 @@ export function ScrollMinimap() {
                       {isActive && (
                         <motion.div
                           layoutId="minimap-reticle"
-                          className="absolute inset-0 rounded-lg border border-brand-400 bg-brand-500/20 shadow-[0_0_12px_rgba(56,189,248,0.5)]"
+                          className="absolute inset-0 rounded-lg border border-[#C9AEC6] bg-[#C9AEC6]/20 shadow-[0_0_12px_rgba(201,174,198,0.3)]"
                           transition={{ type: "spring", stiffness: 400, damping: 30 }}
                         />
                       )}
@@ -134,10 +134,10 @@ export function ScrollMinimap() {
                       <div
                         className={`transition-all duration-200 rounded-full ${
                           isActive
-                            ? "w-2 h-2 bg-cyan-300 shadow-[0_0_8px_#38bdf8]"
+                            ? "w-2 h-2 bg-[#C9AEC6] shadow-[0_0_8px_#C9AEC6]"
                             : isHovered
-                            ? "w-2 h-2 bg-white"
-                            : "w-1.5 h-1.5 bg-slate-600 group-hover:bg-slate-400"
+                            ? "w-2 h-2 bg-[#F6EFF5]"
+                            : "w-1.5 h-1.5 bg-[#8E8295]/40 group-hover:bg-[#8E8295]"
                         }`}
                       />
                     </div>

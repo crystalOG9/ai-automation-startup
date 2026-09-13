@@ -74,26 +74,26 @@ export function Solutions() {
           variants={scaleReveal}
           className="max-w-4xl mx-auto text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-brand-500/30 text-brand-300 text-xs font-semibold uppercase tracking-wider mb-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-[#C9AEC6]/30 text-[#C9AEC6] text-xs font-semibold uppercase tracking-wider mb-4">
             Workflows We Automate
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-6 text-white">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-6 text-[#F6EFF5]">
             Targeted automation for <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#fda4af] to-[#e11d48]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFFFFF] via-[#EAD6E6] to-[#C9AEC6]">
               high-volume workflows.
             </span>
           </h2>
 
-          <div className="inline-flex flex-wrap items-center justify-center gap-2 px-4 py-2 rounded-2xl glass border border-white/10 text-xs text-muted-foreground font-mono">
+          <div className="inline-flex flex-wrap items-center justify-center gap-2 px-4 py-2 rounded-2xl glass border border-white/[0.06] text-xs text-[#8E8295] font-mono">
             <span>Trigger Ingestion</span>
-            <span className="text-[#e11d48]">→</span>
+            <span className="text-[#C9AEC6]">→</span>
             <span>Data Extraction</span>
-            <span className="text-[#e11d48]">→</span>
+            <span className="text-[#C9AEC6]">→</span>
             <span>Rule Validation</span>
-            <span className="text-[#ffffff] font-bold">→</span>
-            <span className="text-[#ffffff] font-bold bg-[#e11d48]/15 px-2 py-0.5 rounded border border-[#e11d48]/30">HUMAN SIGN-OFF</span>
-            <span className="text-[#e11d48]">→</span>
+            <span className="text-[#F6EFF5] font-bold">→</span>
+            <span className="text-[#22C55E] font-bold bg-[#22C55E]/15 px-2 py-0.5 rounded border border-[#22C55E]/30">HUMAN SIGN-OFF</span>
+            <span className="text-[#C9AEC6]">→</span>
             <span>SYSTEM SYNC</span>
           </div>
         </motion.div>
@@ -130,24 +130,24 @@ export function Solutions() {
                 className="h-full"
               >
                 <PrecisionCard
-                  glowColor={sol.highlight ? "rgba(225, 29, 72, 0.18)" : "rgba(225, 29, 72, 0.08)"}
+                  glowColor={sol.highlight ? "rgba(34, 197, 94, 0.12)" : "rgba(201, 174, 198, 0.08)"}
                   className={`glass-card p-6 rounded-2xl transition-all duration-300 border flex flex-col justify-between group cursor-default h-full shadow-lg ${
                     sol.highlight
-                      ? "border-[#e11d48]/30 bg-[#1c1114]/40 hover:border-[#e11d48]/50"
-                      : "border-white/5 hover:border-[#e11d48]/30 hover:bg-white/5"
+                      ? "border-emerald-500/30 bg-[#161616] hover:border-emerald-500/50"
+                      : "border-white/[0.06] hover:border-[#C9AEC6]/30 hover:bg-[#161616] bg-[#141414]"
                   }`}
                 >
                   <div>
                     <div className="flex items-center justify-between mb-6">
-                      <sol.icon className={`w-8 h-8 ${sol.highlight ? "text-emerald-400" : "text-muted-foreground group-hover:text-brand-400"} transition-colors`} />
+                      <sol.icon className={`w-8 h-8 ${sol.highlight ? "text-emerald-400" : "text-[#8E8295] group-hover:text-[#C9AEC6]"} transition-colors`} />
                       {sol.highlight && (
                         <span className="inline-flex items-center gap-1 text-[10px] font-mono text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded border border-emerald-500/30">
                           <ShieldCheck className="w-3 h-3" /> Safe Action
                         </span>
                       )}
                     </div>
-                    <h3 className="text-lg font-bold text-white mb-3">{sol.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
+                    <h3 className="text-lg font-bold text-[#F6EFF5] mb-3">{sol.title}</h3>
+                    <p className="text-sm text-[#8E8295] leading-relaxed">
                       {sol.desc}
                     </p>
                   </div>
@@ -170,29 +170,29 @@ export function Solutions() {
             className="md:col-span-2 lg:col-span-4"
           >
             <PrecisionCard
-              glowColor="rgba(59, 130, 246, 0.14)"
-              className="glass-card p-8 rounded-2xl border border-brand-500/40 bg-brand-900/15 hover:bg-brand-900/25 transition-all group relative overflow-hidden h-full shadow-xl"
+              glowColor="rgba(201, 174, 198, 0.08)"
+              className="glass-card p-8 rounded-2xl border border-[#C9AEC6]/30 bg-[#161616] hover:bg-[#1A1A1A] transition-all group relative overflow-hidden h-full shadow-xl"
             >
-              <div className="absolute top-0 right-0 w-64 h-64 bg-brand-500/10 blur-[80px] rounded-full pointer-events-none" />
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[#C9AEC6]/[0.025] blur-[80px] rounded-full pointer-events-none" />
               <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                 <div className="flex items-start gap-5">
-                  <div className="p-3.5 rounded-xl bg-brand-500/20 text-brand-400 shrink-0">
+                  <div className="p-3.5 rounded-xl bg-[#C9AEC6]/15 text-[#C9AEC6] shrink-0">
                     <Settings2 className="w-7 h-7" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-white mb-2">Custom Internal Workflows</h3>
-                    <p className="text-muted-foreground max-w-xl text-sm leading-relaxed">
+                    <h3 className="text-xl font-bold text-[#F6EFF5] mb-2">Custom Internal Workflows</h3>
+                    <p className="text-[#8E8295] max-w-xl text-sm leading-relaxed">
                       If your workflow relies on legacy software, internal databases, or non-standard operational rules, we build the pipeline around your exact business logic.
                     </p>
                   </div>
                 </div>
                 <Link
                   href="#contact"
-                  className="relative overflow-hidden px-6 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs sm:text-sm font-semibold uppercase font-mono tracking-wider border border-brand-400/60 shadow-[0_0_0_1px_rgba(59,130,246,0.35)] hover:shadow-[0_0_24px_rgba(37,99,235,0.65),0_0_0_1.5px_rgba(96,165,250,0.9)] hover:-translate-y-0.5 hover:scale-[1.015] active:translate-y-0 active:scale-[0.98] whitespace-nowrap inline-flex items-center gap-2 shrink-0 group transition-all duration-150 ease-out"
+                  className="relative overflow-hidden px-6 py-3.5 rounded-xl bg-[#C9AEC6] hover:bg-[#EAD6E6] text-[#0B0B0B] text-xs sm:text-sm font-semibold uppercase font-mono tracking-wider border border-[#EAD6E6]/60 shadow-[0_0_15px_rgba(201,174,198,0.18)] hover:shadow-[0_0_24px_rgba(201,174,198,0.3)] hover:-translate-y-0.5 hover:scale-[1.015] active:translate-y-0 active:scale-[0.98] whitespace-nowrap inline-flex items-center gap-2 shrink-0 group transition-all duration-150 ease-out"
                 >
                   <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none" />
                   <span className="relative z-10">SHOW US YOUR WORKFLOW</span>
-                  <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform duration-150" />
+                  <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform duration-150 text-[#0B0B0B]" />
                 </Link>
               </div>
             </PrecisionCard>

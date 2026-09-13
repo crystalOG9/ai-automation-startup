@@ -19,45 +19,45 @@ const DIFFERENTIATOR_STEPS = [
     label: "OPERATIONAL INTAKE",
     subtitle: "Documenting your daily tools, spreadsheets, and domain rules",
     icon: Building2,
-    color: "text-[#e11d48]",
-    borderColor: "border-[#881337]/40",
-    bgGlow: "bg-[#881337]/30",
+    color: "text-[#C9AEC6]",
+    borderColor: "border-white/[0.06]",
+    bgGlow: "bg-[#C9AEC6]/10",
   },
   {
     step: "02",
     label: "HANDOFF MAPPING",
     subtitle: "Tracing how information moves across teams and software",
     icon: GitBranch,
-    color: "text-[#ffffff]",
-    borderColor: "border-[#881337]/40",
-    bgGlow: "bg-[#881337]/30",
+    color: "text-[#C9AEC6]",
+    borderColor: "border-white/[0.06]",
+    bgGlow: "bg-[#C9AEC6]/10",
   },
   {
     step: "03",
     label: "BOTTLENECK AUDIT",
     subtitle: "Isolating repetitive lookups, re-keying, and routine triage",
     icon: Repeat,
-    color: "text-[#e11d48]",
-    borderColor: "border-[#881337]/40",
-    bgGlow: "bg-[#881337]/30",
+    color: "text-[#C9AEC6]",
+    borderColor: "border-white/[0.06]",
+    bgGlow: "bg-[#C9AEC6]/10",
   },
   {
     step: "04",
     label: "DETERMINISTIC PROCESSING",
     subtitle: "Parsing unstructured inputs, querying APIs, and drafting records",
     icon: Cpu,
-    color: "text-[#ffffff]",
-    borderColor: "border-[#881337]/40",
-    bgGlow: "bg-[#881337]/30",
+    color: "text-[#C9AEC6]",
+    borderColor: "border-white/[0.06]",
+    bgGlow: "bg-[#C9AEC6]/10",
   },
   {
     step: "05",
     label: "HUMAN OVERSIGHT GATES",
     subtitle: "Exception handling, value thresholds, and final sign-offs",
     icon: UserCheck,
-    color: "text-[#e11d48]",
-    borderColor: "border-[#e11d48]/50",
-    bgGlow: "bg-[#e11d48]/15",
+    color: "text-[#C9AEC6]",
+    borderColor: "border-[#C9AEC6]/40",
+    bgGlow: "bg-[#C9AEC6]/15",
     highlight: true,
   },
   {
@@ -65,9 +65,9 @@ const DIFFERENTIATOR_STEPS = [
     label: "PRODUCTION DEPLOYMENT",
     subtitle: "A connected pipeline with audit logging and zero workflow disruption",
     icon: Sparkles,
-    color: "text-[#ffffff]",
-    borderColor: "border-[#881337]/40",
-    bgGlow: "bg-[#881337]/30",
+    color: "text-[#22C55E]",
+    borderColor: "border-white/[0.06]",
+    bgGlow: "bg-[#22C55E]/15",
   },
 ];
 
@@ -79,9 +79,9 @@ import {
 
 export function MainDifferentiator() {
   return (
-    <section id="differentiator" className="py-24 relative overflow-hidden bg-gradient-to-b from-[#090607] via-[#120b0e] to-[#090607] perspective-1200">
+    <section id="differentiator" className="py-24 relative overflow-hidden bg-gradient-to-b from-[#0B0B0B] via-[#111111] to-[#0B0B0B] perspective-1200">
       {/* Background ambient lighting */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#881337]/25 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#141414]/50 blur-[150px] rounded-full pointer-events-none" />
       
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         
@@ -93,18 +93,18 @@ export function MainDifferentiator() {
           variants={scaleReveal}
           className="max-w-4xl mx-auto text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-[#e11d48]/30 text-[#e11d48] text-xs font-semibold uppercase tracking-wider mb-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-[#C9AEC6]/30 text-[#C9AEC6] text-xs font-semibold uppercase tracking-wider mb-4">
             The Engineering Method
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-6 leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#F6EFF5] mb-6 leading-tight">
             Automate the mechanical steps. <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#fda4af] to-[#e11d48]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFFFFF] via-[#EAD6E6] to-[#C9AEC6]">
               Protect the human decisions.
             </span>
           </h2>
 
-          <p className="text-base md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base md:text-xl text-[#8E8295] max-w-2xl mx-auto leading-relaxed">
             We don&apos;t force you to change how you operate. We map each handoff, automate routine processing, and keep approvals in your team&apos;s hands.
           </p>
         </motion.div>
@@ -130,8 +130,8 @@ export function MainDifferentiator() {
                     className="group"
                   >
                     <div
-                      className={`glass-card p-5 md:p-6 rounded-2xl border ${step.borderColor} transition-all duration-300 hover:shadow-[0_0_25px_rgba(225, 29, 72,0.14)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${
-                        step.highlight ? "bg-[#e11d48]/[0.06] border-[#e11d48]/60 shadow-[0_0_20px_rgba(225, 29, 72,0.15)]" : ""
+                      className={`glass-card p-5 md:p-6 rounded-2xl border ${step.borderColor} transition-all duration-300 hover:shadow-[0_0_25px_rgba(201,174,198,0.06)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${
+                        step.highlight ? "bg-[#1A1A1A] border-[#C9AEC6]/50 shadow-[0_0_20px_rgba(201,174,198,0.12)]" : ""
                       }`}
                     >
                       <div className="flex items-center gap-4">
@@ -140,23 +140,23 @@ export function MainDifferentiator() {
                         </div>
                         <div>
                           <div className="flex items-center gap-2 mb-1">
-                            <span className="text-xs font-mono font-bold text-muted-foreground">{step.step}</span>
-                            <h3 className="text-base md:text-lg font-bold text-white tracking-wide uppercase">
+                            <span className="text-xs font-mono font-bold text-[#8E8295]">{step.step}</span>
+                            <h3 className="text-base md:text-lg font-bold text-[#F6EFF5] tracking-wide uppercase">
                               {step.label}
                             </h3>
                             {step.highlight && (
-                              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-[#e11d48]/20 text-[#ffffff] border border-[#e11d48]/40">
+                              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-[#C9AEC6]/20 text-[#C9AEC6] border border-[#C9AEC6]/40">
                                 Essential
                               </span>
                             )}
                           </div>
-                          <p className="text-xs md:text-sm text-muted-foreground">
+                          <p className="text-xs md:text-sm text-[#8E8295]">
                             {step.subtitle}
                           </p>
                         </div>
                       </div>
 
-                      <div className="hidden sm:flex items-center justify-center shrink-0 w-8 h-8 rounded-full bg-white/5 text-muted-foreground/60 group-hover:text-[#e11d48] transition-colors">
+                      <div className="hidden sm:flex items-center justify-center shrink-0 w-8 h-8 rounded-full bg-white/5 text-[#8E8295]/60 group-hover:text-[#C9AEC6] transition-colors">
                         <ArrowDown className="w-4 h-4" />
                       </div>
                     </div>
@@ -176,7 +176,7 @@ export function MainDifferentiator() {
           >
             <Link
               href="#contact"
-              className="inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#e11d48] to-[#be123c] text-white px-8 py-4 rounded-full text-base font-semibold transition-all hover:brightness-105 hover:shadow-[0_0_25px_rgba(225, 29, 72,0.4)] group"
+              className="inline-flex items-center justify-center gap-2.5 bg-[#C9AEC6] hover:bg-[#EAD6E6] text-[#0B0B0B] px-8 py-4 rounded-full text-base font-semibold transition-all hover:shadow-[0_0_25px_rgba(201,174,198,0.25)] group"
             >
               SHOW US YOUR WORKFLOW
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

@@ -105,7 +105,7 @@ const SCENARIOS: Scenario[] = [
       systemName: "SAP Logistics & FedEx Fleet API",
       status: "Delayed in Transit — Weather Hold Cleared",
       statusBadge: "VERIFIED IN TRANSIT",
-      statusColor: "text-amber-400 border-amber-500/30 bg-amber-500/10",
+      statusColor: "text-[#C9AEC6] border-[#C9AEC6]/30 bg-[#C9AEC6]/10",
       verifiedRecords: [
         { label: "Carrier Tracking", value: "1Z99999999999948291" },
         { label: "Revised ETA", value: "Tomorrow at 10:30 AM" },
@@ -219,7 +219,7 @@ const SCENARIOS: Scenario[] = [
       systemName: "Warehouse Management System (WMS)",
       status: "Fulfillment Halt Eligible • Unpicked in Bay 12",
       statusBadge: "LINE HALT SAFE",
-      statusColor: "text-cyan-400 border-cyan-500/30 bg-cyan-500/10",
+      statusColor: "text-[#C9AEC6] border-[#C9AEC6]/30 bg-[#C9AEC6]/10",
       verifiedRecords: [
         { label: "Picking Status", value: "Queue Position #34 (Not Picked)" },
         { label: "Payment Hold", value: "Authorized, Not Captured" },
@@ -276,7 +276,7 @@ const SCENARIOS: Scenario[] = [
       systemName: "HubSpot CRM & ZoomInfo Intelligence",
       status: "Qualified Tier-1 Account • Regional Rep Assigned",
       statusBadge: "HIGH VALUE LEAD",
-      statusColor: "text-purple-400 border-purple-500/30 bg-purple-500/10",
+      statusColor: "text-[#C9AEC6] border-[#C9AEC6]/30 bg-[#C9AEC6]/10",
       verifiedRecords: [
         { label: "Account Size", value: "150 Employees • Series B" },
         { label: "Assigned Executive", value: "Rachel Vance (Enterprise AE)" },
@@ -419,9 +419,9 @@ export function AutomationDemo() {
   };
 
   return (
-    <section id="workflow-demo" className="py-24 relative overflow-hidden bg-brand-950/20 border-y border-white/5 perspective-1200">
+    <section id="workflow-demo" className="py-24 relative overflow-hidden bg-[#0E0E0E] border-y border-white/[0.06] perspective-1200">
       {/* Background ambient lighting */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-[#881337]/25 blur-[140px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-[#141414]/50 blur-[140px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-6xl preserve-3d">
         
@@ -433,16 +433,16 @@ export function AutomationDemo() {
           variants={scaleReveal}
           className="max-w-4xl mx-auto text-center mb-10"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-[#e11d48]/30 text-[#e11d48] text-xs font-semibold uppercase tracking-wider mb-4">
-            <Cpu className="w-3.5 h-3.5 text-[#e11d48]" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-[#C9AEC6]/30 text-[#C9AEC6] text-xs font-semibold uppercase tracking-wider mb-4">
+            <Cpu className="w-3.5 h-3.5 text-[#C9AEC6]" />
             Interactive Simulation
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4 text-white">
-            See an automated workflow <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#fda4af] to-[#e11d48]">in action.</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4 text-[#F6EFF5]">
+            See an automated workflow <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFFFFF] via-[#EAD6E6] to-[#C9AEC6]">in action.</span>
           </h2>
 
-          <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg text-[#8E8295] max-w-2xl mx-auto leading-relaxed">
             Select an operational scenario to trace each step: trigger intake, data extraction, system verification, human review, and final sync.
           </p>
 
@@ -452,7 +452,7 @@ export function AutomationDemo() {
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={defaultViewport}
             transition={{ duration: 0.52, delay: 0.12, ease: SPARTAN_EASE }}
-            className="flex flex-wrap items-center justify-center gap-2 md:gap-3 p-1.5 rounded-2xl glass-card border border-white/10 max-w-3xl mx-auto mt-8 shadow-lg"
+            className="flex flex-wrap items-center justify-center gap-2 md:gap-3 p-1.5 rounded-2xl glass-card border border-white/[0.06] max-w-3xl mx-auto mt-8 shadow-lg"
           >
             {SCENARIOS.map((s, idx) => {
               const isActive = activeScenarioIdx === idx;
@@ -464,15 +464,15 @@ export function AutomationDemo() {
                   className={cn(
                     "flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer",
                     isActive
-                      ? "bg-gradient-to-r from-[#e11d48] to-[#be123c] text-white shadow-[0_0_18px_rgba(225, 29, 72,0.35)] font-bold"
-                      : "text-muted-foreground hover:text-white hover:bg-white/5 border border-transparent"
+                      ? "bg-[#C9AEC6] text-[#0B0B0B] shadow-[0_0_15px_rgba(201,174,198,0.2)] font-bold"
+                      : "text-[#8E8295] hover:text-[#F6EFF5] hover:bg-white/5 border border-transparent"
                   )}
                 >
                   <Icon className="w-3.5 h-3.5 shrink-0" />
                   <span>{s.name}</span>
                   <span className={cn(
                     "text-[10px] font-mono px-1.5 py-0.2 rounded uppercase",
-                    isActive ? "bg-[#1c1517]/20 text-white font-bold" : "bg-white/5 text-muted-foreground"
+                    isActive ? "bg-[#0B0B0B]/20 text-[#0B0B0B] font-bold" : "bg-white/5 text-[#8E8295]"
                   )}>
                     {s.tag}
                   </span>
@@ -488,7 +488,7 @@ export function AutomationDemo() {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={defaultViewport}
           transition={{ duration: 0.58, delay: 0.22, ease: SPARTAN_EASE }}
-          className="glass-card rounded-2xl border border-white/10 p-3 md:p-4 mb-6 shadow-xl"
+          className="glass-card rounded-2xl border border-white/[0.06] p-3 md:p-4 mb-6 shadow-xl bg-[#141414]"
         >
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
             {PIPELINE_STAGES.map((stage) => {
@@ -506,25 +506,25 @@ export function AutomationDemo() {
                   className={cn(
                     "relative flex items-center gap-2.5 p-3 rounded-xl text-left transition-all duration-200 cursor-pointer overflow-hidden border",
                     isActive
-                      ? "bg-[#e11d48]/15 border-[#e11d48]/60 shadow-[0_0_15px_rgba(225, 29, 72,0.25)] text-white"
+                      ? "bg-[#1C1C1C] border-[#C9AEC6]/50 shadow-[0_0_15px_rgba(201,174,198,0.1)] text-[#F6EFF5]"
                       : isPassed
-                      ? "bg-emerald-950/10 border-emerald-500/30 text-slate-300 hover:bg-white/5"
-                      : "bg-black/20 border-white/5 text-muted-foreground hover:text-slate-200 hover:bg-white/5"
+                      ? "bg-[#161616] border-[#C9AEC6]/20 text-[#BAAEC0] hover:bg-white/5"
+                      : "bg-black/30 border-white/[0.04] text-[#8E8295] hover:text-[#F6EFF5] hover:bg-white/5"
                   )}
                 >
                   {/* Active highlight top sheen */}
                   {isActive && (
-                    <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#e11d48] to-transparent" />
+                    <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#C9AEC6] to-transparent" />
                   )}
 
                   <div
                     className={cn(
                       "w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-xs font-mono font-bold transition-colors",
                       isActive
-                        ? "bg-[#e11d48] text-white shadow-[0_0_10px_rgba(225, 29, 72,0.6)] font-bold"
+                        ? "bg-[#C9AEC6] text-[#0B0B0B] shadow-[0_0_10px_rgba(201,174,198,0.4)] font-bold"
                         : isPassed
-                        ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
-                        : "bg-white/5 text-white/40 border border-white/5"
+                        ? "bg-[#C9AEC6]/20 text-[#C9AEC6] border border-[#C9AEC6]/30"
+                        : "bg-white/5 text-white/30 border border-white/5"
                     )}
                   >
                     {isPassed ? <CheckCircle2 className="w-4 h-4" /> : <Icon className="w-4 h-4" />}
@@ -532,9 +532,9 @@ export function AutomationDemo() {
 
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-1.5">
-                      <span className="text-[10px] font-mono text-muted-foreground">{stage.number}</span>
+                      <span className="text-[10px] font-mono text-[#8E8295]">{stage.number}</span>
                       {stage.id === 3 && (
-                        <span className="text-[9px] font-mono px-1 py-0 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 uppercase">
+                        <span className="text-[9px] font-mono px-1 py-0 rounded bg-[#C9AEC6]/20 text-[#C9AEC6] border border-[#C9AEC6]/30 uppercase">
                           Gate
                         </span>
                       )}
@@ -549,14 +549,14 @@ export function AutomationDemo() {
           </div>
 
           {/* Pipeline Control Strip */}
-          <div className="mt-3 pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-3 px-1">
-            <div className="flex items-center gap-3 text-xs text-muted-foreground">
+          <div className="mt-3 pt-3 border-t border-white/[0.06] flex flex-wrap items-center justify-between gap-3 px-1">
+            <div className="flex items-center gap-3 text-xs text-[#8E8295]">
               <span className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="font-mono text-white/90">Pipeline Status: Live</span>
+                <span className="font-mono text-[#F6EFF5]/90">Pipeline Status: Live</span>
               </span>
               <span className="hidden sm:inline text-white/20">•</span>
-              <span className="hidden sm:inline">Scenario: <strong className="text-white font-medium">{scenario.name}</strong></span>
+              <span className="hidden sm:inline">Scenario: <strong className="text-[#F6EFF5] font-medium">{scenario.name}</strong></span>
             </div>
 
             <div className="flex items-center gap-2">
@@ -564,15 +564,15 @@ export function AutomationDemo() {
                 type="button"
                 onClick={handleRunSimulation}
                 disabled={isAutoPlaying}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-600/20 hover:bg-brand-600/30 text-brand-300 border border-brand-500/30 text-xs font-semibold transition-all cursor-pointer hover:text-white disabled:opacity-50"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#C9AEC6]/10 hover:bg-[#C9AEC6]/20 text-[#C9AEC6] border border-[#C9AEC6]/30 text-xs font-semibold transition-all cursor-pointer hover:text-[#F6EFF5] disabled:opacity-50"
               >
-                <Play className="w-3 h-3 text-brand-400" />
+                <Play className="w-3 h-3 text-[#C9AEC6]" />
                 {isAutoPlaying ? "Simulating..." : "Auto-Run Pipeline"}
               </button>
               <button
                 type="button"
                 onClick={handleReset}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-muted-foreground hover:text-white border border-white/10 text-xs font-medium transition-all cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-[#8E8295] hover:text-[#F6EFF5] border border-white/10 text-xs font-medium transition-all cursor-pointer"
               >
                 <RotateCcw className="w-3 h-3" />
                 Reset
@@ -587,7 +587,7 @@ export function AutomationDemo() {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={defaultViewport}
           transition={{ duration: 0.64, delay: 0.3, ease: SPARTAN_EASE }}
-          className="glass-card rounded-3xl border border-white/10 shadow-2xl overflow-hidden bg-[#060b17] min-h-[460px] flex flex-col justify-between p-5 md:p-8"
+          className="glass-card rounded-3xl border border-white/[0.06] shadow-2xl overflow-hidden bg-[#101010] min-h-[460px] flex flex-col justify-between p-5 md:p-8"
         >
           <AnimatePresence mode="wait">
 
@@ -600,32 +600,32 @@ export function AutomationDemo() {
                 exit={{ opacity: 0, y: -12 }}
                 className="space-y-5"
               >
-                <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
+                <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/[0.06]">
                   <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 rounded bg-brand-500/20 text-brand-300 font-mono text-xs font-bold">
+                    <span className="px-2 py-0.5 rounded bg-[#C9AEC6]/15 text-[#C9AEC6] font-mono text-xs font-bold">
                       STAGE 01
                     </span>
-                    <h3 className="text-sm md:text-base font-bold text-white uppercase tracking-wide">
+                    <h3 className="text-sm md:text-base font-bold text-[#F6EFF5] uppercase tracking-wide">
                       Inbound Trigger Intake
                     </h3>
                   </div>
-                  <span className="text-[11px] font-mono text-muted-foreground flex items-center gap-1">
-                    <Layers className="w-3 h-3 text-brand-400" /> Source: {scenario.email.source}
+                  <span className="text-[11px] font-mono text-[#8E8295] flex items-center gap-1">
+                    <Layers className="w-3 h-3 text-[#C9AEC6]" /> Source: {scenario.email.source}
                   </span>
                 </div>
 
                 {/* Ingestion Payload Card */}
                 <div className="grid md:grid-cols-12 gap-5">
-                  <div className="md:col-span-8 glass p-5 rounded-2xl border border-white/10 bg-black/40 space-y-3">
-                    <div className="flex flex-wrap items-center justify-between text-xs text-muted-foreground pb-2.5 border-b border-white/10 gap-2">
-                      <div><strong className="text-white">Sender:</strong> {scenario.email.from}</div>
-                      <div><strong className="text-white">Subject:</strong> {scenario.email.subject}</div>
+                  <div className="md:col-span-8 glass p-5 rounded-2xl border border-white/[0.06] bg-black/40 space-y-3">
+                    <div className="flex flex-wrap items-center justify-between text-xs text-[#8E8295] pb-2.5 border-b border-white/[0.06] gap-2">
+                      <div><strong className="text-[#F6EFF5]">Sender:</strong> {scenario.email.from}</div>
+                      <div><strong className="text-[#F6EFF5]">Subject:</strong> {scenario.email.subject}</div>
                     </div>
 
                     <div className="space-y-1.5">
                       <div className="flex items-center justify-between">
-                        <label className="text-xs font-semibold text-brand-300 flex items-center gap-1.5">
-                          <PenLine className="w-3 h-3 text-brand-400" />
+                        <label className="text-xs font-semibold text-[#C9AEC6] flex items-center gap-1.5">
+                          <PenLine className="w-3 h-3 text-[#C9AEC6]" />
                           <span>Customer / Partner Message Payload (Editable):</span>
                         </label>
                         {customMessages[scenario.id] && customMessages[scenario.id] !== scenario.email.body && (
@@ -634,7 +634,7 @@ export function AutomationDemo() {
                             onClick={() => {
                               setCustomMessages((prev) => ({ ...prev, [scenario.id]: scenario.email.body }));
                             }}
-                            className="text-[10px] text-muted-foreground hover:text-brand-300 transition-colors"
+                            className="text-[10px] text-[#8E8295] hover:text-[#C9AEC6] transition-colors"
                           >
                             Reset text
                           </button>
@@ -647,28 +647,28 @@ export function AutomationDemo() {
                           const val = e.target.value;
                           setCustomMessages((prev) => ({ ...prev, [scenario.id]: val }));
                         }}
-                        className="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-brand-500/60 focus:ring-1 focus:ring-brand-500/30 resize-none font-sans leading-relaxed"
+                        className="w-full p-3.5 rounded-xl bg-white/5 border border-white/[0.08] text-sm text-[#F6EFF5] focus:outline-none focus:border-[#C9AEC6]/60 focus:ring-1 focus:ring-[#C9AEC6]/30 resize-none font-sans leading-relaxed"
                       />
                     </div>
                   </div>
 
-                  <div className="md:col-span-4 glass p-5 rounded-2xl border border-white/10 bg-black/40 flex flex-col justify-between space-y-4">
+                  <div className="md:col-span-4 glass p-5 rounded-2xl border border-white/[0.06] bg-black/40 flex flex-col justify-between space-y-4">
                     <div>
-                      <div className="text-xs font-bold text-white uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                        <Sparkles className="w-3.5 h-3.5 text-brand-400" /> Ingestion Telemetry
+                      <div className="text-xs font-bold text-[#F6EFF5] uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                        <Sparkles className="w-3.5 h-3.5 text-[#C9AEC6]" /> Ingestion Telemetry
                       </div>
                       <div className="space-y-2 text-xs">
                         <div className="flex justify-between py-1 border-b border-white/5">
-                          <span className="text-muted-foreground">Payload Protocol:</span>
-                          <span className="font-mono text-white">JSON / REST Webhook</span>
+                          <span className="text-[#8E8295]">Payload Protocol:</span>
+                          <span className="font-mono text-[#F6EFF5]">JSON / REST Webhook</span>
                         </div>
                         <div className="flex justify-between py-1 border-b border-white/5">
-                          <span className="text-muted-foreground">Encryption:</span>
+                          <span className="text-[#8E8295]">Encryption:</span>
                           <span className="font-mono text-emerald-400">TLS 1.3 End-to-End</span>
                         </div>
                         <div className="flex justify-between py-1 border-b border-white/5">
-                          <span className="text-muted-foreground">Latency:</span>
-                          <span className="font-mono text-cyan-300">18 ms</span>
+                          <span className="text-[#8E8295]">Latency:</span>
+                          <span className="font-mono text-[#C9AEC6]">18 ms</span>
                         </div>
                       </div>
                     </div>
@@ -676,7 +676,7 @@ export function AutomationDemo() {
                     <button
                       type="button"
                       onClick={() => setActiveStage(1)}
-                      className="w-full py-2.5 px-4 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md"
+                      className="w-full py-2.5 px-4 rounded-xl bg-[#C9AEC6] hover:bg-[#EAD6E6] text-[#0B0B0B] text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md"
                     >
                       Next: AI Extraction <ArrowRight className="w-3.5 h-3.5" />
                     </button>
@@ -694,53 +694,53 @@ export function AutomationDemo() {
                 exit={{ opacity: 0, y: -12 }}
                 className="space-y-5"
               >
-                <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
+                <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/[0.06]">
                   <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-mono text-xs font-bold">
+                    <span className="px-2 py-0.5 rounded bg-[#C9AEC6]/15 text-[#C9AEC6] font-mono text-xs font-bold">
                       STAGE 02
                     </span>
-                    <h3 className="text-sm md:text-base font-bold text-white uppercase tracking-wide">
+                    <h3 className="text-sm md:text-base font-bold text-[#F6EFF5] uppercase tracking-wide">
                       Data Extraction & Classification
                     </h3>
                   </div>
-                  <span className="text-[11px] font-mono text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">
+                  <span className="text-[11px] font-mono text-[#C9AEC6] bg-[#C9AEC6]/10 px-2 py-0.5 rounded border border-[#C9AEC6]/20">
                     Confidence: {scenario.aiExtraction.confidence}
                   </span>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-4">
-                  <div className="glass p-4 rounded-xl border border-cyan-500/20 bg-cyan-950/10 space-y-1.5">
-                    <span className="text-[10px] font-mono text-muted-foreground uppercase">Classified Intent</span>
-                    <div className="text-sm font-bold text-white flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                  <div className="glass p-4 rounded-xl border border-[#C9AEC6]/20 bg-[#141414] space-y-1.5">
+                    <span className="text-[10px] font-mono text-[#8E8295] uppercase">Classified Intent</span>
+                    <div className="text-sm font-bold text-[#F6EFF5] flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#C9AEC6]" />
                       {scenario.aiExtraction.intent}
                     </div>
                   </div>
 
-                  <div className="glass p-4 rounded-xl border border-cyan-500/20 bg-cyan-950/10 space-y-1.5">
-                    <span className="text-[10px] font-mono text-muted-foreground uppercase">Primary Reference</span>
-                    <div className="text-sm font-bold font-mono text-cyan-300">
+                  <div className="glass p-4 rounded-xl border border-[#C9AEC6]/20 bg-[#141414] space-y-1.5">
+                    <span className="text-[10px] font-mono text-[#8E8295] uppercase">Primary Reference</span>
+                    <div className="text-sm font-bold font-mono text-[#C9AEC6]">
                       {scenario.aiExtraction.reference}
                     </div>
                   </div>
 
-                  <div className="glass p-4 rounded-xl border border-cyan-500/20 bg-cyan-950/10 space-y-1.5">
-                    <span className="text-[10px] font-mono text-muted-foreground uppercase">Triage Priority</span>
-                    <div className="text-sm font-bold text-amber-300">
+                  <div className="glass p-4 rounded-xl border border-[#C9AEC6]/20 bg-[#141414] space-y-1.5">
+                    <span className="text-[10px] font-mono text-[#8E8295] uppercase">Triage Priority</span>
+                    <div className="text-sm font-bold text-[#C9AEC6]">
                       {scenario.aiExtraction.priority} LEVEL
                     </div>
                   </div>
                 </div>
 
-                <div className="glass p-5 rounded-2xl border border-white/10 bg-black/40 space-y-3">
-                  <div className="text-xs font-semibold text-white uppercase tracking-wider flex items-center gap-2">
-                    <Bot className="w-4 h-4 text-cyan-400" /> Structured Extraction Attributes
+                <div className="glass p-5 rounded-2xl border border-white/[0.06] bg-black/40 space-y-3">
+                  <div className="text-xs font-semibold text-[#F6EFF5] uppercase tracking-wider flex items-center gap-2">
+                    <Bot className="w-4 h-4 text-[#C9AEC6]" /> Structured Extraction Attributes
                   </div>
                   <div className="grid sm:grid-cols-3 gap-3">
                     {scenario.aiExtraction.entities.map((item, idx) => (
                       <div key={idx} className="p-3 rounded-xl bg-white/5 border border-white/5">
-                        <div className="text-[10px] font-mono text-muted-foreground uppercase">{item.label}</div>
-                        <div className="text-xs font-semibold text-white mt-1 truncate">{item.value}</div>
+                        <div className="text-[10px] font-mono text-[#8E8295] uppercase">{item.label}</div>
+                        <div className="text-xs font-semibold text-[#F6EFF5] mt-1 truncate">{item.value}</div>
                       </div>
                     ))}
                   </div>
@@ -750,14 +750,14 @@ export function AutomationDemo() {
                   <button
                     type="button"
                     onClick={() => setActiveStage(0)}
-                    className="text-xs text-muted-foreground hover:text-white transition-colors"
+                    className="text-xs text-[#8E8295] hover:text-[#F6EFF5] transition-colors"
                   >
                     ← Previous Step
                   </button>
                   <button
                     type="button"
                     onClick={() => setActiveStage(2)}
-                    className="py-2.5 px-5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer shadow-md"
+                    className="py-2.5 px-5 rounded-xl bg-[#C9AEC6] hover:bg-[#EAD6E6] text-[#0B0B0B] text-xs font-bold flex items-center gap-2 transition-all cursor-pointer shadow-md"
                   >
                     Next: Connected System Check <ArrowRight className="w-3.5 h-3.5" />
                   </button>
@@ -774,12 +774,12 @@ export function AutomationDemo() {
                 exit={{ opacity: 0, y: -12 }}
                 className="space-y-5"
               >
-                <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
+                <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/[0.06]">
                   <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 font-mono text-xs font-bold">
+                    <span className="px-2 py-0.5 rounded bg-[#C9AEC6]/15 text-[#C9AEC6] font-mono text-xs font-bold">
                       STAGE 03
                     </span>
-                    <h3 className="text-sm md:text-base font-bold text-white uppercase tracking-wide">
+                    <h3 className="text-sm md:text-base font-bold text-[#F6EFF5] uppercase tracking-wide">
                       Database & System Verification
                     </h3>
                   </div>
@@ -788,17 +788,17 @@ export function AutomationDemo() {
                   </span>
                 </div>
 
-                <div className="glass p-5 rounded-2xl border border-blue-500/30 bg-blue-950/15 space-y-4">
-                  <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
+                <div className="glass p-5 rounded-2xl border border-white/[0.06] bg-[#141414] space-y-4">
+                  <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/[0.06]">
                     <div>
-                      <div className="text-[11px] font-mono text-muted-foreground uppercase">Target Infrastructure</div>
-                      <div className="text-sm font-bold text-white mt-0.5 flex items-center gap-2">
-                        <Database className="w-4 h-4 text-brand-400" />
+                      <div className="text-[11px] font-mono text-[#8E8295] uppercase">Target Infrastructure</div>
+                      <div className="text-sm font-bold text-[#F6EFF5] mt-0.5 flex items-center gap-2">
+                        <Database className="w-4 h-4 text-[#C9AEC6]" />
                         {scenario.systemCheck.systemName}
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-[11px] font-mono text-muted-foreground uppercase">Live Record Status</div>
+                      <div className="text-[11px] font-mono text-[#8E8295] uppercase">Live Record Status</div>
                       <div className="text-xs font-semibold text-emerald-400 mt-0.5">
                         {scenario.systemCheck.status}
                       </div>
@@ -808,8 +808,8 @@ export function AutomationDemo() {
                   <div className="grid sm:grid-cols-3 gap-3">
                     {scenario.systemCheck.verifiedRecords.map((rec, i) => (
                       <div key={i} className="p-3.5 rounded-xl bg-black/40 border border-white/5">
-                        <div className="text-[10px] font-mono text-muted-foreground uppercase">{rec.label}</div>
-                        <div className="text-xs font-medium text-white/90 mt-1">{rec.value}</div>
+                        <div className="text-[10px] font-mono text-[#8E8295] uppercase">{rec.label}</div>
+                        <div className="text-xs font-medium text-[#F6EFF5]/90 mt-1">{rec.value}</div>
                       </div>
                     ))}
                   </div>
@@ -819,14 +819,14 @@ export function AutomationDemo() {
                   <button
                     type="button"
                     onClick={() => setActiveStage(1)}
-                    className="text-xs text-muted-foreground hover:text-white transition-colors"
+                    className="text-xs text-[#8E8295] hover:text-[#F6EFF5] transition-colors"
                   >
                     ← Previous Step
                   </button>
                   <button
                     type="button"
                     onClick={() => setActiveStage(3)}
-                    className="py-2.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer shadow-md shadow-emerald-600/20"
+                    className="py-2.5 px-5 rounded-xl bg-[#C9AEC6] hover:bg-[#EAD6E6] text-[#0B0B0B] text-xs font-bold flex items-center gap-2 transition-all cursor-pointer shadow-md"
                   >
                     Proceed to Human Review Gate <ArrowRight className="w-3.5 h-3.5" />
                   </button>
@@ -844,44 +844,44 @@ export function AutomationDemo() {
                 className="space-y-4"
               >
                 {/* Header with safety gate warning */}
-                <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
+                <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/[0.06]">
                   <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono text-xs font-bold border border-amber-500/30">
+                    <span className="px-2 py-0.5 rounded bg-[#C9AEC6]/20 text-[#C9AEC6] font-mono text-xs font-bold border border-[#C9AEC6]/30">
                       STAGE 04 / 05
                     </span>
-                    <h3 className="text-sm md:text-base font-bold text-white uppercase tracking-wide flex items-center gap-2">
-                      <ShieldCheck className="w-4 h-4 text-amber-400" />
+                    <h3 className="text-sm md:text-base font-bold text-[#F6EFF5] uppercase tracking-wide flex items-center gap-2">
+                      <ShieldCheck className="w-4 h-4 text-[#C9AEC6]" />
                       Human Review Gate
                     </h3>
                   </div>
-                  <span className="text-[10px] font-mono uppercase px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/40 flex items-center gap-1.5 animate-pulse">
+                  <span className="text-[10px] font-mono uppercase px-2.5 py-1 rounded-full bg-[#C9AEC6]/15 text-[#C9AEC6] border border-[#C9AEC6]/40 flex items-center gap-1.5">
                     <Lock className="w-3 h-3" /> Awaiting Human Authorization
                   </span>
                 </div>
 
                 {/* Safety Protocol Banner */}
-                <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-200 flex items-start gap-2.5 leading-relaxed">
-                  <Zap className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                <div className="p-3.5 rounded-xl bg-[#161616] border border-[#C9AEC6]/30 text-xs text-[#F6EFF5] flex items-start gap-2.5 leading-relaxed">
+                  <Zap className="w-4 h-4 text-[#C9AEC6] shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-amber-300 font-semibold">Strict Human-in-the-Loop Protocol: </strong>
+                    <strong className="text-[#C9AEC6] font-semibold">Strict Human-in-the-Loop Protocol: </strong>
                     Autonomous execution is suspended. No live financial, CRM, or external communications will execute without explicit supervisor authorization.
                   </div>
                 </div>
 
                 {/* Action Review Form Card */}
-                <div className="glass p-5 rounded-2xl border border-emerald-500/30 bg-black/40 space-y-3.5">
-                  <div className="flex flex-wrap items-center justify-between text-xs gap-2 pb-2.5 border-b border-white/10">
+                <div className="glass p-5 rounded-2xl border border-[#C9AEC6]/30 bg-black/40 space-y-3.5">
+                  <div className="flex flex-wrap items-center justify-between text-xs gap-2 pb-2.5 border-b border-white/[0.06]">
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-white uppercase">{scenario.humanStep.role}</span>
-                      <span className="text-[10px] font-mono text-muted-foreground">({scenario.humanStep.supervisor})</span>
+                      <span className="font-bold text-[#F6EFF5] uppercase">{scenario.humanStep.role}</span>
+                      <span className="text-[10px] font-mono text-[#8E8295]">({scenario.humanStep.supervisor})</span>
                     </div>
-                    <span className="text-[11px] text-muted-foreground">{scenario.humanStep.actionPrompt}</span>
+                    <span className="text-[11px] text-[#8E8295]">{scenario.humanStep.actionPrompt}</span>
                   </div>
 
                   <div className="space-y-1.5">
                     <div className="flex items-center justify-between text-xs">
-                      <label htmlFor="prepared-action-input" className="font-semibold text-brand-300 flex items-center gap-1.5">
-                        <PenLine className="w-3 h-3 text-brand-400" />
+                      <label htmlFor="prepared-action-input" className="font-semibold text-[#C9AEC6] flex items-center gap-1.5">
+                        <PenLine className="w-3 h-3 text-[#C9AEC6]" />
                         <span>AI Prepared Action (User Editable Before Approval):</span>
                       </label>
                       <div className="flex items-center gap-2">
@@ -889,12 +889,12 @@ export function AutomationDemo() {
                           <button
                             type="button"
                             onClick={handleResetDraft}
-                            className="text-[11px] text-amber-300 hover:text-amber-200 transition-colors cursor-pointer"
+                            className="text-[11px] text-[#C9AEC6] hover:text-[#EAD6E6] transition-colors cursor-pointer"
                           >
                             Reset to AI draft
                           </button>
                         )}
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#C9AEC6]/10 text-[#C9AEC6] border border-[#C9AEC6]/20">
                           Directly Editable
                         </span>
                       </div>
@@ -907,15 +907,15 @@ export function AutomationDemo() {
                       value={currentDraft}
                       onChange={(e) => handleDraftChange(e.target.value)}
                       className={cn(
-                        "w-full p-3.5 rounded-xl bg-black/60 border text-xs md:text-sm text-white/95 leading-relaxed font-sans transition-all focus:outline-none resize-y min-h-[100px]",
+                        "w-full p-3.5 rounded-xl bg-black/60 border text-xs md:text-sm text-[#F6EFF5] leading-relaxed font-sans transition-all focus:outline-none resize-y min-h-[100px]",
                         draftError
-                          ? "border-rose-500/70 focus:border-rose-500 bg-rose-950/15"
-                          : "border-white/15 focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/40"
+                          ? "border-[#EF4444]/70 focus:border-[#EF4444] bg-[#EF4444]/10"
+                          : "border-white/15 focus:border-[#C9AEC6] focus:ring-1 focus:ring-[#C9AEC6]/40"
                       )}
                     />
 
                     {draftError && (
-                      <p className="text-xs text-rose-400 flex items-center gap-1 font-medium pt-0.5">
+                      <p className="text-xs text-[#EF4444] flex items-center gap-1 font-medium pt-0.5">
                         <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                         {draftError}
                       </p>
@@ -928,11 +928,11 @@ export function AutomationDemo() {
                       type="button"
                       onClick={handleApproveAndExecute}
                       disabled={isExecuting}
-                      className="flex-1 py-3.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs md:text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-150 hover:shadow-[0_0_25px_rgba(16,185,129,0.5)] cursor-pointer disabled:opacity-60"
+                      className="flex-1 py-3.5 px-5 rounded-xl bg-[#C9AEC6] hover:bg-[#EAD6E6] text-[#0B0B0B] text-xs md:text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-150 hover:shadow-[0_0_25px_rgba(201,174,198,0.35)] cursor-pointer disabled:opacity-60"
                     >
                       {isExecuting ? (
                         <>
-                          <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          <span className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
                           <span>Authorizing & Executing...</span>
                         </>
                       ) : (
@@ -946,9 +946,9 @@ export function AutomationDemo() {
                     <button
                       type="button"
                       onClick={() => draftTextareaRef.current?.focus()}
-                      className="py-3.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 text-muted-foreground hover:text-white border border-white/10 text-xs md:text-sm font-medium transition-all flex items-center justify-center gap-2 cursor-pointer"
+                      className="py-3.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 text-[#8E8295] hover:text-[#F6EFF5] border border-white/10 text-xs md:text-sm font-medium transition-all flex items-center justify-center gap-2 cursor-pointer"
                     >
-                      <PenLine className="w-3.5 h-3.5 text-brand-400" />
+                      <PenLine className="w-3.5 h-3.5 text-[#C9AEC6]" />
                       <span>{scenario.humanStep.secondaryAction}</span>
                     </button>
                   </div>
@@ -984,7 +984,7 @@ export function AutomationDemo() {
                 {/* Performance Metric Tile */}
                 <div className="inline-flex items-center gap-4 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs font-mono mx-auto">
                   <span className="text-muted-foreground">{scenario.executionResult.metrics.label}:</span>
-                  <span className="text-rose-300 line-through">{scenario.executionResult.metrics.before}</span>
+                  <span className="text-slate-400 line-through">{scenario.executionResult.metrics.before}</span>
                   <span className="text-emerald-400 font-bold">{scenario.executionResult.metrics.after}</span>
                 </div>
 
@@ -1002,7 +1002,7 @@ export function AutomationDemo() {
                   <button
                     type="button"
                     onClick={handleReset}
-                    className="text-xs text-brand-300 hover:text-white underline underline-offset-4 cursor-pointer"
+                    className="text-xs text-[#C9AEC6] hover:text-[#EAD6E6] underline underline-offset-4 cursor-pointer"
                   >
                     Run scenario again
                   </button>
@@ -1010,7 +1010,7 @@ export function AutomationDemo() {
                   <button
                     type="button"
                     onClick={() => handleScenarioChange((activeScenarioIdx + 1) % SCENARIOS.length)}
-                    className="text-xs text-brand-300 hover:text-white underline underline-offset-4 cursor-pointer font-semibold"
+                    className="text-xs text-[#C9AEC6] hover:text-[#EAD6E6] underline underline-offset-4 cursor-pointer font-semibold"
                   >
                     Try next scenario →
                   </button>

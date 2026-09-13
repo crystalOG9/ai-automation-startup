@@ -140,7 +140,7 @@ export function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out border-b",
         isScrolled
-          ? "bg-[#090607]/90 backdrop-blur-xl border-white/[0.08] shadow-[0_4px_30px_rgba(0,0,0,0.6)] py-3"
+          ? "bg-[#0B0B0B]/90 backdrop-blur-xl border-white/[0.06] shadow-[0_4px_30px_rgba(0,0,0,0.6)] py-3"
           : "bg-transparent border-transparent py-5"
       )}
     >
@@ -154,12 +154,12 @@ export function Navbar() {
           <div className="transition-transform duration-300 group-hover:scale-105">
             <SpartanLogo size={32} priority />
           </div>
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-[#fecdd3] to-[#e11d48] font-bold tracking-tight text-lg md:text-xl">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FFFFFF] via-[#EAD6E6] to-[#C9AEC6] font-bold tracking-tight text-lg md:text-xl">
             SPARTAN
           </span>
         </Link>
 
-        {/* Desktop Navigation - Plain Text Links with Crimson Laser Glowing Underline */}
+        {/* Desktop Navigation - Plain Text Links with Champagne Laser Glowing Underline */}
         <nav className="hidden lg:flex items-center gap-7 xl:gap-8">
           {NAV_LINKS.map((link) => {
             const isActive = activeId === link.id;
@@ -172,18 +172,18 @@ export function Navbar() {
                 className={cn(
                   "relative py-1 text-xs sm:text-sm font-semibold tracking-wider transition-colors duration-200 uppercase font-mono cursor-pointer select-none",
                   isActive
-                    ? "text-white [text-shadow:0_0_12px_rgba(255,255,255,0.7),0_0_20px_rgba(225,29,72,0.5)]"
-                    : "text-[#a3959a] hover:text-white"
+                    ? "text-[#F6EFF5] [text-shadow:0_0_12px_rgba(201,174,198,0.4)]"
+                    : "text-[#BAAEC0] hover:text-[#F6EFF5]"
                 )}
               >
                 <span>{link.name}</span>
 
-                {/* Glowing Crimson Laser Underline */}
+                {/* Glowing Champagne Laser Underline */}
                 {isActive && (
                   <motion.div
                     layoutId="nav-active-glow-laser"
                     transition={{ type: "spring", stiffness: 420, damping: 32 }}
-                    className="absolute -bottom-1 left-0 right-0 h-[2px] rounded-full bg-[#e11d48] shadow-[0_0_8px_#e11d48,0_0_16px_#e11d48,0_0_24px_rgba(225,29,72,0.8)] pointer-events-none"
+                    className="absolute -bottom-1 left-0 right-0 h-[2px] rounded-full bg-[#C9AEC6] shadow-[0_0_8px_#C9AEC6,0_0_16px_rgba(201,174,198,0.4)] pointer-events-none"
                   />
                 )}
               </a>
@@ -195,18 +195,18 @@ export function Navbar() {
         <div className="flex items-center gap-3 md:gap-4">
           <Link
             href="#contact"
-            className="hidden md:inline-flex items-center gap-2 relative overflow-hidden bg-gradient-to-r from-[#e11d48] via-[#be123c] to-[#9f1239] hover:from-[#f43f5e] hover:to-[#e11d48] text-white px-6 py-2.5 rounded-xl text-xs md:text-sm font-bold tracking-wider uppercase border border-[#fb7185]/50 shadow-[0_0_20px_rgba(225,29,72,0.35)] hover:shadow-[0_0_30px_rgba(225,29,72,0.6)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-150 ease-out group"
+            className="hidden md:inline-flex items-center gap-2 relative overflow-hidden bg-[#C9AEC6] hover:bg-[#EAD6E6] text-[#0B0B0B] px-6 py-2.5 rounded-xl text-xs md:text-sm font-bold tracking-wider uppercase border border-[#EAD6E6]/60 shadow-[0_0_15px_rgba(201,174,198,0.15)] hover:shadow-[0_0_20px_rgba(201,174,198,0.25)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-150 ease-out group"
           >
             {/* Crisp directional specular sweep on hover */}
             <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out bg-gradient-to-r from-transparent via-white/35 to-transparent pointer-events-none" />
             
             <span className="relative z-10 font-mono text-xs">Show Us Your Workflow</span>
-            <ArrowRight className="w-3.5 h-3.5 relative z-10 group-hover:translate-x-1 transition-transform duration-150 text-white" />
+            <ArrowRight className="w-3.5 h-3.5 relative z-10 group-hover:translate-x-1 transition-transform duration-150 text-[#0B0B0B]" />
           </Link>
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden text-[#a3959a] hover:text-white w-11 h-11 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors cursor-pointer"
+            className="lg:hidden text-[#BAAEC0] hover:text-[#F6EFF5] w-11 h-11 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors cursor-pointer"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -227,7 +227,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="lg:hidden absolute top-full left-0 right-0 bg-[#090607]/95 backdrop-blur-2xl border-b border-white/10 p-5 shadow-2xl"
+            className="lg:hidden absolute top-full left-0 right-0 bg-[#0B0B0B]/95 backdrop-blur-2xl border-b border-white/[0.06] p-5 shadow-2xl"
           >
             <nav className="flex flex-col space-y-1">
               {NAV_LINKS.map((link) => {
@@ -239,8 +239,8 @@ export function Navbar() {
                     className={cn(
                       "py-2.5 px-4 text-sm font-medium rounded-xl transition-all duration-150 flex items-center justify-between",
                       isActive
-                        ? "text-white font-semibold [text-shadow:0_0_10px_rgba(225,29,72,0.7)] bg-white/[0.04]"
-                        : "text-[#a3959a] hover:text-white hover:bg-white/[0.04]"
+                        ? "text-[#F6EFF5] font-semibold [text-shadow:0_0_10px_rgba(201,174,198,0.3)] bg-white/[0.04]"
+                        : "text-[#BAAEC0] hover:text-[#F6EFF5] hover:bg-white/[0.04]"
                     )}
                     onClick={(e) => {
                       handleLinkClick(e, link.href, link.id);
@@ -248,18 +248,18 @@ export function Navbar() {
                     }}
                   >
                     <span>{link.name}</span>
-                    <ArrowRight className={cn("w-3.5 h-3.5", isActive ? "text-[#e11d48]" : "text-[#a3959a]/60")} />
+                    <ArrowRight className={cn("w-3.5 h-3.5", isActive ? "text-[#C9AEC6]" : "text-[#8E8295]/60")} />
                   </a>
                 );
               })}
               <div className="pt-3">
                 <Link
                   href="#contact"
-                  className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#e11d48] to-[#be123c] text-white px-5 py-3 rounded-xl text-sm font-bold shadow-[0_0_20px_rgba(225,29,72,0.4)] transition-all"
+                  className="flex items-center justify-center gap-2 bg-[#C9AEC6] hover:bg-[#EAD6E6] text-[#0B0B0B] px-5 py-3 rounded-xl text-sm font-bold shadow-[0_0_15px_rgba(201,174,198,0.2)] transition-all"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <span>Show Us Your Workflow</span>
-                  <ArrowRight className="w-4 h-4 text-white" />
+                  <ArrowRight className="w-4 h-4 text-[#0B0B0B]" />
                 </Link>
               </div>
             </nav>

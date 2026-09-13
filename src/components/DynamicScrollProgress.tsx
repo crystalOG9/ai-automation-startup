@@ -22,9 +22,9 @@ export function DynamicScrollProgress() {
       {/* Laser Track Background Line */}
       <div className="w-full h-[2px] bg-white/[0.04]" />
 
-      {/* Main Dynamic Laser Stream in Crimson and Warm Champagne */}
+      {/* Main Dynamic Laser Stream in Champagne Gold */}
       <motion.div
-        className="absolute top-0 left-0 right-0 h-[2px] origin-left bg-gradient-to-r from-[#881337] via-[#e11d48] to-[#ffffff]"
+        className="absolute top-0 left-0 right-0 h-[2px] origin-left bg-gradient-to-r from-[#141414] via-[#8E7796] to-[#C9AEC6]"
         style={{
           scaleX,
           opacity: laserOpacity,
@@ -32,14 +32,14 @@ export function DynamicScrollProgress() {
       >
         {/* Diffuse energetic glow under the laser beam */}
         <motion.div
-          className="absolute inset-0 blur-[2px] bg-gradient-to-r from-[#881337] via-[#e11d48] to-[#ffffff]"
+          className="absolute inset-0 blur-[2px] bg-gradient-to-r from-[#141414] via-[#8E7796] to-[#C9AEC6]"
           style={{ opacity: velocityGlow }}
         />
 
         {/* Leading Plasma Flare / Laser Head */}
         <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 flex items-center justify-center">
           {/* Intense center plasma core with controlled glow */}
-          <div className="w-2.5 h-2.5 rounded-full bg-[#ffffff] shadow-[0_0_8px_#ffffff,0_0_16px_#e11d48]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#F6EFF5] shadow-[0_0_6px_#F6EFF5,0_0_12px_rgba(201,174,198,0.5)]" />
         </div>
       </motion.div>
     </div>

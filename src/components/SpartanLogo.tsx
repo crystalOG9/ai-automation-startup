@@ -17,11 +17,11 @@ export function SpartanLogo({
       style={{ width: size, height: size }}
     >
       <Image
-        src="/branding/spartan-3d-logo-red.png"
+        src="/branding/spartan-galaxy-logo.png"
         alt="SPARTAN Logo"
         width={size * 2}
         height={size * 2}
-        className="w-full h-full object-contain drop-shadow-[0_0_12px_rgba(225,29,72,0.45)]"
+        className="w-full h-full object-contain drop-shadow-[0_0_12px_rgba(201,174,198,0.35)]"
         priority={priority}
       />
     </div>

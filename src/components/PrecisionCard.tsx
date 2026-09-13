@@ -12,7 +12,7 @@ interface PrecisionCardProps extends React.HTMLAttributes<HTMLDivElement> {
 export function PrecisionCard({
   children,
   className,
-  glowColor = "rgba(225, 29, 72, 0.12)",
+  glowColor = "rgba(201, 174, 198, 0.08)",
   ...props
 }: PrecisionCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -86,8 +86,8 @@ export function PrecisionCard({
       className={cn(
         "relative overflow-hidden rounded-2xl border transition-all duration-200",
         isHovered
-          ? "border-[#e11d48]/60 shadow-[0_8px_32px_rgba(225,29,72,0.22)]"
-          : "border-white/10",
+          ? "border-[#C9AEC6]/35 shadow-[0_8px_32px_rgba(201,174,198,0.08)]"
+          : "border-white/[0.06]",
         className
       )}
       {...props}

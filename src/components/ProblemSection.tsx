@@ -12,19 +12,17 @@ const TODAY_STEPS = [
   { text: "Draft Reply", icon: Clock },
   { text: "Update Sheet", icon: Clock },
   { text: "Send Message", icon: Clock },
-  { text: "Repeat 40x daily", icon: AlertTriangle, color: "text-red-400" },
+  { text: "Repeat 40x daily", icon: AlertTriangle, color: "text-[#EF4444]" },
 ];
 
 const AUTOMATION_STEPS = [
   { text: "Inbound Trigger", icon: Mail },
-  { text: "Data Extraction", icon: Bot, color: "text-brand-400" },
-  { text: "Rule Validation", icon: Settings, color: "text-brand-400" },
-  { text: "Database Query", icon: Database, color: "text-brand-400" },
-  { text: "Human Sign-Off", icon: UserCheck, color: "text-green-400" },
-  { text: "Automated System Sync", icon: CheckCircle2, color: "text-brand-400" },
+  { text: "Data Extraction", icon: Bot, color: "text-[#C9AEC6]" },
+  { text: "Rule Validation", icon: Settings, color: "text-[#C9AEC6]" },
+  { text: "Database Query", icon: Database, color: "text-[#C9AEC6]" },
+  { text: "Human Sign-Off", icon: UserCheck, color: "text-[#22C55E]" },
+  { text: "Automated System Sync", icon: CheckCircle2, color: "text-[#C9AEC6]" },
 ];
-
-
 
 import {
   fadeInLeft,
@@ -47,11 +45,13 @@ export function ProblemSection() {
           variants={scaleReveal}
           className="max-w-3xl mx-auto text-center mb-16"
         >
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-white">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-[#F6EFF5]">
             You don&apos;t have an AI shortage. <br className="hidden md:block" />
-            <span className="text-[#a3959a]">You have a workflow bottleneck.</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFFFFF] via-[#EAD6E6] to-[#C9AEC6]">
+              You have a workflow bottleneck.
+            </span>
           </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">
+          <p className="text-lg text-[#8E8295] leading-relaxed">
             Valuable operators spend hours copying data between inboxes, spreadsheets, and internal software. The work is necessary, but paying people to move text between screens is not.
           </p>
         </motion.div>
@@ -67,12 +67,12 @@ export function ProblemSection() {
             className="h-full"
           >
             <PrecisionCard
-              glowColor="rgba(239, 68, 68, 0.08)"
-              className="glass-card p-8 rounded-2xl border border-white/10 relative overflow-hidden h-full shadow-lg hover:border-white/20 transition-all duration-300"
+              glowColor="rgba(201, 174, 198, 0.05)"
+              className="glass-card p-8 rounded-2xl border border-white/[0.06] relative overflow-hidden h-full shadow-lg hover:border-white/15 transition-all duration-300"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/5 blur-[80px] rounded-full pointer-events-none" />
-              <h3 className="text-xl font-semibold mb-6 flex items-center gap-2 text-white/80">
-                <span className="w-2 h-2 rounded-full bg-red-500/80"></span>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#C9AEC6]/[0.03] blur-[80px] rounded-full pointer-events-none" />
+              <h3 className="text-xl font-semibold mb-6 flex items-center gap-2 text-[#F6EFF5]/80">
+                <span className="w-2 h-2 rounded-full bg-[#EF4444]"></span>
                 TODAY
               </h3>
               
@@ -88,13 +88,13 @@ export function ProblemSection() {
                       delay: 0.12 + idx * 0.055,
                       ease: SPARTAN_EASE,
                     }}
-                    className="flex items-center gap-3 text-muted-foreground"
+                    className="flex items-center gap-3 text-[#8E8295]"
                   >
                     <div className="w-8 flex justify-center">
                       {idx === 0 ? (
                         <step.icon className="w-5 h-5 text-white/50" />
                       ) : idx === TODAY_STEPS.length - 1 ? (
-                        <step.icon className="w-4 h-4 text-red-400/70" />
+                        <step.icon className="w-4 h-4 text-[#EF4444]" />
                       ) : (
                         <ArrowRight className="w-4 h-4 text-white/20" />
                       )}
@@ -117,12 +117,12 @@ export function ProblemSection() {
             className="h-full"
           >
             <PrecisionCard
-              glowColor="rgba(225, 29, 72, 0.22)"
-              className="glass-card p-8 rounded-2xl border border-brand-500/30 bg-brand-950/10 relative overflow-hidden h-full shadow-xl hover:border-[#e11d48]/60 transition-all duration-300"
+              glowColor="rgba(201, 174, 198, 0.08)"
+              className="glass-card p-8 rounded-2xl border border-[#C9AEC6]/30 bg-[#161616] relative overflow-hidden h-full shadow-xl hover:border-[#C9AEC6]/50 transition-all duration-300"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-brand-500/10 blur-[80px] rounded-full pointer-events-none" />
-              <h3 className="text-xl font-semibold mb-6 flex items-center gap-2 text-white">
-                <span className="w-2 h-2 rounded-full bg-[#e11d48] shadow-[0_0_8px_rgba(225, 29, 72,0.8)]"></span>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#C9AEC6]/[0.03] blur-[80px] rounded-full pointer-events-none" />
+              <h3 className="text-xl font-semibold mb-6 flex items-center gap-2 text-[#F6EFF5]">
+                <span className="w-2 h-2 rounded-full bg-[#C9AEC6] shadow-[0_0_8px_rgba(201,174,198,0.6)]"></span>
                 WITH AUTOMATION
               </h3>
               
@@ -140,15 +140,15 @@ export function ProblemSection() {
                     }}
                     className="flex items-start gap-4"
                   >
-                    <div className={`p-2 rounded-lg bg-white/5 ${step.color || "text-white/60"}`}>
+                    <div className={`p-2 rounded-lg bg-white/[0.04] ${step.color || "text-white/60"}`}>
                       <step.icon className="w-5 h-5" />
                     </div>
                     <div className="pt-1.5 flex-1">
-                      <span className="text-sm md:text-base font-medium text-white">
+                      <span className="text-sm md:text-base font-medium text-[#F6EFF5]">
                         {step.text}
                       </span>
                       {idx < AUTOMATION_STEPS.length - 1 && (
-                        <div className="h-4 border-l-2 border-white/10 ml-2 mt-2 border-dashed" />
+                        <div className="h-4 border-l-2 border-white/[0.08] ml-2 mt-2 border-dashed" />
                       )}
                     </div>
                   </motion.div>

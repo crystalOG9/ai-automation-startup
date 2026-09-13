@@ -48,7 +48,7 @@ export function ScrollToTop() {
           <button
             onClick={scrollToTop}
             aria-label="Scroll to top of page"
-            className="relative w-11 h-11 rounded-xl bg-[#120b0e]/90 backdrop-blur-xl border border-white/10 hover:border-[#e11d48]/60 shadow-[0_0_20px_rgba(0,0,0,0.6)] flex items-center justify-center text-slate-300 hover:text-[#ffffff] transition-colors group cursor-pointer"
+            className="relative w-11 h-11 rounded-xl bg-[#141414]/90 backdrop-blur-xl border border-white/[0.08] hover:border-[#C9AEC6]/40 shadow-[0_0_20px_rgba(0,0,0,0.6)] flex items-center justify-center text-[#BAAEC0] hover:text-[#F6EFF5] transition-colors group cursor-pointer"
           >
             {/* SVG Circular Progress Track */}
             <svg className="absolute inset-0 w-full h-full -rotate-90 p-[2px]" viewBox="0 0 44 44">
@@ -66,13 +66,13 @@ export function ScrollToTop() {
                 cx="22"
                 cy="22"
                 r="18"
-                className="stroke-[#e11d48]"
+                className="stroke-[#C9AEC6]"
                 strokeWidth="2.5"
                 strokeLinecap="round"
                 fill="transparent"
                 style={{
                   pathLength: smoothProgress,
-                  filter: "drop-shadow(0 0 4px rgba(225, 29, 72, 0.6))",
+                  filter: "drop-shadow(0 0 4px rgba(201, 174, 198, 0.35))",
                 }}
               />
             </svg>
@@ -81,7 +81,7 @@ export function ScrollToTop() {
             <ArrowUp className="w-4 h-4 relative z-10 group-hover:-translate-y-0.5 transition-transform duration-200" />
 
             {/* Hover Tooltip */}
-            <div className="absolute right-full mr-2.5 px-2 py-0.5 rounded-md bg-[#120b0e] border border-white/10 text-[10px] font-mono tracking-widest text-[#e11d48] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg">
+            <div className="absolute right-full mr-2.5 px-2 py-0.5 rounded-md bg-[#141414] border border-white/[0.08] text-[10px] font-mono tracking-widest text-[#C9AEC6] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg">
               TOP
             </div>
           </button>

@@ -19,48 +19,48 @@ const WORKFLOW_STEPS = [
     title: "DISCOVERY",
     desc: "Identify the repetitive tasks draining your team's weekly hours.",
     icon: MessageSquare,
-    color: "text-[#e11d48]",
-    glow: "bg-[#881337]/30",
+    color: "text-[#C9AEC6]",
+    glow: "bg-[#C9AEC6]/10",
   },
   {
     num: "02",
     title: "OBSERVATION",
     desc: "We review the live screens, data formats, and edge cases.",
     icon: Eye,
-    color: "text-[#ffffff]",
-    glow: "bg-[#881337]/30",
+    color: "text-[#C9AEC6]",
+    glow: "bg-[#C9AEC6]/10",
   },
   {
     num: "03",
     title: "ARCHITECTURE",
     desc: "We define the exact triggers, validation rules, and review gates.",
     icon: Network,
-    color: "text-[#e11d48]",
-    glow: "bg-[#881337]/30",
+    color: "text-[#C9AEC6]",
+    glow: "bg-[#C9AEC6]/10",
   },
   {
     num: "04",
     title: "INTEGRATION",
     desc: "We connect your existing software and build the processing pipeline.",
     icon: Cpu,
-    color: "text-[#ffffff]",
-    glow: "bg-[#881337]/30",
+    color: "text-[#C9AEC6]",
+    glow: "bg-[#C9AEC6]/10",
   },
   {
     num: "05",
     title: "VERIFICATION",
     desc: "We track turnaround speed, error rates, and operator hours saved.",
     icon: BarChart3,
-    color: "text-[#e11d48]",
-    glow: "bg-[#881337]/30",
+    color: "text-[#C9AEC6]",
+    glow: "bg-[#C9AEC6]/10",
   },
   {
     num: "06",
     title: "EXPANSION",
     desc: "Once validated, we connect the architecture to adjacent workflows.",
     icon: Maximize2,
-    color: "text-[#ffffff]",
-    glow: "bg-[#881337]/30",
+    color: "text-[#22C55E]",
+    glow: "bg-[#22C55E]/15",
   },
 ];
 
@@ -83,15 +83,15 @@ export function HowItWorks() {
           variants={scaleReveal}
           className="max-w-4xl mx-auto text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-[#e11d48]/30 text-[#e11d48] text-xs font-semibold uppercase tracking-wider mb-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-[#C9AEC6]/30 text-[#C9AEC6] text-xs font-semibold uppercase tracking-wider mb-4">
             Deployment Roadmap
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-6">
-            Start with <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#fda4af] to-[#e11d48]">one workflow.</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#F6EFF5] mb-6">
+            Start with <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFFFFF] via-[#EAD6E6] to-[#C9AEC6]">one workflow.</span>
           </h2>
 
-          <p className="text-base md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base md:text-xl text-[#8E8295] max-w-2xl mx-auto leading-relaxed">
             No multi-month consulting phases. We isolate a single high-friction bottleneck, deploy safe automation, and measure operational time saved.
           </p>
         </motion.div>
@@ -115,29 +115,29 @@ export function HowItWorks() {
                 className="h-full"
               >
                 <PrecisionCard
-                  glowColor="rgba(225, 29, 72, 0.12)"
-                  className="glass-card p-6 md:p-8 rounded-2xl border border-white/5 hover:border-[#e11d48]/30 transition-all duration-300 group h-full flex flex-col justify-between hover:bg-white/[0.04] shadow-lg"
+                  glowColor="rgba(201, 174, 198, 0.08)"
+                  className="glass-card p-6 md:p-8 rounded-2xl border border-white/[0.06] hover:border-[#C9AEC6]/30 transition-all duration-300 group h-full flex flex-col justify-between hover:bg-[#161616] shadow-lg bg-[#141414]"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-6">
                       <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${step.glow} ${step.color} border border-white/5`}>
                         <Icon className="w-6 h-6" />
                       </div>
-                      <span className="font-mono font-bold text-xs text-[#e11d48] bg-[#881337]/30 px-2.5 py-1 rounded-full border border-[#e11d48]/20">
+                      <span className="font-mono font-bold text-xs text-[#C9AEC6] bg-[#C9AEC6]/10 px-2.5 py-1 rounded-full border border-[#C9AEC6]/20">
                         {step.num}
                       </span>
                     </div>
 
-                    <h3 className="text-lg md:text-xl font-bold text-white mb-2 tracking-wide uppercase">
+                    <h3 className="text-lg md:text-xl font-bold text-[#F6EFF5] mb-2 tracking-wide uppercase">
                       {step.title}
                     </h3>
 
-                    <p className="text-sm text-muted-foreground leading-relaxed">
+                    <p className="text-sm text-[#8E8295] leading-relaxed">
                       {step.desc}
                     </p>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-white/5 flex items-center text-[11px] font-mono text-muted-foreground/60 group-hover:text-[#e11d48] transition-colors">
+                  <div className="mt-6 pt-4 border-t border-white/[0.06] flex items-center text-[11px] font-mono text-[#8E8295]/60 group-hover:text-[#C9AEC6] transition-colors">
                     <span>Step {step.num} of 06</span>
                   </div>
                 </PrecisionCard>
@@ -150,7 +150,7 @@ export function HowItWorks() {
         <div className="text-center">
           <Link
             href="#contact"
-            className="relative overflow-hidden inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#e11d48] to-[#be123c] text-white px-8 py-4 rounded-xl text-sm md:text-base font-semibold uppercase font-mono tracking-wider border border-[#e11d48]/60 shadow-[0_0_20px_rgba(225, 29, 72,0.3)] hover:brightness-105 hover:shadow-[0_0_30px_rgba(225, 29, 72,0.5)] hover:-translate-y-0.5 hover:scale-[1.015] active:translate-y-0 active:scale-[0.98] transition-all duration-150 ease-out group"
+            className="relative overflow-hidden inline-flex items-center justify-center gap-2.5 bg-[#C9AEC6] hover:bg-[#EAD6E6] text-[#0B0B0B] px-8 py-4 rounded-xl text-sm md:text-base font-semibold uppercase font-mono tracking-wider border border-[#EAD6E6]/60 shadow-[0_0_20px_rgba(201,174,198,0.18)] hover:shadow-[0_0_30px_rgba(201,174,198,0.3)] hover:-translate-y-0.5 hover:scale-[1.015] active:translate-y-0 active:scale-[0.98] transition-all duration-150 ease-out group"
           >
             <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none" />
             <span className="relative z-10">SHOW US YOUR WORKFLOW</span>

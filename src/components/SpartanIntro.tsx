@@ -21,13 +21,13 @@ interface Particle {
   clusterIndex: number;
 }
 
-// Color palette
+// Color palette: Obsidian, Graphite, Champagne Gold, Warm White
 const COLORS = [
-  "rgba(56, 189, 248, ", // Cyan-400
-  "rgba(96, 165, 250, ", // Blue-400
-  "rgba(147, 197, 253, ", // Blue-300
-  "rgba(255, 255, 255, ", // Pure White
-  "rgba(34, 211, 238, ", // Cyan-300
+  "rgba(201, 174, 198, ", // Primary Champagne Gold (#C9AEC6)
+  "rgba(227, 204, 150, ", // Highlight Champagne (#EAD6E6)
+  "rgba(191, 164, 102, ", // Secondary Gold (#B398B8)
+  "rgba(246, 239, 245, ", // Cosmic Starlight (#F6EFF5)
+  "rgba(186, 174, 192, ", // Cosmic Stardust (#BAAEC0)
 ];
 
 export function SpartanIntro() {
@@ -426,8 +426,8 @@ export function SpartanIntro() {
       // Clear Canvas Void
       ctx.clearRect(0, 0, width, height);
 
-      // Deep Void Dark Background Fill with subtle atmospheric vignette
-      ctx.fillStyle = "#03060a";
+      // Deep Obsidian Background Fill
+      ctx.fillStyle = "#080808";
       ctx.fillRect(0, 0, width, height);
 
       // Phase calculations
@@ -470,7 +470,7 @@ export function SpartanIntro() {
 
             if (dist < lineMaxDist) {
               const alpha = (1 - dist / lineMaxDist) * baseLineAlpha;
-              ctx.strokeStyle = `rgba(56, 189, 248, ${alpha})`;
+              ctx.strokeStyle = `rgba(201, 174, 198, ${alpha * 0.7})`;
               ctx.beginPath();
               ctx.moveTo(p1.x, p1.y);
               ctx.lineTo(p2.x, p2.y);
@@ -490,14 +490,14 @@ export function SpartanIntro() {
         shockwaveAlpha *= 0.94;
 
         if (shockwaveAlpha > 0.01) {
-          ctx.strokeStyle = `rgba(56, 189, 248, ${shockwaveAlpha})`;
-          ctx.lineWidth = 2.5;
+          ctx.strokeStyle = `rgba(201, 174, 198, ${shockwaveAlpha * 0.75})`;
+          ctx.lineWidth = 2.0;
           ctx.beginPath();
           ctx.arc(width / 2, height / 2, shockwaveRadius, 0, Math.PI * 2);
           ctx.stroke();
 
           // Secondary harmonic ring
-          ctx.strokeStyle = `rgba(147, 197, 253, ${shockwaveAlpha * 0.5})`;
+          ctx.strokeStyle = `rgba(227, 204, 150, ${shockwaveAlpha * 0.35})`;
           ctx.lineWidth = 1.0;
           ctx.beginPath();
           ctx.arc(width / 2, height / 2, shockwaveRadius * 0.75, 0, Math.PI * 2);
@@ -553,9 +553,9 @@ export function SpartanIntro() {
 
         // High-energy glow for locked glyph particles
         if (isSpartanLocked && p.isGlyph && (i % 4 === 0)) {
-          ctx.fillStyle = `rgba(56, 189, 248, 0.22)`;
+          ctx.fillStyle = `rgba(201, 174, 198, 0.18)`;
           ctx.beginPath();
-          ctx.arc(p.x, p.y, currentSize * 2.8, 0, Math.PI * 2);
+          ctx.arc(p.x, p.y, currentSize * 2.5, 0, Math.PI * 2);
           ctx.fill();
         }
       }
@@ -570,9 +570,9 @@ export function SpartanIntro() {
           height / 2,
           Math.min(width * 0.28, 220)
         );
-        glowGradient.addColorStop(0, "rgba(56, 189, 248, 0.16)");
-        glowGradient.addColorStop(0.5, "rgba(37, 99, 235, 0.08)");
-        glowGradient.addColorStop(1, "rgba(3, 6, 10, 0)");
+        glowGradient.addColorStop(0, "rgba(201, 174, 198, 0.08)");
+        glowGradient.addColorStop(0.5, "rgba(143, 120, 74, 0.03)");
+        glowGradient.addColorStop(1, "rgba(8, 8, 8, 0)");
 
         ctx.fillStyle = glowGradient;
         ctx.fillRect(0, 0, width, height);
@@ -595,7 +595,7 @@ export function SpartanIntro() {
     <div
       ref={containerRef}
       onClick={handleDismiss}
-      className={`fixed inset-0 z-[100] flex flex-col items-center justify-between select-none cursor-pointer overflow-hidden bg-[#03060a] transition-all duration-500 ease-out ${
+      className={`fixed inset-0 z-[100] flex flex-col items-center justify-between select-none cursor-pointer overflow-hidden bg-[#080808] transition-all duration-500 ease-out ${
         zoomFade ? "opacity-0 scale-[1.08] pointer-events-none" : "opacity-100 scale-100"
       }`}
       aria-label="Spartan Boot Sequence - Click or press Escape to skip"
@@ -609,33 +609,33 @@ export function SpartanIntro() {
       {/* TOP TELEMETRY TERMINAL HUD */}
       <header className="relative z-20 w-full max-w-6xl mx-auto pt-6 sm:pt-8 px-5 sm:px-8 flex items-center justify-between pointer-events-none font-mono text-xs">
         {/* Left Telemetry Box */}
-        <div className="flex items-center gap-3 bg-black/40 backdrop-blur-md border border-cyan-500/20 px-3.5 py-2 rounded-md shadow-[0_0_15px_rgba(56,189,248,0.12)]">
+        <div className="flex items-center gap-3 bg-[#111111]/80 backdrop-blur-md border border-white/[0.06] px-3.5 py-2 rounded-md shadow-[0_0_15px_rgba(201,174,198,0.06)]">
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500 shadow-[0_0_8px_#38bdf8]" />
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#C9AEC6] opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#C9AEC6] shadow-[0_0_8px_#C9AEC6]" />
           </span>
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
-              <span className="text-cyan-400 font-bold tracking-wider">{stageText}</span>
-              <span className="inline-block w-1.5 h-3.5 bg-cyan-400 animate-pulse" />
+              <span className="text-[#C9AEC6] font-bold tracking-wider">{stageText}</span>
+              <span className="inline-block w-1.5 h-3.5 bg-[#C9AEC6] animate-pulse" />
             </div>
-            <span className="text-[10px] text-slate-400/80 tracking-tight">{telemetrySubtext}</span>
+            <span className="text-[10px] text-[#8E8295] tracking-tight">{telemetrySubtext}</span>
           </div>
         </div>
 
         {/* Right Telemetry Progress */}
-        <div className="hidden sm:flex items-center gap-4 bg-black/40 backdrop-blur-md border border-cyan-500/20 px-3.5 py-2 rounded-md">
-          <div className="flex flex-col items-end text-[10px] text-slate-400">
+        <div className="hidden sm:flex items-center gap-4 bg-[#111111]/80 backdrop-blur-md border border-white/[0.06] px-3.5 py-2 rounded-md">
+          <div className="flex flex-col items-end text-[10px] text-[#8E8295]">
             <span>SEQUENCE LATENCY: 0.8ms</span>
-            <span className="text-cyan-300 font-bold">FPS: 60.0 // HIGH-DPI</span>
+            <span className="text-[#BAAEC0] font-bold">FPS: 60.0 // HIGH-DPI</span>
           </div>
-          <div className="w-24 h-1.5 bg-slate-900 rounded-full overflow-hidden border border-cyan-500/30">
+          <div className="w-24 h-1.5 bg-[#1A1A1A] rounded-full overflow-hidden border border-white/[0.08]">
             <div
-              className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-100 ease-out shadow-[0_0_8px_#38bdf8]"
+              className="h-full bg-gradient-to-r from-[#8E7796] to-[#C9AEC6] transition-all duration-100 ease-out shadow-[0_0_8px_rgba(201,174,198,0.4)]"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
-          <span className="text-cyan-400 font-bold text-[11px] w-8 text-right">
+          <span className="text-[#C9AEC6] font-bold text-[11px] w-8 text-right">
             {progressPercent}%
           </span>
         </div>
@@ -652,33 +652,33 @@ export function SpartanIntro() {
         >
           {/* Subtle Spartan Crest / Wordmark Lockup */}
           <div className="relative inline-block mt-36 sm:mt-44">
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-[0.24em] text-white uppercase font-sans drop-shadow-[0_0_30px_rgba(56,189,248,0.5)]">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-[0.24em] text-[#F6EFF5] uppercase font-sans drop-shadow-[0_0_24px_rgba(201,174,198,0.25)]">
               SPARTAN
             </h1>
 
             {/* Specular Horizontal Laser Dividers */}
             <div className="flex items-center justify-center gap-3 sm:gap-4 mt-2">
-              <span className="h-[1px] w-8 sm:w-16 bg-gradient-to-r from-transparent to-cyan-400 shadow-[0_0_8px_#38bdf8]" />
-              <span className="text-[10px] sm:text-xs font-mono font-bold tracking-[0.35em] text-cyan-300 uppercase">
+              <span className="h-[1px] w-8 sm:w-16 bg-gradient-to-r from-transparent to-[#C9AEC6] shadow-[0_0_6px_rgba(201,174,198,0.3)]" />
+              <span className="text-[10px] sm:text-xs font-mono font-bold tracking-[0.35em] text-[#C9AEC6] uppercase">
                 Workflow Automation
               </span>
-              <span className="h-[1px] w-8 sm:w-16 bg-gradient-to-l from-transparent to-cyan-400 shadow-[0_0_8px_#38bdf8]" />
+              <span className="h-[1px] w-8 sm:w-16 bg-gradient-to-l from-transparent to-[#C9AEC6] shadow-[0_0_6px_rgba(201,174,198,0.3)]" />
             </div>
           </div>
         </div>
       </div>
 
       {/* BOTTOM ACTION TELEMETRY & SKIP PROMPT */}
-      <footer className="relative z-20 w-full max-w-6xl mx-auto pb-6 sm:pb-8 px-5 sm:px-8 flex items-center justify-between pointer-events-none font-mono text-[10px] text-slate-500">
+      <footer className="relative z-20 w-full max-w-6xl mx-auto pb-6 sm:pb-8 px-5 sm:px-8 flex items-center justify-between pointer-events-none font-mono text-[10px] text-[#8E8295]">
         <div className="hidden sm:flex items-center gap-2 tracking-widest uppercase">
-          <span className="w-1.5 h-1.5 rounded-full bg-cyan-500/60" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[#C9AEC6]/60" />
           <span>BOOT PROTOCOL // 2.5s ASSEMBLY</span>
         </div>
 
         {/* Skip Prompt */}
-        <div className="ml-auto flex items-center gap-2 bg-slate-900/60 border border-slate-700/40 px-3 py-1.5 rounded-full text-slate-400 tracking-wider text-[9px] sm:text-[10px] uppercase shadow-sm">
+        <div className="ml-auto flex items-center gap-2 bg-[#141414] border border-white/[0.08] px-3 py-1.5 rounded-full text-[#8E8295] tracking-wider text-[9px] sm:text-[10px] uppercase shadow-sm">
           <span>CLICK ANYWHERE TO BYPASS</span>
-          <kbd className="px-1.5 py-0.5 bg-slate-800 border border-slate-600 rounded text-cyan-400 text-[8px] font-semibold">
+          <kbd className="px-1.5 py-0.5 bg-[#1A1A1A] border border-white/[0.12] rounded text-[#C9AEC6] text-[8px] font-semibold">
             ESC
           </kbd>
         </div>

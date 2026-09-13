@@ -59,7 +59,7 @@ import {
 export function WhyUs() {
   return (
     <section id="why-us" className="py-24 relative overflow-hidden perspective-1200">
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#881337]/20 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#141414]/40 blur-[120px] rounded-full pointer-events-none" />
       
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         
@@ -70,9 +70,9 @@ export function WhyUs() {
           variants={scaleReveal}
           className="max-w-4xl mx-auto text-center mb-16"
         >
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-white">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-[#F6EFF5]">
             Why not just use <br className="hidden md:block" />
-            <span className="text-[#a3959a]">a generic AI tool?</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFFFFF] via-[#EAD6E6] to-[#C9AEC6]">a generic AI tool?</span>
           </h2>
         </motion.div>
 
@@ -90,13 +90,13 @@ export function WhyUs() {
                 ease: SPARTAN_EASE,
               }}
               whileHover={{ y: -4, scale: 1.015 }}
-              className="glass-card p-6 rounded-2xl border border-white/5 hover:border-[#e11d48]/30 transition-all shadow-lg"
+              className="glass-card p-6 rounded-2xl border border-white/[0.06] hover:border-[#C9AEC6]/30 transition-all shadow-lg bg-[#141414]"
             >
-              <div className="w-12 h-12 rounded-lg bg-[#881337]/30 flex items-center justify-center mb-4 text-[#e11d48]">
+              <div className="w-12 h-12 rounded-lg bg-[#C9AEC6]/10 flex items-center justify-center mb-4 text-[#C9AEC6]">
                 <reason.icon className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-semibold text-white mb-2">{reason.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <h3 className="text-lg font-semibold text-[#F6EFF5] mb-2">{reason.title}</h3>
+              <p className="text-sm text-[#8E8295] leading-relaxed">
                 {reason.desc}
               </p>
             </motion.div>
@@ -110,22 +110,22 @@ export function WhyUs() {
             whileInView="visible"
             viewport={defaultViewport}
             variants={depthReveal}
-            className="glass-card rounded-2xl border border-white/10 overflow-hidden shadow-2xl"
+            className="glass-card rounded-2xl border border-white/[0.06] overflow-hidden shadow-2xl bg-[#141414]"
           >
-            <div className="grid grid-cols-2 border-b border-white/10 bg-white/5">
-              <div className="p-4 md:p-6 text-center md:text-left font-semibold text-muted-foreground">Generic AI Tool</div>
-              <div className="p-4 md:p-6 text-center md:text-left font-bold text-[#e11d48] bg-[#e11d48]/5">Our Approach</div>
+            <div className="grid grid-cols-2 border-b border-white/[0.06] bg-white/[0.02]">
+              <div className="p-4 md:p-6 text-center md:text-left font-semibold text-[#8E8295]">Generic AI Tool</div>
+              <div className="p-4 md:p-6 text-center md:text-left font-bold text-[#C9AEC6] bg-[#C9AEC6]/[0.04]">Our Approach</div>
             </div>
             
-            <div className="divide-y divide-white/5">
+            <div className="divide-y divide-white/[0.06]">
               {COMPARISON.map((row, idx) => (
-                <div key={idx} className="grid grid-cols-2 hover:bg-white/5 transition-colors">
-                  <div className="p-4 md:p-6 text-sm md:text-base text-muted-foreground flex items-start md:items-center gap-3">
-                    <X className="w-4 h-4 text-red-400/70 shrink-0 mt-0.5 md:mt-0" />
+                <div key={idx} className="grid grid-cols-2 hover:bg-white/[0.02] transition-colors">
+                  <div className="p-4 md:p-6 text-sm md:text-base text-[#8E8295] flex items-start md:items-center gap-3">
+                    <X className="w-4 h-4 text-[#EF4444] shrink-0 mt-0.5 md:mt-0" />
                     <span>{row.generic}</span>
                   </div>
-                  <div className="p-4 md:p-6 text-sm md:text-base text-white font-medium bg-[#e11d48]/5 flex items-start md:items-center gap-3">
-                    <Check className="w-4 h-4 text-[#e11d48] shrink-0 mt-0.5 md:mt-0" />
+                  <div className="p-4 md:p-6 text-sm md:text-base text-[#F6EFF5] font-medium bg-[#C9AEC6]/[0.03] flex items-start md:items-center gap-3">
+                    <Check className="w-4 h-4 text-[#22C55E] shrink-0 mt-0.5 md:mt-0" />
                     <span>{row.ours}</span>
                   </div>
                 </div>

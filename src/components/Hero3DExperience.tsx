@@ -38,9 +38,9 @@ const NODES_DATA: WorkflowNode[] = [
     sublabel: "Quotes, inquiries & tickets",
     detail: "Parses unstructured customer emails, extracts RFQs & categorizes urgency automatically.",
     badge: "99.4% Extraction",
-    color: "text-blue-400",
-    hexColor: 0x60a5fa,
-    glowColor: "rgba(96, 165, 250, 0.3)",
+    color: "text-[#BAAEC0]",
+    hexColor: 0x85827b,
+    glowColor: "rgba(201, 174, 198, 0.25)",
     icon: Mail,
   },
   {
@@ -51,9 +51,9 @@ const NODES_DATA: WorkflowNode[] = [
     sublabel: "Pipeline & account sync",
     detail: "Syncs HubSpot/Salesforce contacts, logs timeline activity & enriches deal intelligence.",
     badge: "Real-time Sync",
-    color: "text-cyan-400",
-    hexColor: 0x38bdf8,
-    glowColor: "rgba(56, 189, 248, 0.3)",
+    color: "text-[#BAAEC0]",
+    hexColor: 0x85827b,
+    glowColor: "rgba(201, 174, 198, 0.25)",
     icon: Building2,
   },
   {
@@ -64,9 +64,9 @@ const NODES_DATA: WorkflowNode[] = [
     sublabel: "Invoices & ledger entries",
     detail: "Validates purchase orders against ledger items, GST details & generates clean vouchers.",
     badge: "Zero-Error Ledger",
-    color: "text-indigo-400",
-    hexColor: 0x818cf8,
-    glowColor: "rgba(129, 140, 248, 0.3)",
+    color: "text-[#BAAEC0]",
+    hexColor: 0x85827b,
+    glowColor: "rgba(201, 174, 198, 0.25)",
     icon: FileSpreadsheet,
   },
   {
@@ -77,9 +77,9 @@ const NODES_DATA: WorkflowNode[] = [
     sublabel: "ERP & SQL data pools",
     detail: "Queries backend databases, validates inventory balances & checks customer credit limits.",
     badge: "Secure Queries",
-    color: "text-emerald-400",
-    hexColor: 0x34d399,
-    glowColor: "rgba(52, 211, 153, 0.3)",
+    color: "text-[#BAAEC0]",
+    hexColor: 0x85827b,
+    glowColor: "rgba(201, 174, 198, 0.25)",
     icon: Database,
   },
   {
@@ -90,9 +90,9 @@ const NODES_DATA: WorkflowNode[] = [
     sublabel: "Dispatch & tracking",
     detail: "Consolidates shipping requests, generates airway bills & triggers carrier notifications.",
     badge: "Auto-Dispatch",
-    color: "text-amber-400",
-    hexColor: 0xfbbf24,
-    glowColor: "rgba(251, 191, 36, 0.3)",
+    color: "text-[#BAAEC0]",
+    hexColor: 0x85827b,
+    glowColor: "rgba(201, 174, 198, 0.25)",
     icon: ShoppingBag,
   },
   {
@@ -103,9 +103,9 @@ const NODES_DATA: WorkflowNode[] = [
     sublabel: "Gatekeeper Governance",
     detail: "Critical financial thresholds & edge cases trigger 1-click team authorization.",
     badge: "Human in the Loop",
-    color: "text-emerald-300",
-    hexColor: 0x10b981,
-    glowColor: "rgba(16, 185, 129, 0.4)",
+    color: "text-[#C9AEC6]",
+    hexColor: 0xd6b978,
+    glowColor: "rgba(201, 174, 198, 0.35)",
     icon: ShieldCheck,
   },
   {
@@ -116,9 +116,9 @@ const NODES_DATA: WorkflowNode[] = [
     sublabel: "System Dispatch",
     detail: "Autonomous execution: ERP updated, ledger reconciled, customer notified via email.",
     badge: "Autonomous Output",
-    color: "text-cyan-300",
-    hexColor: 0x06b6d4,
-    glowColor: "rgba(6, 182, 212, 0.4)",
+    color: "text-[#22C55E]",
+    hexColor: 0x22c55e,
+    glowColor: "rgba(34, 197, 94, 0.35)",
     icon: Zap,
   },
 ];
@@ -184,7 +184,7 @@ export function Hero3DExperience() {
 
     // Three.js Scene Setup
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x090607, 0.045);
+    scene.fog = new THREE.FogExp2(0x080808, 0.045);
 
     const width = container.clientWidth || 600;
     const height = container.clientHeight || 640;
@@ -211,25 +211,25 @@ export function Hero3DExperience() {
       return;
     }
 
-    // Studio Lighting in Precision Red & Crisp White
-    const ambientLight = new THREE.AmbientLight(0x1f0a10, 2.2);
+    // Studio Lighting in Warm White & Champagne Gold
+    const ambientLight = new THREE.AmbientLight(0x141414, 2.0);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 3.2);
+    const keyLight = new THREE.DirectionalLight(0xf4f1ea, 2.8);
     keyLight.position.set(4, 6, 7);
     scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight(0xe11d48, 4.0);
+    const rimLight = new THREE.DirectionalLight(0xd6b978, 2.2);
     rimLight.position.set(-6, -3, -4);
     scene.add(rimLight);
 
-    const redCoreLight = new THREE.PointLight(0xbe123c, 5.0, 10);
-    redCoreLight.position.set(0, 0, 0.5);
-    scene.add(redCoreLight);
+    const goldCoreLight = new THREE.PointLight(0xd6b978, 2.6, 10);
+    goldCoreLight.position.set(0, 0, 0.5);
+    scene.add(goldCoreLight);
 
-    const whiteAccentLight = new THREE.PointLight(0xffffff, 3.0, 8);
-    whiteAccentLight.position.set(0, 1.2, -0.5);
-    scene.add(whiteAccentLight);
+    const warmAccentLight = new THREE.PointLight(0xf4f1ea, 2.0, 8);
+    warmAccentLight.position.set(0, 1.2, -0.5);
+    scene.add(warmAccentLight);
 
     // Root Hierarchy for smooth Parallax & Scroll
     const worldGroup = new THREE.Group();
@@ -270,14 +270,14 @@ export function Hero3DExperience() {
     spartanGeometry.center();
 
     const spartanMaterial = new THREE.MeshPhysicalMaterial({
-      color: 0xbe123c,
-      emissive: 0x881337,
-      emissiveIntensity: 0.45,
-      roughness: 0.22,
-      metalness: 0.88,
-      clearcoat: 0.9,
-      clearcoatRoughness: 0.15,
-      reflectivity: 0.9,
+      color: 0x181818,
+      emissive: 0x8f784a,
+      emissiveIntensity: 0.16,
+      roughness: 0.32,
+      metalness: 0.85,
+      clearcoat: 0.75,
+      clearcoatRoughness: 0.22,
+      reflectivity: 0.85,
     });
 
     const spartanMesh = new THREE.Mesh(spartanGeometry, spartanMaterial);
@@ -285,7 +285,7 @@ export function Hero3DExperience() {
 
     // Inner Luminous Emblem Disc
     const textureLoader = new THREE.TextureLoader();
-    const logoTexture = textureLoader.load("/branding/spartan-3d-logo-red.png");
+    const logoTexture = textureLoader.load("/branding/spartan-galaxy-logo.png");
     logoTexture.minFilter = THREE.LinearFilter;
     logoTexture.generateMipmaps = false;
 
@@ -310,21 +310,21 @@ export function Hero3DExperience() {
     // Concentric Precision Telemetry Rings
     const innerRingGeo = new THREE.TorusGeometry(1.35, 0.02, 12, 48);
     const ringMaterial = new THREE.MeshStandardMaterial({
-      color: 0xf43f5e,
-      emissive: 0xbe123c,
-      emissiveIntensity: 0.6,
-      roughness: 0.25,
-      metalness: 0.9,
+      color: 0x8f784a,
+      emissive: 0xd6b978,
+      emissiveIntensity: 0.3,
+      roughness: 0.3,
+      metalness: 0.85,
     });
     const innerRing = new THREE.Mesh(innerRingGeo, ringMaterial);
     coreGroup.add(innerRing);
 
     const outerRingGeo = new THREE.TorusGeometry(1.85, 0.015, 12, 56);
     const outerRingMaterial = new THREE.MeshStandardMaterial({
-      color: 0xfecdd3,
-      emissive: 0x9f1239,
-      emissiveIntensity: 0.4,
-      roughness: 0.3,
+      color: 0xbfa466,
+      emissive: 0x8f784a,
+      emissiveIntensity: 0.22,
+      roughness: 0.35,
       metalness: 0.8,
     });
     const outerRing = new THREE.Mesh(outerRingGeo, outerRingMaterial);
@@ -351,8 +351,8 @@ export function Hero3DExperience() {
       nodeMeshes[node.id] = nodeGroup;
 
       const baseMat = new THREE.MeshStandardMaterial({
-        color: 0x0f172a,
-        roughness: 0.5,
+        color: 0x141414,
+        roughness: 0.55,
         metalness: 0.7,
       });
       const baseMesh = new THREE.Mesh(nodeBaseGeo, baseMat);
@@ -653,7 +653,7 @@ export function Hero3DExperience() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[540px] md:h-[620px] rounded-3xl border border-white/10 bg-[#090607]/90 backdrop-blur-xl overflow-hidden shadow-2xl flex flex-col justify-between select-none"
+      className="relative w-full h-[540px] md:h-[620px] rounded-3xl border border-white/[0.08] bg-[#0B0B0B]/95 backdrop-blur-xl overflow-hidden shadow-2xl flex flex-col justify-between select-none"
     >
       {/* 3D WebGL Canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing z-0" />
@@ -663,38 +663,38 @@ export function Hero3DExperience() {
         className="absolute inset-0 opacity-20 pointer-events-none z-[1]"
         style={{
           backgroundImage: `
-            linear-gradient(to right, rgba(225, 29, 72, 0.15) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(225, 29, 72, 0.15) 1px, transparent 1px)
+            linear-gradient(to right, rgba(201, 174, 198, 0.08) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(201, 174, 198, 0.08) 1px, transparent 1px)
           `,
           backgroundSize: "32px 32px",
         }}
       />
 
       {/* Header bar: Live Telemetry Status */}
-      <div className="relative z-10 p-5 border-b border-white/10 flex items-center justify-between bg-gradient-to-b from-[#090607]/90 to-transparent">
+      <div className="relative z-10 p-5 border-b border-white/[0.06] flex items-center justify-between bg-gradient-to-b from-[#0E0E0E]/90 to-transparent">
         <div className="flex items-center gap-2.5">
           <div className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#e11d48] opacity-75" />
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#e11d48]" />
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#C9AEC6] opacity-75" />
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#C9AEC6]" />
           </div>
           <div>
-            <div className="text-[11px] font-mono tracking-widest text-white uppercase flex items-center gap-2">
+            <div className="text-[11px] font-mono tracking-widest text-[#F6EFF5] uppercase flex items-center gap-2">
               <span>SPARTAN AUTOMATION CORE</span>
-              <span className="text-[9px] px-1.5 py-0.2 rounded bg-brand-500/20 text-brand-300 border border-brand-500/30">
+              <span className="text-[9px] px-1.5 py-0.2 rounded bg-[#141414] text-[#C9AEC6] border border-[#C9AEC6]/30">
                 ACTIVE
               </span>
             </div>
-            <div className="text-[10px] font-mono text-slate-400">
+            <div className="text-[10px] font-mono text-[#8E8295]">
               ORCHESTRATING {NODES_DATA.filter((n) => n.category === "input").length} ENTERPRISE SYSTEMS
             </div>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-brand-950/80 border border-brand-500/40 text-[10px] font-mono text-brand-300">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#141414] border border-[#C9AEC6]/30 text-[10px] font-mono text-[#C9AEC6]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#C9AEC6] animate-pulse" />
             <span>PIPELINE:</span>
-            <span className="text-white font-semibold">{workflowState}</span>
+            <span className="text-[#F6EFF5] font-semibold">{workflowState}</span>
           </div>
         </div>
       </div>
@@ -724,19 +724,19 @@ export function Hero3DExperience() {
                 aria-describedby={isSelected ? tooltipId : undefined}
                 className={`group flex items-center gap-1.5 px-2.5 py-1 rounded-lg border transition-all duration-150 backdrop-blur-md shadow-lg cursor-pointer ${
                   isSelected
-                    ? "bg-[#1c1114]/95 border-[#e11d48] scale-105 shadow-[0_0_16px_rgba(225,29,72,0.45)] ring-1 ring-[#e11d48]/50"
-                    : "bg-[#120b0e]/80 border-white/15 hover:border-[#e11d48]/50 hover:bg-[#1c1114]/90"
+                    ? "bg-[#161616] border-[#C9AEC6] scale-105 shadow-[0_0_16px_rgba(201,174,198,0.35)] ring-1 ring-[#C9AEC6]/40 text-[#F6EFF5]"
+                    : "bg-[#141414]/90 border-white/[0.08] hover:border-[#C9AEC6]/40 hover:bg-[#161616] text-[#BAAEC0]"
                 }`}
               >
                 <div className={`p-1 rounded ${node.color} bg-white/5`}>
                   <Icon className="w-3 h-3" />
                 </div>
-                <span className="text-[10px] font-mono font-bold tracking-wider text-white">
+                <span className="text-[10px] font-mono font-bold tracking-wider text-[#F6EFF5]">
                   {node.name}
                 </span>
 
                 {isSelected && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#e11d48] animate-pulse" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#C9AEC6] animate-pulse" />
                 )}
               </button>
             </div>
@@ -745,7 +745,7 @@ export function Hero3DExperience() {
       </div>
 
       {/* Bottom Floating Telemetry Card / Detailed Node Readout */}
-      <div className="relative z-10 p-4 mt-auto border-t border-white/10 bg-[#090607]/85 backdrop-blur-xl">
+      <div className="relative z-10 p-4 mt-auto border-t border-white/[0.06] bg-[#0E0E0E]/90 backdrop-blur-xl">
         <div id={tooltipId} role="region" aria-label="System Node Telemetry" className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div className="flex items-start gap-3">
             <div className={`p-2 rounded-xl bg-white/5 border border-white/10 ${activeNode.color}`}>
@@ -753,25 +753,25 @@ export function Hero3DExperience() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-xs font-mono font-bold uppercase tracking-wider text-white">
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#F6EFF5]">
                   {activeNode.name}
                 </span>
-                <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-300">
+                <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[#BAAEC0]">
                   {activeNode.badge}
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400 mt-0.5 max-w-md leading-relaxed font-sans">
+              <p className="text-[11px] text-[#8E8295] mt-0.5 max-w-md leading-relaxed font-sans">
                 {activeNode.detail}
               </p>
             </div>
           </div>
 
-          <div className="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto gap-1 text-[10px] font-mono text-slate-400">
-            <div className="flex items-center gap-1.5 text-brand-300">
-              <CheckCircle2 className="w-3.5 h-3.5 text-brand-400" />
+          <div className="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto gap-1 text-[10px] font-mono text-[#8E8295]">
+            <div className="flex items-center gap-1.5 text-[#C9AEC6]">
+              <CheckCircle2 className="w-3.5 h-3.5 text-[#C9AEC6]" />
               <span>Orchestrated by SPARTAN</span>
             </div>
-            <span className="text-slate-400 text-[9px]">
+            <span className="text-[#8E8295] text-[9px]">
               {activeNode.category === "human"
                 ? "Safe human approval gatekeeper"
                 : activeNode.category === "execute"
@@ -783,7 +783,7 @@ export function Hero3DExperience() {
 
         {/* Quick Node Switcher Pills */}
         <div className="mt-3 pt-2.5 border-t border-white/5 flex items-center gap-1.5 overflow-x-auto no-scrollbar">
-          <span className="text-[9px] font-mono text-slate-400 uppercase mr-1 flex items-center gap-1">
+          <span className="text-[9px] font-mono text-[#8E8295] uppercase mr-1 flex items-center gap-1">
             <Layers className="w-3 h-3" /> NODES:
           </span>
           {NODES_DATA.map((node) => (
@@ -792,8 +792,8 @@ export function Hero3DExperience() {
               onClick={() => setActiveNodeId(node.id)}
               className={`px-2 py-0.5 rounded text-[9px] font-mono transition-colors cursor-pointer ${
                 activeNodeId === node.id
-                  ? "bg-brand-500/25 border border-brand-400 text-white"
-                  : "bg-white/5 border border-white/5 text-slate-400 hover:text-slate-200 hover:border-white/15"
+                  ? "bg-[#C9AEC6]/15 border border-[#C9AEC6]/40 text-[#C9AEC6]"
+                  : "bg-white/5 border border-white/5 text-[#8E8295] hover:text-[#F6EFF5] hover:border-white/15"
               }`}
             >
               {node.name}

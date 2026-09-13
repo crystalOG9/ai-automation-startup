@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { DynamicSystemField } from "@/components/DynamicSystemField";
+import { DistantStarField } from "@/components/DistantStarField";
 
 export function BackgroundVisuals() {
   const { scrollY, scrollYProgress } = useScroll();
@@ -10,23 +10,37 @@ export function BackgroundVisuals() {
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 25, restDelta: 0.001 });
 
   // Parallax depth transformations with restrained distances
-  const yGrid = useTransform(scrollY, [0, 6000], [0, -180]);
-  const yOrbTop = useTransform(scrollY, [0, 3000], [0, 100]);
-  const yOrbMid = useTransform(scrollY, [0, 5000], [0, -120]);
-  const yOrbBottom = useTransform(scrollY, [0, 6000], [0, -160]);
-
+  const yGrid = useTransform(scrollY, [0, 6000], [0, -140]);
   const scanlineY = useTransform(smoothProgress, [0, 1], ["-5%", "105%"]);
 
   return (
-    <div className="fixed inset-0 z-[-1] overflow-hidden bg-[#090607] pointer-events-none select-none">
+    <div className="fixed inset-0 z-[-1] overflow-hidden bg-[#080808] pointer-events-none select-none">
+      {/* 1. BOTTOM LAYER: Cinematic Galaxy Rotation Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+      >
+        <source src="/branding/galaxy's.mp4" type="video/mp4" />
+        <source src="/branding/galaxy%27s.mp4" type="video/mp4" />
+      </video>
+
+      {/* 2. SUBTLE READABILITY OVERLAY: Preserves galaxy luminance while ensuring UI text clarity */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#080808]/45 via-[#0B0B0B]/20 to-[#080808]/55 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(8,8,8,0.45)_90%)] pointer-events-none" />
+
       {/* Precision Geometric Engineering Grid */}
       <motion.div
-        className="absolute -inset-y-16 inset-x-0 opacity-25 will-change-transform"
+        className="absolute -inset-y-16 inset-x-0 opacity-20 will-change-transform pointer-events-none"
         style={{
           y: yGrid,
           backgroundImage: `
-            linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px)
+            linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px)
           `,
           backgroundSize: "48px 48px",
           maskImage: "radial-gradient(ellipse 80% 80% at 50% 30%, black 40%, transparent 95%)",
@@ -34,29 +48,15 @@ export function BackgroundVisuals() {
         }}
       />
 
-      {/* Controlled, ambient lighting backdrops in Deep Burgundy & Satin Crimson */}
-      {/* Uses optimized blur on desktop, and smooth radial gradients on mobile without GPU raster stalls */}
-      <motion.div
-        style={{ y: yOrbTop }}
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[380px] bg-[radial-gradient(ellipse_at_center,rgba(225,29,72,0.08)_0%,transparent_70%)] md:bg-[#e11d48]/[0.07] md:blur-[80px] rounded-full will-change-transform"
-      />
-      <motion.div
-        style={{ y: yOrbMid }}
-        className="absolute top-[35%] -right-1/6 w-[440px] h-[440px] bg-[radial-gradient(ellipse_at_center,rgba(136,19,55,0.14)_0%,transparent_70%)] md:bg-[#881337]/[0.14] md:blur-[85px] rounded-full will-change-transform"
-      />
-      <motion.div
-        style={{ y: yOrbBottom }}
-        className="absolute bottom-[10%] -left-1/6 w-[500px] h-[380px] bg-[radial-gradient(ellipse_at_center,rgba(76,13,30,0.16)_0%,transparent_70%)] md:bg-[#4c0d1e]/[0.16] md:blur-[90px] rounded-full will-change-transform"
-      />
+      {/* 3. LAYER ABOVE VIDEO: Interactive Distant Star Field */}
+      <DistantStarField />
 
-      {/* SPARTAN SYSTEM FIELD: Living Network of Micro-Nodes, Edges & Controlled Data Pulses */}
-      <DynamicSystemField />
-
-      {/* Dynamic Scanline Pulse in Satin Crimson */}
+      {/* Subtle Dynamic Scanline Pulse in Champagne */}
       <motion.div
         style={{ top: scanlineY }}
-        className="absolute left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#e11d48]/35 to-transparent pointer-events-none"
+        className="absolute left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#C9AEC6]/20 to-transparent pointer-events-none z-[2]"
       />
     </div>
   );
 }
+

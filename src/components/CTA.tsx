@@ -93,8 +93,8 @@ export function CTA() {
   };
 
   return (
-    <section id="contact" className="py-24 relative overflow-hidden bg-brand-950/20 perspective-1200">
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-brand-500/50 to-transparent" />
+    <section id="contact" className="py-24 relative overflow-hidden bg-[#0B0B0B] perspective-1200">
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#C9AEC6]/30 to-transparent" />
       
       <div className="container mx-auto px-4 md:px-6 relative z-10 preserve-3d">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start max-w-6xl mx-auto preserve-3d">
@@ -107,28 +107,28 @@ export function CTA() {
             variants={fadeInLeft}
             className="lg:col-span-5"
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-brand-500/30 text-brand-300 text-xs font-semibold uppercase tracking-wider mb-6">
-              <Sparkles className="w-3.5 h-3.5 text-brand-400" /> Workflow Assessment
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-[#C9AEC6]/30 text-[#C9AEC6] text-xs font-semibold uppercase tracking-wider mb-6">
+              <Sparkles className="w-3.5 h-3.5 text-[#C9AEC6]" /> Workflow Assessment
             </div>
 
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-6 leading-tight">
-              What is your team doing every day that <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-cyan-300 to-blue-200">software should handle?</span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#F6EFF5] mb-6 leading-tight">
+              What is your team doing every day that <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFFFFF] via-[#EAD6E6] to-[#C9AEC6]">software should handle?</span>
             </h2>
 
-            <p className="text-base md:text-lg text-muted-foreground mb-8 leading-relaxed">
+            <p className="text-base md:text-lg text-[#BAAEC0] mb-8 leading-relaxed">
               Describe your current manual steps. We&apos;ll map the process, identify the mechanical bottlenecks, and outline safe automation with built-in human control.
             </p>
 
             {/* Qualified Workflow Criteria Card */}
-            <div className="p-5 rounded-2xl glass-card border border-brand-500/20 bg-brand-950/20 mb-8 relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-28 h-28 bg-brand-500/10 blur-[50px] rounded-full pointer-events-none" />
+            <div className="p-5 rounded-2xl glass-card border border-white/[0.08] bg-[#141414]/80 mb-8 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-28 h-28 bg-[#C9AEC6]/[0.05] blur-[50px] rounded-full pointer-events-none" />
               <div className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full bg-brand-400 mt-1.5 shrink-0 shadow-[0_0_8px_rgba(96,165,250,0.8)]" />
+                <div className="w-2 h-2 rounded-full bg-[#C9AEC6] mt-1.5 shrink-0 shadow-[0_0_8px_rgba(201,174,198,0.6)]" />
                 <div>
-                  <div className="text-xs font-bold text-white tracking-wide uppercase mb-1">
+                  <div className="text-xs font-bold text-[#F6EFF5] tracking-wide uppercase mb-1">
                     Common Starting Points
                   </div>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
+                  <p className="text-xs text-[#BAAEC0] leading-relaxed">
                     Order reconciliation, invoice data extraction, inbox triage, or spreadsheet-to-ERP sync — start with one bottleneck and measure the time saved.
                   </p>
                 </div>
@@ -136,36 +136,36 @@ export function CTA() {
             </div>
 
             <div className="space-y-3">
-              <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+              <div className="flex items-center gap-2.5 text-xs text-[#BAAEC0]">
+                <CheckCircle2 className="w-4 h-4 text-[#22C55E] shrink-0" />
                 <span>Works with your existing software — zero system replacements required</span>
               </div>
-              <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+              <div className="flex items-center gap-2.5 text-xs text-[#BAAEC0]">
+                <CheckCircle2 className="w-4 h-4 text-[#22C55E] shrink-0" />
                 <span>Strict human review gates for all critical or financial actions</span>
               </div>
-              <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+              <div className="flex items-center gap-2.5 text-xs text-[#BAAEC0]">
+                <CheckCircle2 className="w-4 h-4 text-[#22C55E] shrink-0" />
                 <span>Measurable before-and-after turnaround times and hours saved</span>
               </div>
             </div>
 
             {/* Direct Contact Options */}
             <div className="mt-8 pt-6 border-t border-white/10">
-              <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+              <div className="text-xs font-semibold uppercase tracking-wider text-[#8E8295] mb-3">
                 Direct Contact & Connect
               </div>
               <div className="grid sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-3">
                 <a
                   href="mailto:sparten.tech26@gmail.com"
-                  className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-brand-500/40 transition-all group"
+                  className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] hover:border-[#C9AEC6]/40 transition-all group"
                 >
-                  <div className="w-9 h-9 rounded-lg bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-400 group-hover:scale-105 transition-transform shrink-0">
+                  <div className="w-9 h-9 rounded-lg bg-[#C9AEC6]/10 border border-[#C9AEC6]/20 flex items-center justify-center text-[#C9AEC6] group-hover:scale-105 transition-transform shrink-0">
                     <Mail className="w-4 h-4" />
                   </div>
                   <div className="min-w-0">
-                    <div className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Email Us Directly</div>
-                    <div className="text-xs font-medium text-white truncate group-hover:text-brand-300 transition-colors">
+                    <div className="text-[10px] uppercase font-semibold text-[#8E8295] tracking-wider">Email Us Directly</div>
+                    <div className="text-xs font-medium text-[#F6EFF5] truncate group-hover:text-[#EAD6E6] transition-colors">
                       sparten.tech26@gmail.com
                     </div>
                   </div>
@@ -175,14 +175,14 @@ export function CTA() {
                   href="https://www.instagram.com/spartantech.ai/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-pink-500/40 transition-all group"
+                  className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] hover:border-[#C9AEC6]/30 transition-all group"
                 >
-                  <div className="w-9 h-9 rounded-lg bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400 group-hover:scale-105 transition-transform shrink-0">
+                  <div className="w-9 h-9 rounded-lg bg-white/[0.05] border border-white/10 flex items-center justify-center text-[#BAAEC0] group-hover:text-[#C9AEC6] group-hover:scale-105 transition-transform shrink-0">
                     <InstagramIcon className="w-4 h-4" />
                   </div>
                   <div className="min-w-0">
-                    <div className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider">Instagram</div>
-                    <div className="text-xs font-medium text-white truncate group-hover:text-pink-300 transition-colors">
+                    <div className="text-[10px] uppercase font-semibold text-[#8E8295] tracking-wider">Instagram</div>
+                    <div className="text-xs font-medium text-[#F6EFF5] truncate group-hover:text-[#C9AEC6] transition-colors">
                       @spartantech.ai
                     </div>
                   </div>
@@ -197,7 +197,7 @@ export function CTA() {
             whileInView={{ opacity: 1, scale: 1, z: 0, y: 0, rotateX: 0 }}
             viewport={defaultViewport}
             transition={{ duration: 0.76, delay: 0.12, ease: SPARTAN_EASE }}
-            className="lg:col-span-7 glass-card p-6 md:p-8 rounded-3xl border border-white/10 shadow-2xl relative"
+            className="lg:col-span-7 glass-card p-6 md:p-8 rounded-3xl border border-white/[0.08] bg-[#141414]/90 shadow-2xl relative"
           >
             <AnimatePresence mode="wait">
               {!isSuccess ? (
@@ -211,10 +211,10 @@ export function CTA() {
                   className="space-y-4"
                 >
                   <div>
-                    <h3 className="text-xl md:text-2xl font-bold text-white uppercase tracking-wide">
+                    <h3 className="text-xl md:text-2xl font-bold text-[#F6EFF5] uppercase tracking-wide">
                       Request a Workflow Assessment
                     </h3>
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-[#BAAEC0] mt-1">
                       Tell us about your team&apos;s manual steps.
                     </p>
                   </div>
@@ -222,7 +222,7 @@ export function CTA() {
                   {/* Basic Contact Info */}
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label htmlFor="name" className="text-xs font-semibold text-muted-foreground">
+                      <label htmlFor="name" className="text-xs font-semibold text-[#8E8295]">
                         Full Name *
                       </label>
                       <input
@@ -230,13 +230,13 @@ export function CTA() {
                         type="text"
                         id="name"
                         name="name"
-                        className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors"
+                        className="w-full bg-[#111111] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-[#F6EFF5] placeholder-[#8E8295] focus:outline-none focus:border-[#C9AEC6] transition-colors"
                         placeholder="Jane Doe"
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <label htmlFor="email" className="text-xs font-semibold text-muted-foreground">
+                      <label htmlFor="email" className="text-xs font-semibold text-[#8E8295]">
                         Work Email *
                       </label>
                       <input
@@ -244,7 +244,7 @@ export function CTA() {
                         type="email"
                         id="email"
                         name="email"
-                        className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors"
+                        className="w-full bg-[#111111] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-[#F6EFF5] placeholder-[#8E8295] focus:outline-none focus:border-[#C9AEC6] transition-colors"
                         placeholder="name@company.com"
                       />
                     </div>
@@ -252,7 +252,7 @@ export function CTA() {
 
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label htmlFor="company" className="text-xs font-semibold text-muted-foreground">
+                      <label htmlFor="company" className="text-xs font-semibold text-[#8E8295]">
                         Company Name *
                       </label>
                       <input
@@ -260,13 +260,13 @@ export function CTA() {
                         type="text"
                         id="company"
                         name="company"
-                        className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors"
+                        className="w-full bg-[#111111] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-[#F6EFF5] placeholder-[#8E8295] focus:outline-none focus:border-[#C9AEC6] transition-colors"
                         placeholder="Acme Corp"
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <label htmlFor="frequency" className="text-xs font-semibold text-muted-foreground">
+                      <label htmlFor="frequency" className="text-xs font-semibold text-[#8E8295]">
                         How Often Does This Process Run? *
                       </label>
                       <select
@@ -275,11 +275,11 @@ export function CTA() {
                         name="frequency"
                         value={frequency}
                         onChange={(e) => setFrequency(e.target.value)}
-                        className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors appearance-none"
+                        className="w-full bg-[#111111] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-[#F6EFF5] focus:outline-none focus:border-[#C9AEC6] transition-colors appearance-none"
                       >
                         <option value="">Select frequency</option>
                         {FREQUENCY_OPTIONS.map((opt) => (
-                          <option key={opt} value={opt} className="bg-slate-900 text-white">
+                          <option key={opt} value={opt} className="bg-[#141414] text-[#F6EFF5]">
                             {opt}
                           </option>
                         ))}
@@ -289,7 +289,7 @@ export function CTA() {
 
                   {/* Task 9: Current Tools / Systems */}
                   <div className="space-y-2 pt-1">
-                    <label className="text-xs font-semibold text-muted-foreground block">
+                    <label className="text-xs font-semibold text-[#8E8295] block">
                       Tools Currently Used
                     </label>
                     <div className="flex flex-wrap gap-2">
@@ -302,8 +302,8 @@ export function CTA() {
                             onClick={() => toggleTool(tool)}
                             className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-all flex items-center gap-1.5 cursor-pointer ${
                               isSelected
-                                ? "bg-brand-600 text-white border-brand-500 shadow-sm"
-                                : "bg-black/40 border-white/10 text-muted-foreground hover:border-white/20 hover:text-white"
+                                ? "bg-[#C9AEC6] text-[#0B0B0B] border-[#C9AEC6] font-bold shadow-sm"
+                                : "bg-[#111111] border-white/[0.08] text-[#BAAEC0] hover:border-white/20 hover:text-[#F6EFF5]"
                             }`}
                           >
                             {isSelected && <Check className="w-3 h-3" />}
@@ -316,7 +316,7 @@ export function CTA() {
 
                   {/* Task 9: Workflow Details */}
                   <div className="space-y-1.5 pt-1">
-                    <label htmlFor="process" className="text-xs font-semibold text-muted-foreground">
+                    <label htmlFor="process" className="text-xs font-semibold text-[#8E8295]">
                       Describe the Workflow *
                     </label>
                     <textarea
@@ -324,27 +324,29 @@ export function CTA() {
                       id="process"
                       name="process"
                       rows={3}
-                      className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors resize-none"
+                      className="w-full bg-[#111111] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-[#F6EFF5] placeholder-[#8E8295] focus:outline-none focus:border-[#C9AEC6] transition-colors resize-none"
                       placeholder="What are the manual steps, what systems are involved, and where does work slow down?"
                     />
                   </div>
 
                   {errorMessage && (
-                    <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-rose-400 shrink-0" />
+                    <div className="p-3 rounded-xl bg-[#EF4444]/10 border border-[#EF4444]/30 text-[#EF4444] text-xs flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#EF4444] shrink-0" />
                       <span>{errorMessage}</span>
                     </div>
-                  )}                  <button 
+                  )}
+
+                  <button 
                     type="submit" 
                     disabled={isSubmitting}
-                    className="w-full bg-gradient-to-r from-[#e11d48] to-[#be123c] hover:from-[#f43f5e] hover:to-[#e11d48] text-white rounded-xl px-6 py-4 font-bold text-sm transition-all shadow-[0_0_20px_rgba(225, 29, 72,0.25)] hover:shadow-[0_0_30px_rgba(225, 29, 72,0.5)] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-4 cursor-pointer uppercase tracking-wider"
+                    className="w-full bg-[#C9AEC6] hover:bg-[#EAD6E6] text-[#0B0B0B] rounded-xl px-6 py-4 font-bold text-sm transition-all shadow-[0_0_20px_rgba(201,174,198,0.18)] hover:shadow-[0_0_28px_rgba(201,174,198,0.3)] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-4 cursor-pointer uppercase tracking-wider font-mono"
                   >
                     {isSubmitting ? (
-                      <span className="w-5 h-5 border-2 border-[#1c1517]/30 border-t-[#1c1517] rounded-full animate-spin" />
+                      <span className="w-5 h-5 border-2 border-black/30 border-t-[#0B0B0B] rounded-full animate-spin" />
                     ) : (
                       <>
                         REQUEST WORKFLOW ASSESSMENT
-                        <ArrowRight className="w-4 h-4 text-white" />
+                        <ArrowRight className="w-4 h-4 text-[#0B0B0B]" />
                       </>
                     )}
                   </button>
@@ -356,26 +358,26 @@ export function CTA() {
                   animate={{ opacity: 1, scale: 1 }}
                   className="py-8 flex flex-col items-center text-center h-full justify-center space-y-4"
                 >
-                  <div className="w-14 h-14 rounded-2xl bg-[#e11d48]/20 border border-[#e11d48]/30 flex items-center justify-center text-[#ffffff] mb-1 shadow-[0_0_25px_rgba(225, 29, 72,0.3)]">
+                  <div className="w-14 h-14 rounded-2xl bg-[#22C55E]/20 border border-[#22C55E]/40 flex items-center justify-center text-[#22C55E] mb-1 shadow-[0_0_25px_rgba(34,197,94,0.3)]">
                     <CheckCircle2 className="w-7 h-7" />
                   </div>
-                  <h3 className="text-xl md:text-2xl font-bold text-white uppercase">Assessment Request Received</h3>
-                  <p className="text-xs sm:text-sm text-muted-foreground max-w-sm leading-relaxed">
+                  <h3 className="text-xl md:text-2xl font-bold text-[#F6EFF5] uppercase">Assessment Request Received</h3>
+                  <p className="text-xs sm:text-sm text-[#BAAEC0] max-w-sm leading-relaxed">
                     We&apos;ve received your workflow details and will review the steps. Expect a response within 24 hours.
                   </p>
 
                   {/* Follow-up question: Schedule a meeting? */}
                   {meetingDecision === "pending" && (
-                    <div className="w-full max-w-md p-5 rounded-2xl bg-white/[0.03] border border-[#e11d48]/30 text-left space-y-3.5 shadow-xl mt-3">
+                    <div className="w-full max-w-md p-5 rounded-2xl bg-[#161616] border border-[#C9AEC6]/30 text-left space-y-3.5 shadow-xl mt-3">
                       <div className="flex items-start gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-[#e11d48]/20 border border-[#e11d48]/30 flex items-center justify-center text-[#ffffff] shrink-0">
+                        <div className="w-9 h-9 rounded-xl bg-[#C9AEC6]/15 border border-[#C9AEC6]/30 flex items-center justify-center text-[#C9AEC6] shrink-0">
                           <Calendar className="w-4 h-4" />
                         </div>
                         <div>
-                          <h4 className="text-xs font-bold text-white uppercase tracking-wider">
+                          <h4 className="text-xs font-bold text-[#F6EFF5] uppercase tracking-wider">
                             Would you like a 15-minute discovery call?
                           </h4>
-                          <p className="text-[11px] text-muted-foreground mt-0.5 leading-relaxed">
+                          <p className="text-[11px] text-[#BAAEC0] mt-0.5 leading-relaxed">
                             Walk through your workflow live with an automation engineer.
                           </p>
                         </div>
@@ -385,7 +387,7 @@ export function CTA() {
                         <a
                           href={`mailto:sparten.tech26@gmail.com?subject=Schedule%20Discovery%20Meeting%20-%20SPARTAN&body=Hi%20SPARTAN%20Team,%0A%0AI%20just%20submitted%20a%20workflow%20assessment%20request%20(${submittedEmail})%20and%20would%20like%20to%20schedule%20a%2015-minute%20introductory%20meeting.%0A%0AMy%20preferred%20days%20and%20times%20are:%20`}
                           onClick={() => setMeetingDecision("scheduled")}
-                          className="flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl bg-gradient-to-r from-[#e11d48] to-[#be123c] hover:from-[#f43f5e] hover:to-[#e11d48] text-white font-bold text-xs uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(225, 29, 72,0.3)] text-center"
+                          className="flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl bg-[#C9AEC6] hover:bg-[#EAD6E6] text-[#0B0B0B] font-bold text-xs uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(201,174,198,0.2)] text-center"
                         >
                           <Calendar className="w-3.5 h-3.5" />
                           <span>Yes, Schedule Call</span>
@@ -394,7 +396,7 @@ export function CTA() {
                         <button
                           type="button"
                           onClick={() => setMeetingDecision("email_only")}
-                          className="py-2.5 px-3.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-muted-foreground hover:text-white font-medium text-xs transition-colors text-center"
+                          className="py-2.5 px-3.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[#8E8295] hover:text-[#F6EFF5] font-medium text-xs transition-colors text-center cursor-pointer"
                         >
                           No, email is fine
                         </button>
@@ -403,15 +405,15 @@ export function CTA() {
                   )}
 
                   {meetingDecision === "scheduled" && (
-                    <div className="w-full max-w-md p-4 rounded-2xl bg-[#e11d48]/10 border border-[#e11d48]/30 text-xs text-[#ffffff] flex items-center gap-2.5 text-left mt-2">
-                      <CheckCircle2 className="w-4 h-4 text-[#e11d48] shrink-0" />
+                    <div className="w-full max-w-md p-4 rounded-2xl bg-[#22C55E]/10 border border-[#22C55E]/30 text-xs text-[#F6EFF5] flex items-center gap-2.5 text-left mt-2">
+                      <CheckCircle2 className="w-4 h-4 text-[#22C55E] shrink-0" />
                       <span>Meeting request prepared! Check your email client or send to lock in your call slot.</span>
                     </div>
                   )}
 
                   {meetingDecision === "email_only" && (
-                    <div className="w-full max-w-md p-4 rounded-2xl bg-white/[0.02] border border-white/10 text-xs text-muted-foreground flex items-center gap-2.5 text-left mt-2">
-                      <Mail className="w-4 h-4 text-[#e11d48] shrink-0" />
+                    <div className="w-full max-w-md p-4 rounded-2xl bg-white/[0.02] border border-white/10 text-xs text-[#BAAEC0] flex items-center gap-2.5 text-left mt-2">
+                      <Mail className="w-4 h-4 text-[#C9AEC6] shrink-0" />
                       <span>Noted! We&apos;ll prepare your assessment and email you directly within 24 hours.</span>
                     </div>
                   )}
@@ -425,7 +427,7 @@ export function CTA() {
                       setSubmittedEmail("");
                       setMeetingDecision("pending");
                     }}
-                    className="mt-4 text-[#e11d48] hover:text-[#ffffff] font-medium text-xs underline underline-offset-4 transition-colors cursor-pointer"
+                    className="mt-4 text-[#C9AEC6] hover:text-[#EAD6E6] font-medium text-xs underline underline-offset-4 transition-colors cursor-pointer"
                   >
                     Submit another workflow
                   </button>

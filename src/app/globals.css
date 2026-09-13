@@ -3,35 +3,42 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  /* Theme Palette: Precision Satin Crimson, Deep Burgundy, Crisp White & Dark Graphite
-     Engineered to harmonize with the 3D SPARTAN Red Emblem
-  */
-  --color-brand-50: #fff1f2;
-  --color-brand-100: #ffe4e6;
-  --color-brand-200: #fecdd3;
-  --color-brand-300: #fda4af;
-  --color-brand-400: #fb7185;
-  --color-brand-500: #e11d48; /* Primary Crimson Red */
-  --color-brand-600: #be123c; /* Refined Deep Crimson */
-  --color-brand-700: #9f1239; /* Rich Wine Red */
-  --color-brand-800: #881337; /* Deep Burgundy */
-  --color-brand-900: #4c0d1e; /* Velvet Wine */
-  --color-brand-950: #2a0811; /* Obsidian Wine */
+  /* Premium Obsidian + Galaxy Stardust Palette */
+  --color-brand-50: #FBF8FA;
+  --color-brand-100: #F6EFF5;
+  --color-brand-200: #EAD6E6;
+  --color-brand-300: #EAD6E6; /* Highlight champagne gold */
+  --color-brand-400: #C9AEC6; /* Primary champagne gold accent */
+  --color-brand-500: #B398B8; /* Secondary champagne gold */
+  --color-brand-600: #9D82A2;
+  --color-brand-700: #8E7796; /* Dark gold */
+  --color-brand-800: #6B5573;
+  --color-brand-900: #4B3751;
+  --color-brand-950: #291B2D;
 
-  --color-background: #090607; /* Deep Obsidian Charcoal Canvas */
-  --color-foreground: #ffffff; /* Crisp Pure White */
-  --color-muted: #1c1114;
-  --color-muted-foreground: #a3959a;
-  --color-card: #120b0e;
-  --color-card-foreground: #ffffff;
-  --color-border: #28151b;
+  --color-background: #0B0B0B; /* Deep obsidian black canvas */
+  --color-foreground: #F6EFF5; /* Luminous cosmic starlight core primary text */
+  --color-muted: #1A1A1A;
+  --color-muted-foreground: #8E8295; /* Cosmic nebula dust muted text */
+  --color-card: #141414; /* Refined graphite card/panel */
+  --color-card-foreground: #F6EFF5;
+  --color-border: rgba(255, 255, 255, 0.06);
 
   --font-sans: var(--font-inter);
 }
 
 :root {
-  --background: #090607;
-  --foreground: #ffffff;
+  --background: #0B0B0B;
+  --foreground: #F6EFF5;
+  --surface: #141414;
+  --surface-elevated: #1A1A1A;
+  --border: rgba(255, 255, 255, 0.06);
+  --text-primary: #F6EFF5;
+  --text-secondary: #BAAEC0;
+  --text-muted: #8E8295;
+  --accent: #C9AEC6;
+  --accent-hover: #EAD6E6;
+  --accent-dark: #8E7796;
 }
 
 html {
@@ -51,28 +58,28 @@ body {
 }
 
 ::selection {
-  background-color: rgba(225, 29, 72, 0.35);
-  color: #ffffff;
+  background-color: rgba(201, 174, 198, 0.25);
+  color: #F6EFF5;
 }
 
-/* Glassmorphism tuned to obsidian charcoal & satin red edge illumination */
+/* Glassmorphism tuned to graphite & subtle edge definition */
 .glass {
-  background: rgba(18, 11, 14, 0.85);
+  background: rgba(20, 20, 20, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(225, 29, 72, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .glass-card {
-  background: rgba(18, 11, 14, 0.7);
+  background: rgba(20, 20, 20, 0.72);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-/* Controlled crimson specular edge glow */
+/* Controlled subtle champagne ambient glow */
 .glow-effect {
-  box-shadow: 0 0 30px rgba(225, 29, 72, 0.2);
+  box-shadow: 0 0 25px rgba(201, 174, 198, 0.06);
 }
 
 /* 3D Motion System Utilities */
@@ -84,24 +91,22 @@ body {
   transform-style: preserve-3d;
 }
 
-/* Mobile-First Performance Mode:
-   Reduces GPU fill-rate overhead and compositing lag on phones and tablets
-*/
+/* Mobile-First Performance Mode */
 @media (max-width: 768px) {
   .glass {
-    background: rgba(18, 11, 14, 0.94);
+    background: rgba(20, 20, 20, 0.94);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
   }
 
   .glass-card {
-    background: rgba(18, 11, 14, 0.88);
+    background: rgba(20, 20, 20, 0.90);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
   }
 
   .glow-effect {
-    box-shadow: 0 0 15px rgba(225, 29, 72, 0.14);
+    box-shadow: 0 0 15px rgba(201, 174, 198, 0.05);
   }
 
   .perspective-1200 {

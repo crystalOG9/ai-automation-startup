@@ -26,11 +26,11 @@ interface NodeData {
 }
 
 const DEPARTMENTS: NodeData[] = [
-  { id: "sales", label: "SALES", sublabel: "Leads & Outreach", icon: TrendingUp, color: "text-blue-400", bgGlow: "rgba(59, 130, 246, 0.15)", badge: "Leads" },
-  { id: "operations", label: "OPERATIONS", sublabel: "Orders & Fulfillment", icon: Settings, color: "text-cyan-400", bgGlow: "rgba(6, 182, 212, 0.15)", badge: "Orders" },
-  { id: "support", label: "SUPPORT", sublabel: "Emails & Tickets", icon: Headphones, color: "text-indigo-400", bgGlow: "rgba(99, 102, 241, 0.15)", badge: "Emails" },
-  { id: "finance", label: "FINANCE", sublabel: "Invoices & Billing", icon: DollarSign, color: "text-emerald-400", bgGlow: "rgba(16, 185, 129, 0.15)", badge: "Invoices" },
-  { id: "logistics", label: "LOGISTICS", sublabel: "Shipments & Tracking", icon: Truck, color: "text-amber-400", bgGlow: "rgba(245, 158, 11, 0.15)", badge: "Shipments" },
+  { id: "sales", label: "SALES", sublabel: "Leads & Outreach", icon: TrendingUp, color: "text-[#BAAEC0]", bgGlow: "rgba(201, 174, 198, 0.15)", badge: "Leads" },
+  { id: "operations", label: "OPERATIONS", sublabel: "Orders & Fulfillment", icon: Settings, color: "text-[#BAAEC0]", bgGlow: "rgba(201, 174, 198, 0.15)", badge: "Orders" },
+  { id: "support", label: "SUPPORT", sublabel: "Emails & Tickets", icon: Headphones, color: "text-[#BAAEC0]", bgGlow: "rgba(201, 174, 198, 0.15)", badge: "Emails" },
+  { id: "finance", label: "FINANCE", sublabel: "Invoices & Billing", icon: DollarSign, color: "text-[#BAAEC0]", bgGlow: "rgba(201, 174, 198, 0.15)", badge: "Invoices" },
+  { id: "logistics", label: "LOGISTICS", sublabel: "Shipments & Tracking", icon: Truck, color: "text-[#BAAEC0]", bgGlow: "rgba(201, 174, 198, 0.15)", badge: "Shipments" },
 ];
 
 export function WorkflowNetwork() {
@@ -86,10 +86,10 @@ export function WorkflowNetwork() {
           if (distToMouse < 75) {
             const factor = 1 - distToMouse / 75;
             ctx.arc(gx, gy, 1.2, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(96, 165, 250, ${0.12 + factor * 0.28})`;
+            ctx.fillStyle = `rgba(201, 174, 198, ${0.12 + factor * 0.28})`;
           } else {
             ctx.arc(gx, gy, 0.9, 0, Math.PI * 2);
-            ctx.fillStyle = "rgba(255, 255, 255, 0.05)";
+            ctx.fillStyle = "rgba(255, 255, 255, 0.04)";
           }
           ctx.fill();
         }
@@ -146,9 +146,9 @@ export function WorkflowNetwork() {
         );
 
         if (isCurrentActive) {
-          ctx.strokeStyle = "#38bdf8";
+          ctx.strokeStyle = "#C9AEC6";
           ctx.lineWidth = 2.0;
-          ctx.shadowColor = "rgba(56, 189, 248, 0.4)";
+          ctx.shadowColor = "rgba(201, 174, 198, 0.4)";
           ctx.shadowBlur = 6;
           ctx.stroke();
           ctx.shadowBlur = 0;
@@ -163,7 +163,7 @@ export function WorkflowNetwork() {
             ctx.restore();
           }
         } else {
-          ctx.strokeStyle = "rgba(255, 255, 255, 0.09)";
+          ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
           ctx.lineWidth = 1.1;
           ctx.stroke();
         }
@@ -183,9 +183,9 @@ export function WorkflowNetwork() {
         );
 
         if (isCurrentActive) {
-          ctx.strokeStyle = "#38bdf8";
+          ctx.strokeStyle = "#C9AEC6";
           ctx.lineWidth = 2.0;
-          ctx.shadowColor = "rgba(56, 189, 248, 0.4)";
+          ctx.shadowColor = "rgba(201, 174, 198, 0.4)";
           ctx.shadowBlur = 6;
           ctx.stroke();
           ctx.shadowBlur = 0;
@@ -200,7 +200,7 @@ export function WorkflowNetwork() {
             ctx.restore();
           }
         } else {
-          ctx.strokeStyle = "rgba(255, 255, 255, 0.09)";
+          ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
           ctx.lineWidth = 1.1;
           ctx.stroke();
         }
@@ -208,7 +208,7 @@ export function WorkflowNetwork() {
         // Clean terminal port dot at AI node entry
         ctx.beginPath();
         ctx.arc(aiPortX, aiPortY, isCurrentActive ? 2.5 : 1.8, 0, Math.PI * 2);
-        ctx.fillStyle = isCurrentActive ? "#38bdf8" : "rgba(255, 255, 255, 0.22)";
+        ctx.fillStyle = isCurrentActive ? "#C9AEC6" : "rgba(255, 255, 255, 0.22)";
         ctx.fill();
       }
 
@@ -219,7 +219,7 @@ export function WorkflowNetwork() {
       ctx.beginPath();
       ctx.moveTo(rootX, aiBottomY);
       ctx.lineTo(rootX, humanTopY);
-      ctx.strokeStyle = activeIdx >= 0 ? "rgba(52, 211, 153, 0.9)" : "rgba(52, 211, 153, 0.5)";
+      ctx.strokeStyle = activeIdx >= 0 ? "rgba(201, 174, 198, 0.8)" : "rgba(201, 174, 198, 0.35)";
       ctx.lineWidth = 1.6;
       ctx.setLineDash([5, 4]);
       ctx.stroke();
@@ -228,7 +228,7 @@ export function WorkflowNetwork() {
       // Subtle gatekeeper junction dot
       ctx.beginPath();
       ctx.arc(rootX, (aiBottomY + humanTopY) / 2, 2.4, 0, Math.PI * 2);
-      ctx.fillStyle = "#34d399";
+      ctx.fillStyle = "#C9AEC6";
       ctx.fill();
 
       // 5. Line from Human Approval -> Action
@@ -238,7 +238,7 @@ export function WorkflowNetwork() {
       ctx.beginPath();
       ctx.moveTo(rootX, humanBottomY);
       ctx.lineTo(rootX, actionTopY);
-      ctx.strokeStyle = activeIdx >= 0 ? "#60a5fa" : "rgba(96, 165, 250, 0.6)";
+      ctx.strokeStyle = activeIdx >= 0 ? "#22C55E" : "rgba(34, 197, 94, 0.5)";
       ctx.lineWidth = 1.8;
       ctx.stroke();
 
@@ -287,30 +287,30 @@ export function WorkflowNetwork() {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full h-[600px] md:h-[660px] rounded-3xl border border-white/10 bg-[#060b17]/90 backdrop-blur-xl overflow-hidden p-4 md:p-6 shadow-2xl flex flex-col justify-between select-none"
+      className="relative w-full h-[600px] md:h-[660px] rounded-3xl border border-white/[0.08] bg-[#0B0B0B]/95 backdrop-blur-xl overflow-hidden p-4 md:p-6 shadow-2xl flex flex-col justify-between select-none"
     >
       {/* Dynamic Canvas for connecting bezier lines, technical grid & pulses */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-0" />
 
       {/* Decorative ambient gradient backdrop */}
-      <div className="absolute inset-0 bg-radial from-brand-600/10 via-transparent to-transparent pointer-events-none -z-10" />
-      <div className="absolute top-0 right-1/4 w-72 h-72 bg-brand-600/[0.07] blur-[110px] pointer-events-none" />
-      <div className="absolute bottom-10 left-1/4 w-72 h-72 bg-emerald-500/[0.07] blur-[110px] pointer-events-none" />
+      <div className="absolute inset-0 bg-radial from-[#C9AEC6]/[0.03] via-transparent to-transparent pointer-events-none -z-10" />
+      <div className="absolute top-0 right-1/4 w-72 h-72 bg-[#C9AEC6]/[0.03] blur-[110px] pointer-events-none" />
+      <div className="absolute bottom-10 left-1/4 w-72 h-72 bg-[#22C55E]/[0.03] blur-[110px] pointer-events-none" />
 
       {/* Top Root Node: YOUR BUSINESS */}
       <div className="relative z-10 flex flex-col items-center pt-2">
         <motion.div
           animate={{ x: mousePos.x * 0.2, y: mousePos.y * 0.2 }}
           transition={{ type: "spring", stiffness: 300, damping: 25 }}
-          className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full glass border border-brand-500/40 bg-brand-950/70 shadow-[0_0_25px_rgba(37,99,235,0.25)] cursor-default"
+          className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full glass border border-[#C9AEC6]/30 bg-[#141414] shadow-[0_0_25px_rgba(201,174,198,0.12)] cursor-default"
         >
-          <div className="w-6 h-6 rounded-full bg-brand-500/20 flex items-center justify-center text-brand-400">
+          <div className="w-6 h-6 rounded-full bg-[#C9AEC6]/15 flex items-center justify-center text-[#C9AEC6]">
             <Building2 className="w-3.5 h-3.5" />
           </div>
           <div className="text-left">
-            <span className="text-xs font-bold tracking-widest text-white block uppercase">YOUR BUSINESS</span>
+            <span className="text-xs font-bold tracking-widest text-[#F6EFF5] block uppercase">YOUR BUSINESS</span>
           </div>
-          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-brand-500/20 text-brand-300">
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-[#C9AEC6]/15 text-[#C9AEC6]">
             Operations
           </span>
         </motion.div>
@@ -329,24 +329,24 @@ export function WorkflowNetwork() {
               animate={{ x: mousePos.x * 0.15, y: mousePos.y * 0.15 }}
               className={`relative flex flex-col items-center text-center p-2 sm:p-2.5 md:p-3 rounded-xl border transition-all duration-200 cursor-pointer overflow-hidden ${
                 isSelected
-                  ? "border-brand-400/80 bg-brand-950/85 shadow-[0_4px_22px_rgba(37,99,235,0.28)] scale-[1.03]"
-                  : "border-white/10 bg-slate-950/60 hover:border-brand-500/40 hover:bg-slate-900/60"
+                  ? "border-[#C9AEC6] bg-[#161616] shadow-[0_4px_22px_rgba(201,174,198,0.2)] scale-[1.03]"
+                  : "border-white/[0.08] bg-[#141414]/70 hover:border-[#C9AEC6]/40 hover:bg-[#161616]"
               }`}
             >
               {/* Refined top specular sheen when active */}
               {isSelected && (
-                <div className="absolute top-0 left-2 right-2 h-[1px] bg-gradient-to-r from-transparent via-brand-300 to-transparent" />
+                <div className="absolute top-0 left-2 right-2 h-[1px] bg-gradient-to-r from-transparent via-[#C9AEC6] to-transparent" />
               )}
               <div className={`w-7 h-7 md:w-8 md:h-8 rounded-lg flex items-center justify-center mb-1 bg-white/5 ${dept.color}`}>
                 <Icon className="w-3.5 h-3.5 md:w-4 md:h-4" />
               </div>
-              <span className="text-[10px] md:text-xs font-bold text-white tracking-wider block">
+              <span className="text-[10px] md:text-xs font-bold text-[#F6EFF5] tracking-wider block">
                 {dept.label}
               </span>
-              <span className="text-[8px] md:text-[10px] text-muted-foreground hidden sm:block truncate max-w-full">
+              <span className="text-[8px] md:text-[10px] text-[#8E8295] hidden sm:block truncate max-w-full">
                 {dept.sublabel}
               </span>
-              <div className="mt-1.5 inline-flex items-center px-1.5 py-0.5 rounded bg-white/5 border border-white/5 text-[8px] md:text-[9px] font-mono text-brand-300">
+              <div className="mt-1.5 inline-flex items-center px-1.5 py-0.5 rounded bg-white/5 border border-white/5 text-[8px] md:text-[9px] font-mono text-[#C9AEC6]">
                 {dept.badge}
               </div>
             </motion.div>
@@ -359,42 +359,42 @@ export function WorkflowNetwork() {
         {/* Step 1: AI Automation */}
         <motion.div
           animate={{ x: mousePos.x * 0.1, y: mousePos.y * 0.1 }}
-          className="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl glass border border-cyan-500/30 bg-[#071726]/80 shadow-[0_4px_20px_rgba(6,182,212,0.12)]"
+          className="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl glass border border-white/[0.08] bg-[#141414]/90 shadow-lg"
         >
-          <div className="w-6 h-6 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-400">
+          <div className="w-6 h-6 rounded-lg bg-[#C9AEC6]/15 flex items-center justify-center text-[#C9AEC6]">
             <Bot className="w-3.5 h-3.5" />
           </div>
           <div className="text-left">
-            <div className="text-xs font-bold text-cyan-200">AI PROCESSING</div>
-            <div className="text-[10px] text-muted-foreground">Extracts data, validates rules & drafts actions</div>
+            <div className="text-xs font-bold text-[#F6EFF5]">AI PROCESSING</div>
+            <div className="text-[10px] text-[#8E8295]">Extracts data, validates rules & drafts actions</div>
           </div>
         </motion.div>
 
         {/* Step 2: Human Approval (Strict Human in the Loop) */}
         <motion.div
           animate={{ x: mousePos.x * 0.08, y: mousePos.y * 0.08 }}
-          className="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl glass border border-emerald-500/35 bg-[#061e18]/80 shadow-[0_4px_20px_rgba(16,185,129,0.15)]"
+          className="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl glass border border-[#C9AEC6]/40 bg-[#161616] shadow-[0_4px_20px_rgba(201,174,198,0.12)]"
         >
-          <div className="w-6 h-6 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+          <div className="w-6 h-6 rounded-lg bg-[#C9AEC6]/15 flex items-center justify-center text-[#C9AEC6]">
             <UserCheck className="w-3.5 h-3.5" />
           </div>
           <div className="text-left">
-            <div className="text-xs font-bold text-emerald-300 flex items-center gap-1.5">
+            <div className="text-xs font-bold text-[#F6EFF5] flex items-center gap-1.5">
               HUMAN REVIEW
-              <span className="text-[9px] font-mono uppercase px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              <span className="text-[9px] font-mono uppercase px-1.5 py-0.5 rounded bg-[#C9AEC6]/15 text-[#C9AEC6] border border-[#C9AEC6]/30">
                 Gatekeeper
               </span>
             </div>
-            <div className="text-[10px] text-muted-foreground">Team authorizes high-impact actions & exceptions</div>
+            <div className="text-[10px] text-[#8E8295]">Team authorizes high-impact actions & exceptions</div>
           </div>
         </motion.div>
 
         {/* Step 3: Verified Action / Result */}
         <motion.div
           animate={{ x: mousePos.x * 0.05, y: mousePos.y * 0.05 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-white/15 bg-white/5 text-[11px] md:text-xs text-white font-medium text-center shadow-lg"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-[#22C55E]/30 bg-[#141414] text-[11px] md:text-xs text-[#F6EFF5] font-medium text-center shadow-lg"
         >
-          <Zap className="w-3.5 h-3.5 text-brand-400 shrink-0" />
+          <Zap className="w-3.5 h-3.5 text-[#22C55E] shrink-0" />
           <span>SYSTEM EXECUTES: Database updated • Dispatch sent • Records synchronized</span>
         </motion.div>
       </div>

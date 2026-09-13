@@ -298,7 +298,7 @@ export function DynamicSystemField() {
 
       // Draw subtle connection links (batched)
       ctx.beginPath();
-      ctx.strokeStyle = "rgba(240, 245, 255, 0.05)";
+      ctx.strokeStyle = "rgba(244, 241, 234, 0.04)";
       ctx.lineWidth = 0.5;
 
       const maxD = maxDistance * 0.85;
@@ -323,8 +323,8 @@ export function DynamicSystemField() {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = p.isAccent
-          ? `rgba(225, 29, 72, ${p.baseAlpha})`
-          : `rgba(240, 245, 255, ${p.baseAlpha})`;
+          ? `rgba(201, 174, 198, ${p.baseAlpha})`
+          : `rgba(244, 241, 234, ${p.baseAlpha})`;
         ctx.fill();
       }
     };
@@ -408,7 +408,7 @@ export function DynamicSystemField() {
 
           ctx.beginPath();
           ctx.arc(rip.x, rip.y, rip.radius, 0, Math.PI * 2);
-          ctx.strokeStyle = `rgba(225, 29, 72, ${ripAlpha})`;
+          ctx.strokeStyle = `rgba(201, 174, 198, ${ripAlpha})`;
           ctx.lineWidth = 0.75;
           ctx.stroke();
         }
@@ -460,7 +460,7 @@ export function DynamicSystemField() {
       let edgesDrawn = 0;
 
       ctx.beginPath();
-      ctx.strokeStyle = "rgba(240, 245, 255, 0.045)";
+      ctx.strokeStyle = "rgba(244, 241, 234, 0.04)";
       ctx.lineWidth = 0.45;
 
       const maxDistSq = maxDistance * maxDistance;
@@ -509,7 +509,7 @@ export function DynamicSystemField() {
           toIdx: edge.p2Idx,
           progress: 0,
           speed: 0.016 + Math.random() * 0.01,
-          color: "rgba(225, 29, 72, 0.85)",
+          color: "rgba(201, 174, 198, 0.75)",
         });
         lastPulseSpawn = time;
         if (demoPulseBurst > 0) demoPulseBurst--;
@@ -542,14 +542,14 @@ export function DynamicSystemField() {
 
         ctx.beginPath();
         ctx.arc(pulseX, pulseY, 1.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${pulseAlpha})`;
+        ctx.fillStyle = `rgba(244, 241, 234, ${pulseAlpha})`;
         ctx.fill();
       }
 
       // 5. Batched Network Nodes
       // Normal nodes batch
       ctx.beginPath();
-      ctx.fillStyle = "rgba(240, 245, 255, 0.28)";
+      ctx.fillStyle = "rgba(244, 241, 234, 0.25)";
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
         if (!p.isAccent) {
@@ -561,9 +561,9 @@ export function DynamicSystemField() {
       }
       ctx.fill();
 
-      // Accent red nodes batch
+      // Accent champagne nodes batch
       ctx.beginPath();
-      ctx.fillStyle = "rgba(225, 29, 72, 0.75)";
+      ctx.fillStyle = "rgba(201, 174, 198, 0.75)";
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
         if (p.isAccent) {

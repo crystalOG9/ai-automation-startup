@@ -5,52 +5,52 @@ import { InstagramIcon } from "@/components/InstagramIcon";
 
 export function Footer() {
   return (
-    <footer className="bg-[#0e0a0c] border-t border-[#881337]/30 pt-16 pb-8">
+    <footer className="bg-[#080808] border-t border-white/[0.06] pt-16 pb-8">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           
           <div className="lg:col-span-1">
             <Link
               href="/"
-              className="text-2xl font-bold tracking-tighter text-white flex items-center gap-2.5 mb-4 inline-flex group"
+              className="text-2xl font-bold tracking-tighter text-[#F6EFF5] flex items-center gap-2.5 mb-4 inline-flex group"
             >
               <SpartanLogo size={36} />
-              <span className="font-bold tracking-tight text-white">SPARTAN</span>
+              <span className="font-bold tracking-tight text-[#F6EFF5]">SPARTAN</span>
             </Link>
-            <p className="text-muted-foreground text-sm leading-relaxed">
+            <p className="text-[#8E8295] text-sm leading-relaxed">
               Custom workflow automation built around your existing software and business rules.
             </p>
           </div>
 
           <div>
-            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Platform</h4>
+            <h4 className="text-[#F6EFF5] font-semibold mb-4 text-sm uppercase tracking-wider">Platform</h4>
             <ul className="space-y-3">
-              <li><Link href="#how-it-works" className="text-muted-foreground hover:text-white transition-colors text-sm">How It Works</Link></li>
-              <li><Link href="#workflow-demo" className="text-muted-foreground hover:text-white transition-colors text-sm">Workflow Demo</Link></li>
-              <li><Link href="#solutions" className="text-muted-foreground hover:text-white transition-colors text-sm">Solutions</Link></li>
-              <li><Link href="#industries" className="text-muted-foreground hover:text-white transition-colors text-sm">Industries</Link></li>
-              <li><Link href="#why-us" className="text-muted-foreground hover:text-white transition-colors text-sm">Why Us</Link></li>
+              <li><Link href="#how-it-works" className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm">How It Works</Link></li>
+              <li><Link href="#workflow-demo" className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm">Workflow Demo</Link></li>
+              <li><Link href="#solutions" className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm">Solutions</Link></li>
+              <li><Link href="#industries" className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm">Industries</Link></li>
+              <li><Link href="#why-us" className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm">Why Us</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Assessment & Method</h4>
+            <h4 className="text-[#F6EFF5] font-semibold mb-4 text-sm uppercase tracking-wider">Assessment & Method</h4>
             <ul className="space-y-3">
-              <li><Link href="#contact" className="text-muted-foreground hover:text-white transition-colors text-sm">Request Assessment</Link></li>
-              <li><Link href="#differentiator" className="text-muted-foreground hover:text-white transition-colors text-sm">Engineering Method</Link></li>
-              <li><Link href="#contact" className="text-muted-foreground hover:text-white transition-colors text-sm">Start With One Workflow</Link></li>
+              <li><Link href="#contact" className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm">Request Assessment</Link></li>
+              <li><Link href="#differentiator" className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm">Engineering Method</Link></li>
+              <li><Link href="#contact" className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm">Start With One Workflow</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Contact & Connect</h4>
+            <h4 className="text-[#F6EFF5] font-semibold mb-4 text-sm uppercase tracking-wider">Contact & Connect</h4>
             <ul className="space-y-3">
               <li>
                 <a
                   href="mailto:sparten.tech26@gmail.com"
-                  className="flex items-center gap-2.5 text-muted-foreground hover:text-white transition-colors text-sm group"
+                  className="flex items-center gap-2.5 text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm group"
                 >
-                  <Mail className="w-4 h-4 text-[#e11d48] shrink-0 group-hover:scale-110 transition-transform" />
+                  <Mail className="w-4 h-4 text-[#C9AEC6] shrink-0 group-hover:scale-110 transition-transform" />
                   <span className="break-all">sparten.tech26@gmail.com</span>
                 </a>
               </li>
@@ -59,30 +59,30 @@ export function Footer() {
                   href="https://www.instagram.com/spartantech.ai/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2.5 text-muted-foreground hover:text-white transition-colors text-sm group"
+                  className="flex items-center gap-2.5 text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm group"
                 >
-                  <InstagramIcon className="w-4 h-4 text-pink-400 shrink-0 group-hover:scale-110 transition-transform" />
+                  <InstagramIcon className="w-4 h-4 text-[#8E8295] group-hover:text-[#C9AEC6] shrink-0 group-hover:scale-110 transition-transform" />
                   <span>@spartantech.ai</span>
                 </a>
               </li>
             </ul>
-            <p className="text-xs text-muted-foreground/60 mt-4 leading-relaxed">
+            <p className="text-xs text-[#8E8295] mt-4 leading-relaxed">
               Custom workflow automation engineering.
             </p>
           </div>
           
         </div>
 
-        <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-white/5 text-sm text-muted-foreground gap-4">
+        <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-white/[0.06] text-xs text-[#8E8295] gap-4">
           <p>© 2026 SPARTAN. All rights reserved.</p>
           
           <div className="flex items-center gap-4">
-            <Link href="/" className="hover:text-white transition-colors" aria-label="Website">
+            <Link href="/" className="hover:text-[#C9AEC6] transition-colors" aria-label="Website">
               <Globe className="w-4 h-4" />
             </Link>
             <a
               href="mailto:sparten.tech26@gmail.com"
-              className="hover:text-white transition-colors"
+              className="hover:text-[#C9AEC6] transition-colors"
               aria-label="Email SPARTAN"
             >
               <Mail className="w-4 h-4" />
@@ -91,7 +91,7 @@ export function Footer() {
               href="https://www.instagram.com/spartantech.ai/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-white transition-colors"
+              className="hover:text-[#C9AEC6] transition-colors"
               aria-label="SPARTAN Instagram"
             >
               <InstagramIcon className="w-4 h-4" />
