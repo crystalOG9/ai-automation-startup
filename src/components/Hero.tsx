@@ -6,7 +6,6 @@ import { ArrowRight, ArrowDown } from "lucide-react";
 import Link from "next/link";
 
 import { SPARTAN_EASE } from "@/lib/motion";
-import { Hero3DExperience } from "@/components/Hero3DExperience";
 
 const TICKER_ITEMS = [
   "Custom Business Logic",
@@ -24,42 +23,42 @@ export function Hero() {
     target: sectionRef,
     offset: ["start start", "end start"],
   });
-  const heroContentY = useTransform(scrollYProgress, [0, 1], [0, 30]);
-  const heroContentOpacity = useTransform(scrollYProgress, [0, 0.9], [1, 0.4]);
+  const heroContentY = useTransform(scrollYProgress, [0, 1], [0, 40]);
+  const heroContentOpacity = useTransform(scrollYProgress, [0, 0.9], [1, 0.3]);
 
   return (
-    <section id="hero" ref={sectionRef} className="relative min-h-[92vh] flex flex-col justify-between pt-28 pb-0 md:pt-36 overflow-hidden perspective-1200">
-      {/* Subtle controlled atmospheric lighting */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-[400px] bg-[#881337]/[0.18] blur-[140px] rounded-full pointer-events-none select-none" />
-      <div className="absolute top-1/4 right-0 w-80 h-80 bg-[#e11d48]/[0.07] blur-[120px] rounded-full pointer-events-none select-none" />
+    <section id="hero" ref={sectionRef} className="relative min-h-[92vh] flex flex-col justify-between pt-32 pb-0 md:pt-40 overflow-hidden perspective-1200">
+      {/* Subtle controlled atmospheric lighting tuned to deep burgundy and satin crimson */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-[480px] bg-[#881337]/[0.22] blur-[180px] rounded-full pointer-events-none select-none" />
+      <div className="absolute top-1/4 right-0 w-96 h-96 bg-[#e11d48]/[0.08] blur-[160px] rounded-full pointer-events-none select-none" />
       
       <motion.div
         style={{ y: heroContentY, opacity: heroContentOpacity }}
         className="container mx-auto px-4 md:px-6 relative z-10 my-auto"
       >
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center max-w-7xl mx-auto">
-          {/* Left Column: Core Technical Value Proposition */}
-          <div className="lg:col-span-6 xl:col-span-7 space-y-0">
+        {/* Full-Width Expansive Hero Layout in Obsidian Charcoal & Precision Red */}
+        <div className="max-w-5xl xl:max-w-6xl">
+          <div className="space-y-0">
             {/* 1. SPARTAN Branding / Technical Eyebrow Badge */}
             <motion.div
-              initial={{ opacity: 0, y: 14, scale: 0.98 }}
+              initial={{ opacity: 0, y: 16, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.48, ease: SPARTAN_EASE }}
-              className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-xl bg-[#1c1114]/85 border border-[#e11d48]/40 text-white text-xs sm:text-sm font-mono uppercase tracking-wider mb-6 sm:mb-8 shadow-[0_0_15px_rgba(225,29,72,0.18)] transition-colors hover:border-[#fb7185]"
+              transition={{ duration: 0.52, ease: SPARTAN_EASE }}
+              className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-xl bg-[#1c1114]/85 border border-[#e11d48]/40 text-white text-xs sm:text-sm font-mono uppercase tracking-wider mb-8 shadow-[0_0_15px_rgba(225,29,72,0.18)] transition-colors hover:border-[#fb7185]"
             >
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#e11d48] opacity-70" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#e11d48]" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#e11d48] opacity-70"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#e11d48]"></span>
               </span>
               <span>Custom Process &amp; Workflow Automation</span>
             </motion.div>
             
             {/* 2. Main Headline with White into Satin Crimson Contrast */}
             <motion.h1
-              initial={{ opacity: 0, y: 20, scale: 0.98 }}
+              initial={{ opacity: 0, y: 26, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.58, delay: 0.08, ease: SPARTAN_EASE }}
-              className="text-3xl sm:text-5xl md:text-6xl lg:text-[3.4rem] xl:text-[4rem] font-bold tracking-tight text-white mb-6 sm:mb-8 leading-[1.08]"
+              transition={{ duration: 0.64, delay: 0.1, ease: SPARTAN_EASE }}
+              className="text-4xl sm:text-6xl md:text-7xl lg:text-[4.65rem] font-bold tracking-tight text-white mb-8 leading-[1.05] max-w-5xl"
             >
               <span className="text-[#a3959a]">Your team shouldn&apos;t spend all day doing work </span>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#fda4af] to-[#e11d48]">
@@ -69,25 +68,26 @@ export function Hero() {
             
             {/* 3. Supporting Text */}
             <motion.p
-              initial={{ opacity: 0, y: 18 }}
+              initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.52, delay: 0.16, ease: SPARTAN_EASE }}
-              className="text-base sm:text-lg md:text-xl text-[#d4c9cd] mb-8 sm:mb-10 leading-relaxed max-w-2xl font-normal"
+              transition={{ duration: 0.6, delay: 0.2, ease: SPARTAN_EASE }}
+              className="text-lg sm:text-xl md:text-2xl text-[#d4c9cd] mb-10 leading-relaxed max-w-3xl font-normal"
             >
               We identify repetitive operational steps and build custom automation directly into your existing software — keeping your operators focused on <strong className="text-white font-semibold">decisions and exceptions</strong>.
             </motion.p>
             
             {/* 4. CTA Action Buttons */}
             <motion.div
-              initial={{ opacity: 0, y: 16, scale: 0.98 }}
+              initial={{ opacity: 0, y: 20, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.48, delay: 0.24, ease: SPARTAN_EASE }}
-              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-4 mb-8 sm:mb-12"
+              transition={{ duration: 0.56, delay: 0.3, ease: SPARTAN_EASE }}
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-14"
             >
               <Link
                 href="#contact"
-                className="relative overflow-hidden inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#e11d48] via-[#be123c] to-[#9f1239] hover:from-[#f43f5e] hover:to-[#e11d48] text-white px-7 py-3.5 rounded-xl text-xs sm:text-sm font-bold tracking-wider uppercase border border-[#fb7185]/50 shadow-[0_0_25px_rgba(225,29,72,0.35)] hover:shadow-[0_0_35px_rgba(225,29,72,0.6)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-150 ease-out group font-mono"
+                className="relative overflow-hidden inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#e11d48] via-[#be123c] to-[#9f1239] hover:from-[#f43f5e] hover:to-[#e11d48] text-white px-8 py-4 rounded-xl text-xs sm:text-sm font-bold tracking-wider uppercase border border-[#fb7185]/50 shadow-[0_0_25px_rgba(225,29,72,0.35)] hover:shadow-[0_0_35px_rgba(225,29,72,0.6)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-150 ease-out group font-mono"
               >
+                {/* Directional specular sweep on hover */}
                 <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out bg-gradient-to-r from-transparent via-white/35 to-transparent pointer-events-none" />
                 
                 <span className="relative z-10">SHOW US YOUR WORKFLOW</span>
@@ -96,23 +96,11 @@ export function Hero() {
               
               <Link
                 href="#how-it-works"
-                className="inline-flex items-center justify-center gap-2.5 bg-white/[0.04] hover:bg-white/[0.08] border border-white/15 hover:border-[#e11d48]/60 text-white hover:text-white px-7 py-3.5 rounded-xl text-xs sm:text-sm font-medium tracking-wider uppercase hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(225,29,72,0.18)] active:translate-y-0 active:scale-[0.98] transition-all duration-150 ease-out font-mono"
+                className="inline-flex items-center justify-center gap-2.5 bg-white/[0.04] hover:bg-white/[0.08] border border-white/15 hover:border-[#e11d48]/60 text-white hover:text-white px-8 py-4 rounded-xl text-xs sm:text-sm font-medium tracking-wider uppercase hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(225,29,72,0.18)] active:translate-y-0 active:scale-[0.98] transition-all duration-150 ease-out font-mono"
               >
                 <span>SEE HOW IT WORKS</span>
                 <ArrowDown className="w-3.5 h-3.5 text-[#fb7185]" />
               </Link>
-            </motion.div>
-          </div>
-
-          {/* Right Column: Adaptive 3D Automation Core (3D on Desktop, Fallback on Mobile/Touch) */}
-          <div className="lg:col-span-6 xl:col-span-5 relative w-full flex items-center justify-center mt-4 lg:mt-0">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.56, delay: 0.18, ease: SPARTAN_EASE }}
-              className="w-full relative"
-            >
-              <Hero3DExperience />
             </motion.div>
           </div>
         </div>
@@ -120,10 +108,10 @@ export function Hero() {
 
       {/* 5. Ticker marquee strip in Obsidian & Crimson palette */}
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
+        initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.3, ease: SPARTAN_EASE }}
-        className="w-full mt-10 sm:mt-14 py-3.5 border-y border-white/[0.08] bg-[#0e080a]/90 backdrop-blur-md overflow-hidden select-none"
+        transition={{ duration: 0.7, delay: 0.4, ease: SPARTAN_EASE }}
+        className="w-full mt-14 py-3.5 border-y border-white/[0.08] bg-[#0e080a]/90 backdrop-blur-md overflow-hidden select-none"
       >
         <motion.div
           className="flex w-max space-x-10 text-xs font-mono tracking-widest text-[#a3959a] uppercase"
