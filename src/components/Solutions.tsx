@@ -20,135 +20,158 @@ const SOLUTIONS = [
   {
     icon: Mail,
     title: "Email Operations",
-    desc: "Understand, classify and route incoming emails automatically based on intent, sender status, and context.",
+    desc: "Classify incoming emails, extract key references, and route requests without manual inbox sorting.",
   },
   {
     icon: FileText,
     title: "Document Processing",
-    desc: "Extract structured information from unstructured invoices, receipts, PDFs, and vendor forms with high precision.",
+    desc: "Parse line items from PDFs, vendor invoices, bills of lading, and purchase orders directly into your system.",
   },
   {
     icon: Headset,
     title: "Customer Support",
-    desc: "Classify incoming tickets, retrieve contextual history from databases, and prepare accurate response drafts.",
+    desc: "Categorize support tickets, pull account history from your CRM, and stage resolved responses for operator sign-off.",
   },
   {
     icon: ShoppingCart,
     title: "Order & Refund Operations",
-    desc: "Identify refund requests, verify information, prepare the appropriate action and route it for human approval when required.",
+    desc: "Validate return requests against warranty rules, cross-check transaction logs, and stage refunds for manager approval.",
     highlight: true,
   },
   {
     icon: Database,
     title: "Data Operations",
-    desc: "Move information reliably between spreadsheets, databases, CRMs, and ERP systems without manual re-entry.",
+    desc: "Synchronize records, inventory levels, and order statuses between ERPs, spreadsheets, and CRMs with zero re-keying.",
   },
   {
     icon: TrendingUp,
     title: "Sales Operations",
-    desc: "Qualify inbound leads, assign them to the right representatives, and prepare personalized initial outreach.",
+    desc: "Enrich inbound inquiries with company data, assign accounts by territory, and draft personalized initial outreach.",
   },
   {
     icon: BarChart,
     title: "Operational Reporting",
-    desc: "Collect metrics across disparate operational systems and generate recurring summaries for leadership.",
+    desc: "Aggregate daily volume, error rates, and throughput metrics across disconnected tools into scheduled executive summaries.",
   },
 ];
 
+import {
+  scaleReveal,
+  defaultViewport,
+  SPARTAN_EASE,
+} from "@/lib/motion";
+
 export function Solutions() {
   return (
-    <section id="solutions" className="py-24 relative z-10 overflow-hidden">
+    <section id="solutions" className="py-24 relative z-10 overflow-hidden perspective-1200">
       <div className="container mx-auto px-4 md:px-6">
         
         {/* Header with 5-step philosophy */}
-        <div className="max-w-4xl mx-auto text-center mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-brand-500/30 text-brand-300 text-xs font-semibold uppercase tracking-wider mb-4"
-          >
-            Capabilities
-          </motion.div>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={defaultViewport}
+          variants={scaleReveal}
+          className="max-w-4xl mx-auto text-center mb-16"
+        >
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-brand-500/30 text-brand-300 text-xs font-semibold uppercase tracking-wider mb-4">
+            Workflows We Automate
+          </div>
 
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-6 uppercase text-white"
-          >
-            WE AUTOMATE THE WORK UNIQUE TO <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-cyan-300 to-blue-200">
-              YOUR BUSINESS.
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-6 text-white">
+            Targeted automation for <br className="hidden md:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#fda4af] to-[#e11d48]">
+              high-volume workflows.
             </span>
-          </motion.h2>
+          </h2>
 
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="inline-flex flex-wrap items-center justify-center gap-2 px-4 py-2 rounded-2xl glass border border-white/10 text-xs text-muted-foreground font-mono"
-          >
-            <span>AI Identifies</span>
-            <span className="text-brand-400">→</span>
-            <span>AI Validates</span>
-            <span className="text-brand-400">→</span>
-            <span>AI Prepares</span>
-            <span className="text-emerald-400 font-bold">→</span>
-            <span className="text-emerald-300 font-bold bg-emerald-500/20 px-2 py-0.5 rounded border border-emerald-500/30">HUMAN APPROVES</span>
-            <span className="text-brand-400">→</span>
-            <span>SYSTEM EXECUTES</span>
-          </motion.div>
-        </div>
+          <div className="inline-flex flex-wrap items-center justify-center gap-2 px-4 py-2 rounded-2xl glass border border-white/10 text-xs text-muted-foreground font-mono">
+            <span>Trigger Ingestion</span>
+            <span className="text-[#e11d48]">→</span>
+            <span>Data Extraction</span>
+            <span className="text-[#e11d48]">→</span>
+            <span>Rule Validation</span>
+            <span className="text-[#ffffff] font-bold">→</span>
+            <span className="text-[#ffffff] font-bold bg-[#e11d48]/15 px-2 py-0.5 rounded border border-[#e11d48]/30">HUMAN SIGN-OFF</span>
+            <span className="text-[#e11d48]">→</span>
+            <span>SYSTEM SYNC</span>
+          </div>
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {SOLUTIONS.map((sol, idx) => (
-            <motion.div
-              key={sol.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.08 }}
-              className="h-full"
-            >
-              <PrecisionCard
-                glowColor={sol.highlight ? "rgba(16, 185, 129, 0.12)" : "rgba(59, 130, 246, 0.09)"}
-                className={`glass-card p-6 rounded-2xl transition-all duration-300 border flex flex-col justify-between group cursor-default h-full ${
-                  sol.highlight
-                    ? "border-emerald-500/30 bg-emerald-950/10 hover:border-emerald-500/50"
-                    : "border-white/5 hover:border-brand-500/30 hover:bg-white/5"
-                }`}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 preserve-3d">
+          {SOLUTIONS.map((sol, idx) => {
+            const isRow1 = idx < 4;
+            const directionOffset = isRow1 ? -80 : 80;
+            const rotateAngle = isRow1 ? -7 : 7;
+            const delayTime = (idx % 4) * 0.08 + (isRow1 ? 0 : 0.16);
+
+            return (
+              <motion.div
+                key={sol.title}
+                initial={{
+                  opacity: 0,
+                  x: directionOffset,
+                  rotateY: rotateAngle,
+                  scale: 0.94,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  x: 0,
+                  rotateY: 0,
+                  scale: 1,
+                }}
+                viewport={defaultViewport}
+                transition={{
+                  duration: 0.65,
+                  delay: delayTime,
+                  ease: SPARTAN_EASE,
+                }}
+                whileHover={{ y: -6, scale: 1.015 }}
+                className="h-full"
               >
-                <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <sol.icon className={`w-8 h-8 ${sol.highlight ? "text-emerald-400" : "text-muted-foreground group-hover:text-brand-400"} transition-colors`} />
-                    {sol.highlight && (
-                      <span className="inline-flex items-center gap-1 text-[10px] font-mono text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded border border-emerald-500/30">
-                        <ShieldCheck className="w-3 h-3" /> Safe Action
-                      </span>
-                    )}
+                <PrecisionCard
+                  glowColor={sol.highlight ? "rgba(225, 29, 72, 0.18)" : "rgba(225, 29, 72, 0.08)"}
+                  className={`glass-card p-6 rounded-2xl transition-all duration-300 border flex flex-col justify-between group cursor-default h-full shadow-lg ${
+                    sol.highlight
+                      ? "border-[#e11d48]/30 bg-[#1c1114]/40 hover:border-[#e11d48]/50"
+                      : "border-white/5 hover:border-[#e11d48]/30 hover:bg-white/5"
+                  }`}
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-6">
+                      <sol.icon className={`w-8 h-8 ${sol.highlight ? "text-emerald-400" : "text-muted-foreground group-hover:text-brand-400"} transition-colors`} />
+                      {sol.highlight && (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-mono text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded border border-emerald-500/30">
+                          <ShieldCheck className="w-3 h-3" /> Safe Action
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="text-lg font-bold text-white mb-3">{sol.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {sol.desc}
+                    </p>
                   </div>
-                  <h3 className="text-lg font-bold text-white mb-3">{sol.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {sol.desc}
-                  </p>
-                </div>
-              </PrecisionCard>
-            </motion.div>
-          ))}
+                </PrecisionCard>
+              </motion.div>
+            );
+          })}
 
           {/* Custom Workflow Card - Emphasized */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: SOLUTIONS.length * 0.08 }}
+            initial={{ opacity: 0, y: 35, scale: 0.96 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={defaultViewport}
+            transition={{
+              duration: 0.62,
+              delay: 0.32,
+              ease: SPARTAN_EASE,
+            }}
+            whileHover={{ y: -4, scale: 1.008 }}
             className="md:col-span-2 lg:col-span-4"
           >
             <PrecisionCard
               glowColor="rgba(59, 130, 246, 0.14)"
-              className="glass-card p-8 rounded-2xl border border-brand-500/40 bg-brand-900/15 hover:bg-brand-900/25 transition-all group relative overflow-hidden h-full"
+              className="glass-card p-8 rounded-2xl border border-brand-500/40 bg-brand-900/15 hover:bg-brand-900/25 transition-all group relative overflow-hidden h-full shadow-xl"
             >
               <div className="absolute top-0 right-0 w-64 h-64 bg-brand-500/10 blur-[80px] rounded-full pointer-events-none" />
               <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
@@ -157,9 +180,9 @@ export function Solutions() {
                     <Settings2 className="w-7 h-7" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-white mb-2">Custom Proprietary Workflow</h3>
+                    <h3 className="text-xl font-bold text-white mb-2">Custom Internal Workflows</h3>
                     <p className="text-muted-foreground max-w-xl text-sm leading-relaxed">
-                      If your operational process doesn&apos;t fit a predefined category, we build the automation specifically around your internal systems, spreadsheets, and unique business logic.
+                      If your workflow relies on legacy software, internal databases, or non-standard operational rules, we build the pipeline around your exact business logic.
                     </p>
                   </div>
                 </div>

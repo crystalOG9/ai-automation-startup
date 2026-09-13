@@ -32,9 +32,9 @@ export function DynamicScrollProgress() {
       {/* Laser Track Background Line */}
       <div className="w-full h-[2px] bg-white/[0.04]" />
 
-      {/* Main Dynamic Laser Stream */}
+      {/* Main Dynamic Laser Stream in Warm Skin & Champagne Colors */}
       <motion.div
-        className="absolute top-0 left-0 right-0 h-[2px] origin-left bg-gradient-to-r from-brand-600 via-brand-400 to-cyan-300"
+        className="absolute top-0 left-0 right-0 h-[2px] origin-left bg-gradient-to-r from-[#881337] via-[#e11d48] to-[#ffffff]"
         style={{
           scaleX,
           opacity: laserOpacity,
@@ -42,7 +42,7 @@ export function DynamicScrollProgress() {
       >
         {/* Diffuse energetic glow under the laser beam */}
         <motion.div
-          className="absolute inset-0 blur-[3px] bg-gradient-to-r from-brand-600 via-cyan-400 to-blue-200"
+          className="absolute inset-0 blur-[3px] bg-gradient-to-r from-[#881337] via-[#e11d48] to-[#ffffff]"
           style={{ opacity: velocityGlow }}
         />
 
@@ -50,12 +50,12 @@ export function DynamicScrollProgress() {
         <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 flex items-center justify-center">
           {/* Outer high-energy glow ring */}
           <motion.div
-            className="w-4 h-4 rounded-full bg-cyan-400/40 blur-[4px]"
+            className="w-4 h-4 rounded-full bg-[#e11d48]/40 blur-[4px]"
             animate={{ scale: [1, 1.4, 1], opacity: [0.6, 1, 0.6] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
           />
           {/* Intense center plasma core */}
-          <div className="absolute w-2 h-2 rounded-full bg-white shadow-[0_0_8px_#38bdf8,0_0_16px_#2563eb]" />
+          <div className="absolute w-2 h-2 rounded-full bg-[#ffffff] shadow-[0_0_10px_#ffffff,0_0_20px_#e11d48]" />
         </div>
       </motion.div>
     </div>

@@ -186,7 +186,7 @@ export function Hero3DExperience() {
 
     // Three.js Scene Setup
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x030712, 0.045);
+    scene.fog = new THREE.FogExp2(0x090607, 0.045);
 
     const width = container.clientWidth || 600;
     const height = container.clientHeight || 640;
@@ -211,25 +211,25 @@ export function Hero3DExperience() {
       return;
     }
 
-    // Studio Lighting
-    const ambientLight = new THREE.AmbientLight(0x0a192f, 2.0);
+    // Studio Lighting in Precision Red & Crisp White
+    const ambientLight = new THREE.AmbientLight(0x1f0a10, 2.2);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xe0f2fe, 3.2);
+    const keyLight = new THREE.DirectionalLight(0xffffff, 3.4);
     keyLight.position.set(4, 6, 7);
     scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight(0x2563eb, 4.5);
+    const rimLight = new THREE.DirectionalLight(0xe11d48, 4.5);
     rimLight.position.set(-6, -3, -4);
     scene.add(rimLight);
 
-    const blueCoreLight = new THREE.PointLight(0x3b82f6, 6.0, 10);
-    blueCoreLight.position.set(0, 0, 0.5);
-    scene.add(blueCoreLight);
+    const redCoreLight = new THREE.PointLight(0xbe123c, 6.0, 10);
+    redCoreLight.position.set(0, 0, 0.5);
+    scene.add(redCoreLight);
 
-    const cyanAccentLight = new THREE.PointLight(0x06b6d4, 4.0, 8);
-    cyanAccentLight.position.set(0, 1.2, -0.5);
-    scene.add(cyanAccentLight);
+    const whiteAccentLight = new THREE.PointLight(0xffffff, 3.5, 8);
+    whiteAccentLight.position.set(0, 1.2, -0.5);
+    scene.add(whiteAccentLight);
 
     // Root Hierarchy for smooth Parallax & Scroll
     const worldGroup = new THREE.Group();
@@ -273,10 +273,10 @@ export function Hero3DExperience() {
     spartanGeometry.center();
 
     const spartanMaterial = new THREE.MeshPhysicalMaterial({
-      color: 0x2563eb,
-      emissive: 0x1d4ed8,
+      color: 0xbe123c,
+      emissive: 0x881337,
       emissiveIntensity: 0.45,
-      roughness: 0.18,
+      roughness: 0.22,
       metalness: 0.88,
       clearcoat: 0.95,
       clearcoatRoughness: 0.12,
@@ -288,7 +288,7 @@ export function Hero3DExperience() {
 
     // Inner Luminous Emblem Disc (Official SPARTAN Logo Badge)
     const textureLoader = new THREE.TextureLoader();
-    const logoTexture = textureLoader.load("/branding/spartan-logo.png");
+    const logoTexture = textureLoader.load("/branding/spartan-3d-logo-red.png");
     logoTexture.generateMipmaps = true;
 
     const emblemGeometry = new THREE.PlaneGeometry(1.65, 1.65);
@@ -314,8 +314,8 @@ export function Hero3DExperience() {
     // Ring 1: Inner Chamfered Ring
     const innerRingGeo = new THREE.TorusGeometry(1.35, 0.022, 16, 72);
     const ringMaterial = new THREE.MeshStandardMaterial({
-      color: 0x60a5fa,
-      emissive: 0x2563eb,
+      color: 0xf43f5e,
+      emissive: 0xbe123c,
       emissiveIntensity: 0.6,
       roughness: 0.25,
       metalness: 0.9,
@@ -326,8 +326,8 @@ export function Hero3DExperience() {
     // Ring 2: Tilted Outer Gimbal Ring with Technical Coordinate Ticks
     const outerRingGeo = new THREE.TorusGeometry(1.85, 0.016, 16, 80);
     const outerRingMaterial = new THREE.MeshStandardMaterial({
-      color: 0x38bdf8,
-      emissive: 0x0284c7,
+      color: 0xfecdd3,
+      emissive: 0x9f1239,
       emissiveIntensity: 0.4,
       roughness: 0.3,
       metalness: 0.8,
@@ -346,7 +346,7 @@ export function Hero3DExperience() {
     }
     const dashedGeo = new THREE.BufferGeometry().setFromPoints(dashedCirclePoints);
     const dashedMat = new THREE.LineDashedMaterial({
-      color: 0x3b82f6,
+      color: 0xe11d48,
       dashSize: 0.15,
       gapSize: 0.08,
       transparent: true,
@@ -712,7 +712,7 @@ export function Hero3DExperience() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[600px] md:h-[660px] rounded-3xl border border-white/10 bg-[#060b17]/90 backdrop-blur-xl overflow-hidden shadow-2xl flex flex-col justify-between select-none"
+      className="relative w-full h-[600px] md:h-[660px] rounded-3xl border border-white/10 bg-[#090607]/90 backdrop-blur-xl overflow-hidden shadow-2xl flex flex-col justify-between select-none"
     >
       {/* 3D WebGL Canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing z-0" />
@@ -722,16 +722,16 @@ export function Hero3DExperience() {
         className="absolute inset-0 opacity-20 pointer-events-none z-[1]"
         style={{
           backgroundImage: `
-            linear-gradient(to right, rgba(59, 130, 246, 0.15) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(59, 130, 246, 0.15) 1px, transparent 1px)
+            linear-gradient(to right, rgba(225, 29, 72, 0.15) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(225, 29, 72, 0.15) 1px, transparent 1px)
           `,
           backgroundSize: "32px 32px",
         }}
       />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-600/[0.1] blur-[120px] rounded-full pointer-events-none z-[1]" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-600/[0.12] blur-[110px] rounded-full pointer-events-none z-[1]" />
 
       {/* Top Telemetry Header Bar */}
-      <div className="relative z-10 p-5 flex items-center justify-between border-b border-white/5 bg-[#030712]/40 backdrop-blur-md">
+      <div className="relative z-10 p-5 flex items-center justify-between border-b border-white/5 bg-[#090607]/60 backdrop-blur-md">
         <div className="flex items-center gap-3">
           <div className="relative flex h-2.5 w-2.5">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75" />
@@ -806,7 +806,7 @@ export function Hero3DExperience() {
       </div>
 
       {/* Bottom Floating Telemetry Card / Detailed Node Readout */}
-      <div className="relative z-10 p-5 mt-auto border-t border-white/10 bg-[#030712]/75 backdrop-blur-xl">
+      <div className="relative z-10 p-5 mt-auto border-t border-white/10 bg-[#090607]/85 backdrop-blur-xl">
         <div id={tooltipId} role="region" aria-label="System Node Telemetry" className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div className="flex items-start gap-3">
             <div className={`p-2 rounded-xl bg-white/5 border border-white/10 ${activeNode.color}`}>

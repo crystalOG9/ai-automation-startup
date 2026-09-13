@@ -12,7 +12,7 @@ interface PrecisionCardProps extends React.HTMLAttributes<HTMLDivElement> {
 export function PrecisionCard({
   children,
   className,
-  glowColor = "rgba(59, 130, 246, 0.15)",
+  glowColor = "rgba(225, 29, 72, 0.12)",
   ...props
 }: PrecisionCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -39,9 +39,9 @@ export function PrecisionCard({
     const normalizedX = (x / rect.width - 0.5) * 2;
     const normalizedY = (y / rect.height - 0.5) * 2;
 
-    // Subtle 3D tilt: max 3.5 degrees for disciplined enterprise feel
-    const rotX = -normalizedY * 3.5;
-    const rotY = normalizedX * 3.5;
+    // Responsive 3D tilt: max 5.5 degrees for tangible spatial depth
+    const rotX = -normalizedY * 5.5;
+    const rotY = normalizedX * 5.5;
 
     setTilt({ rotX, rotY });
   };
@@ -63,17 +63,17 @@ export function PrecisionCard({
       onMouseLeave={handleMouseLeave}
       style={{
         transform: enabled && isHovered
-          ? `perspective(1000px) rotateX(${tilt.rotX.toFixed(2)}deg) rotateY(${tilt.rotY.toFixed(2)}deg) scale3d(1.012, 1.012, 1.012)`
-          : "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)",
+          ? `perspective(1000px) rotateX(${tilt.rotX.toFixed(2)}deg) rotateY(${tilt.rotY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02) translateZ(8px)`
+          : undefined,
         transition: isHovered
           ? "transform 80ms ease-out, border-color 150ms ease, box-shadow 150ms ease"
-          : "transform 350ms cubic-bezier(0.16, 1, 0.3, 1), border-color 200ms ease, box-shadow 200ms ease",
+          : "transform 350ms cubic-bezier(0.19, 1, 0.22, 1), border-color 200ms ease, box-shadow 200ms ease",
         transformStyle: "preserve-3d",
       }}
       className={cn(
         "relative overflow-hidden rounded-2xl border transition-all",
         isHovered
-          ? "border-brand-500/60 shadow-[0_4px_30px_rgba(37,99,235,0.2)]"
+          ? "border-[#e11d48]/60 shadow-[0_8px_32px_rgba(225,29,72,0.25)]"
           : "border-white/10",
         className
       )}

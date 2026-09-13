@@ -3,37 +3,35 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-brand-50: #eff6ff;
-  --color-brand-100: #dbeafe;
-  --color-brand-200: #bfdbfe;
-  --color-brand-300: #93c5fd;
-  --color-brand-400: #60a5fa;
-  --color-brand-500: #3b82f6;
-  --color-brand-600: #2563eb;
-  --color-brand-700: #1d4ed8;
-  --color-brand-800: #1e40af;
-  --color-brand-900: #1e3a8a;
-  --color-brand-950: #172554;
+  /* Theme Palette: Precision Satin Crimson, Deep Burgundy, Crisp White & Dark Graphite
+     Engineered to harmonize with the 3D SPARTAN Red Emblem
+  */
+  --color-brand-50: #fff1f2;
+  --color-brand-100: #ffe4e6;
+  --color-brand-200: #fecdd3;
+  --color-brand-300: #fda4af;
+  --color-brand-400: #fb7185;
+  --color-brand-500: #e11d48; /* Primary Crimson Red */
+  --color-brand-600: #be123c; /* Refined Deep Crimson */
+  --color-brand-700: #9f1239; /* Rich Wine Red */
+  --color-brand-800: #881337; /* Deep Burgundy */
+  --color-brand-900: #4c0d1e; /* Velvet Wine */
+  --color-brand-950: #2a0811; /* Obsidian Wine */
 
-  --color-background: #030712; /* Very dark navy/gray */
-  --color-foreground: #f8fafc;
-  --color-muted: #1e293b;
-  --color-muted-foreground: #94a3b8;
-  --color-card: #0f172a;
-  --color-card-foreground: #f8fafc;
-  --color-border: #1e293b;
+  --color-background: #090607; /* Deep Obsidian Charcoal Canvas */
+  --color-foreground: #ffffff; /* Crisp Pure White */
+  --color-muted: #1c1114;
+  --color-muted-foreground: #a3959a;
+  --color-card: #120b0e;
+  --color-card-foreground: #ffffff;
+  --color-border: #28151b;
 
   --font-sans: var(--font-inter);
 }
 
-/*
-  The default theme in Tailwind v4 applies automatically without needing explicit dark mode classes on the body, 
-  but we'll enforce the dark mode colors directly since this is a dark-only B2B site.
-*/
-
 :root {
-  --background: #030712;
-  --foreground: #f8fafc;
+  --background: #090607;
+  --foreground: #ffffff;
 }
 
 body {
@@ -44,22 +42,48 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Utility for glassmorphism */
+::selection {
+  background-color: rgba(225, 29, 72, 0.35);
+  color: #ffffff;
+}
+
+/* Glassmorphism tuned to obsidian charcoal & satin red edge illumination */
 .glass {
-  background: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(18, 11, 14, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(225, 29, 72, 0.18);
 }
 
 .glass-card {
-  background: rgba(15, 23, 42, 0.4);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(18, 11, 14, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Subtle glow effect */
+/* Controlled crimson specular edge glow */
 .glow-effect {
-  box-shadow: 0 0 40px rgba(37, 99, 235, 0.15);
+  box-shadow: 0 0 35px rgba(225, 29, 72, 0.22);
+}
+
+/* 3D Motion System Utilities */
+.perspective-1200 {
+  perspective: 1200px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* Accessibility: respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

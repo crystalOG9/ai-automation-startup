@@ -12,12 +12,12 @@ interface SectionNode {
 const SECTIONS: SectionNode[] = [
   { id: "hero", number: "01", name: "OVERVIEW" },
   { id: "problem", number: "02", name: "BOTTLENECK" },
-  { id: "differentiator", number: "03", name: "PHILOSOPHY" },
+  { id: "differentiator", number: "03", name: "METHOD" },
   { id: "core-message", number: "04", name: "COGNITION" },
   { id: "how-it-works", number: "05", name: "ROADMAP" },
   { id: "workflow-demo", number: "06", name: "LIVE DEMO" },
   { id: "solutions", number: "07", name: "SOLUTIONS" },
-  { id: "roi", number: "08", name: "PRINCIPLES" },
+  { id: "roi", number: "08", name: "STANDARDS" },
   { id: "contact", number: "09", name: "DISPATCH" },
 ];
 

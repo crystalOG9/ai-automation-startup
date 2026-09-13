@@ -14,31 +14,31 @@ export function Hero3DFallback() {
 
   return (
     <div
-      className="relative w-full h-[600px] md:h-[660px] rounded-3xl border border-white/10 bg-[#060b17]/90 backdrop-blur-xl overflow-hidden p-6 shadow-2xl flex flex-col justify-between select-none"
+      className="relative w-full h-[600px] md:h-[660px] rounded-3xl border border-white/10 bg-[#090607]/90 backdrop-blur-xl overflow-hidden p-6 shadow-2xl flex flex-col justify-between select-none"
       aria-label="SPARTAN Automation Core Architectural Flow"
     >
       {/* Background blueprint grid */}
       <div 
-        className="absolute inset-0 opacity-25 pointer-events-none"
+        className="absolute inset-0 opacity-20 pointer-events-none"
         style={{
           backgroundImage: `
-            linear-gradient(to right, rgba(59, 130, 246, 0.15) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(59, 130, 246, 0.15) 1px, transparent 1px)
+            linear-gradient(to right, rgba(225, 29, 72, 0.15) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(225, 29, 72, 0.15) 1px, transparent 1px)
           `,
           backgroundSize: "32px 32px",
         }}
       />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-brand-600/[0.12] blur-[100px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-brand-600/[0.14] blur-[100px] rounded-full pointer-events-none" />
 
       {/* Header bar: System status */}
       <div className="relative z-10 flex items-center justify-between border-b border-white/5 pb-3">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-brand-400 animate-pulse" />
-          <span className="text-[11px] font-mono tracking-widest uppercase text-brand-300">
+          <span className="w-2 h-2 rounded-full bg-brand-500 animate-pulse shadow-[0_0_8px_#e11d48]" />
+          <span className="text-[11px] font-mono tracking-widest uppercase text-white">
             WORKFLOW ORCHESTRATION // SYSTEM ONLINE
           </span>
         </div>
-        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-brand-950 border border-brand-500/30 text-brand-300">
+        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-brand-950 border border-brand-500/30 text-brand-200">
           CORE v3.4
         </span>
       </div>
@@ -52,13 +52,13 @@ export function Hero3DFallback() {
             return (
               <div
                 key={node.id}
-                className={`flex flex-col items-center text-center p-2.5 rounded-xl border bg-slate-950/70 ${node.border}`}
+                className={`flex flex-col items-center text-center p-2.5 rounded-xl border bg-card/80 border-white/10`}
               >
-                <div className={`w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center mb-1 ${node.color}`}>
+                <div className={`w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center mb-1 text-white`}>
                   <Icon className="w-3.5 h-3.5" />
                 </div>
                 <span className="text-[10px] font-bold text-white tracking-wider">{node.label}</span>
-                <span className="text-[8px] text-slate-400 truncate max-w-full hidden sm:block">{node.sublabel}</span>
+                <span className="text-[8px] text-muted-foreground truncate max-w-full hidden sm:block">{node.sublabel}</span>
               </div>
             );
           })}
@@ -67,34 +67,34 @@ export function Hero3DFallback() {
         {/* Connecting flow lines SVG */}
         <div className="relative w-full max-w-md h-12 flex items-center justify-center">
           <svg className="w-full h-full" viewBox="0 0 400 48" fill="none" preserveAspectRatio="none">
-            <path d="M 40,0 C 40,30 200,10 200,48" stroke="rgba(59, 130, 246, 0.4)" strokeWidth="1.5" strokeDasharray="4 4" />
-            <path d="M 120,0 C 120,25 200,15 200,48" stroke="rgba(59, 130, 246, 0.4)" strokeWidth="1.5" strokeDasharray="4 4" />
-            <path d="M 200,0 L 200,48" stroke="rgba(59, 130, 246, 0.7)" strokeWidth="1.8" />
-            <path d="M 280,0 C 280,25 200,15 200,48" stroke="rgba(59, 130, 246, 0.4)" strokeWidth="1.5" strokeDasharray="4 4" />
-            <path d="M 360,0 C 360,30 200,10 200,48" stroke="rgba(59, 130, 246, 0.4)" strokeWidth="1.5" strokeDasharray="4 4" />
+            <path d="M 40,0 C 40,30 200,10 200,48" stroke="rgba(225, 29, 72, 0.4)" strokeWidth="1.5" strokeDasharray="4 4" />
+            <path d="M 120,0 C 120,25 200,15 200,48" stroke="rgba(225, 29, 72, 0.4)" strokeWidth="1.5" strokeDasharray="4 4" />
+            <path d="M 200,0 L 200,48" stroke="rgba(225, 29, 72, 0.8)" strokeWidth="1.8" />
+            <path d="M 280,0 C 280,25 200,15 200,48" stroke="rgba(225, 29, 72, 0.4)" strokeWidth="1.5" strokeDasharray="4 4" />
+            <path d="M 360,0 C 360,30 200,10 200,48" stroke="rgba(225, 29, 72, 0.4)" strokeWidth="1.5" strokeDasharray="4 4" />
           </svg>
         </div>
 
         {/* Center: SPARTAN Automation Core */}
         <div className="relative flex flex-col items-center">
           {/* Orbital Ring Graphic */}
-          <div className="relative w-36 h-36 rounded-full border border-brand-500/40 p-2 flex items-center justify-center bg-brand-950/40 shadow-[0_0_40px_rgba(37,99,235,0.25)]">
-            <div className="absolute inset-1 rounded-full border border-dashed border-brand-400/30 animate-[spin_30s_linear_infinite]" />
+          <div className="relative w-36 h-36 rounded-full border border-brand-500/40 p-2 flex items-center justify-center bg-brand-950/50 shadow-[0_0_40px_rgba(225,29,72,0.3)]">
+            <div className="absolute inset-1 rounded-full border border-dashed border-brand-400/40 animate-[spin_30s_linear_infinite]" />
             <div className="relative w-20 h-20 flex items-center justify-center">
               <Image
-                src="/branding/spartan-logo.png"
+                src="/branding/spartan-3d-logo-red.png"
                 alt="SPARTAN Automation Core"
                 width={80}
                 height={80}
-                className="w-16 h-16 object-contain drop-shadow-[0_0_15px_rgba(59,130,246,0.6)]"
+                className="w-16 h-16 object-contain drop-shadow-[0_0_15px_rgba(225,29,72,0.7)]"
                 priority
               />
             </div>
           </div>
 
-          <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-950/80 border border-brand-500/40 text-[10px] font-mono text-brand-300">
-            <span className="text-cyan-300 font-semibold">UNDERSTAND</span>
-            <span className="text-slate-500">➔</span>
+          <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-950/80 border border-brand-500/40 text-[10px] font-mono text-white">
+            <span className="text-white font-semibold">UNDERSTAND</span>
+            <span className="text-brand-400">➔</span>
             <span className="text-brand-300 font-semibold">AUTOMATE</span>
           </div>
         </div>

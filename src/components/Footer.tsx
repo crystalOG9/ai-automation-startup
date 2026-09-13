@@ -5,7 +5,7 @@ import { InstagramIcon } from "@/components/InstagramIcon";
 
 export function Footer() {
   return (
-    <footer className="bg-[#02050a] border-t border-white/5 pt-16 pb-8">
+    <footer className="bg-[#0e0a0c] border-t border-[#881337]/30 pt-16 pb-8">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           
@@ -18,7 +18,7 @@ export function Footer() {
               <span className="font-bold tracking-tight text-white">SPARTAN</span>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              We discover repetitive business workflows and build AI-powered automation around the way your company actually works.
+              Custom workflow automation built around your existing software and business rules.
             </p>
           </div>
 
@@ -34,10 +34,10 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Assessment</h4>
+            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Assessment & Method</h4>
             <ul className="space-y-3">
               <li><Link href="#contact" className="text-muted-foreground hover:text-white transition-colors text-sm">Request Assessment</Link></li>
-              <li><Link href="#differentiator" className="text-muted-foreground hover:text-white transition-colors text-sm">Workflow Differentiator</Link></li>
+              <li><Link href="#differentiator" className="text-muted-foreground hover:text-white transition-colors text-sm">Engineering Method</Link></li>
               <li><Link href="#contact" className="text-muted-foreground hover:text-white transition-colors text-sm">Start With One Workflow</Link></li>
             </ul>
           </div>
@@ -50,7 +50,7 @@ export function Footer() {
                   href="mailto:sparten.tech26@gmail.com"
                   className="flex items-center gap-2.5 text-muted-foreground hover:text-white transition-colors text-sm group"
                 >
-                  <Mail className="w-4 h-4 text-brand-400 shrink-0 group-hover:scale-110 transition-transform" />
+                  <Mail className="w-4 h-4 text-[#e11d48] shrink-0 group-hover:scale-110 transition-transform" />
                   <span className="break-all">sparten.tech26@gmail.com</span>
                 </a>
               </li>
@@ -67,7 +67,7 @@ export function Footer() {
               </li>
             </ul>
             <p className="text-xs text-muted-foreground/60 mt-4 leading-relaxed">
-              Available for custom enterprise workflow engineering inquiries.
+              Custom workflow automation engineering.
             </p>
           </div>
           

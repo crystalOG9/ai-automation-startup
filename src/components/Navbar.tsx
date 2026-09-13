@@ -1,40 +1,123 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SpartanLogo } from "@/components/SpartanLogo";
 
+// Synchronized sequence:
+// 1. Hero -> 2. Method -> 3. How It Works -> 4. Workflow Demo -> 5. Solutions -> 6. Why Us
 const NAV_LINKS = [
-  { name: "How It Works", href: "#how-it-works" },
-  { name: "Workflow Demo", href: "#workflow-demo" },
-  { name: "Philosophy", href: "#differentiator" },
-  { name: "Solutions", href: "#solutions" },
-  { name: "Why Us", href: "#why-us" },
+  { name: "Home", href: "#hero", id: "hero" },
+  { name: "Method", href: "#differentiator", id: "differentiator" },
+  { name: "How It Works", href: "#how-it-works", id: "how-it-works" },
+  { name: "Workflow Demo", href: "#workflow-demo", id: "workflow-demo" },
+  { name: "Solutions", href: "#solutions", id: "solutions" },
+  { name: "Why Us", href: "#why-us", id: "why-us" },
 ];
 
 export function Navbar() {
+  const [activeId, setActiveId] = useState<string>("hero");
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [hoveredHref, setHoveredHref] = useState<string | null>(null);
+  const isManualScrollRef = useRef(false);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
+
+      if (isManualScrollRef.current) return;
+
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+
+      // Bottom of page (CTA / Contact / Why Us area)
+      if (scrollY + windowHeight >= docHeight - 80) {
+        setActiveId("why-us");
+        return;
+      }
+
+      // Very top of page
+      if (scrollY < 140) {
+        setActiveId("hero");
+        return;
+      }
+
+      // Mid-view line for responsive section detection
+      const viewLine = scrollY + windowHeight * 0.35;
+
+      const targets = [
+        { id: "hero", navId: "hero" },
+        { id: "problem", navId: "hero" },
+        { id: "differentiator", navId: "differentiator" },
+        { id: "core-message", navId: "differentiator" },
+        { id: "how-it-works", navId: "how-it-works" },
+        { id: "workflow-demo", navId: "workflow-demo" },
+        { id: "solutions", navId: "solutions" },
+        { id: "industries", navId: "solutions" },
+        { id: "human-in-the-loop", navId: "solutions" },
+        { id: "roi", navId: "solutions" },
+        { id: "why-us", navId: "why-us" },
+        { id: "discovery", navId: "why-us" },
+        { id: "contact", navId: "why-us" },
+      ];
+
+      let matchedNavId = "hero";
+      for (const target of targets) {
+        const el = document.getElementById(target.id);
+        if (el) {
+          const top = el.offsetTop;
+          if (viewLine >= top) {
+            matchedNavId = target.navId;
+          }
+        }
+      }
+
+      setActiveId(matchedNavId);
     };
+
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    };
   }, []);
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, id: string) => {
+    e.preventDefault();
+    setActiveId(id);
+    isManualScrollRef.current = true;
+
+    if (href === "#hero") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      const targetEl = document.querySelector(href);
+      if (targetEl) {
+        const navHeight = 80;
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elRect = targetEl.getBoundingClientRect().top;
+        const targetPos = elRect - bodyRect - navHeight;
+        window.scrollTo({ top: Math.max(0, targetPos), behavior: "smooth" });
+      }
+    }
+
+    if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    scrollTimeoutRef.current = setTimeout(() => {
+      isManualScrollRef.current = false;
+    }, 850);
+  };
 
   return (
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out border-b",
         isScrolled
-          ? "bg-[#030712]/80 backdrop-blur-xl border-white/[0.08] shadow-[0_4px_30px_rgba(0,0,0,0.6)] py-3"
+          ? "bg-[#090607]/90 backdrop-blur-xl border-white/[0.08] shadow-[0_4px_30px_rgba(0,0,0,0.6)] py-3"
           : "bg-transparent border-transparent py-5"
       )}
     >
@@ -42,54 +125,45 @@ export function Navbar() {
         {/* Brand Logo */}
         <Link
           href="/"
+          onClick={(e) => handleLinkClick(e, "#hero", "hero")}
           className="text-xl md:text-2xl font-bold tracking-tighter text-foreground flex items-center gap-2.5 group select-none"
         >
           <div className="transition-transform duration-300 group-hover:scale-105">
             <SpartanLogo size={32} priority />
           </div>
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white/95 to-slate-200 font-bold tracking-tight text-lg md:text-xl">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-[#fecdd3] to-[#e11d48] font-bold tracking-tight text-lg md:text-xl">
             SPARTAN
           </span>
         </Link>
 
-        {/* Desktop Navigation with Sharp Animated Blue Highlight */}
-        <nav
-          className="hidden lg:flex items-center gap-1 p-1 rounded-xl bg-black/40 border border-white/10 backdrop-blur-md"
-          onMouseLeave={() => setHoveredHref(null)}
-        >
+        {/* Desktop Navigation - Plain Text Links with Crimson Laser Glowing Underline */}
+        <nav className="hidden lg:flex items-center gap-7 xl:gap-8">
           {NAV_LINKS.map((link) => {
-            const isHovered = hoveredHref === link.href;
+            const isActive = activeId === link.id;
 
             return (
-              <Link
+              <a
                 key={link.name}
                 href={link.href}
-                onMouseEnter={() => setHoveredHref(link.href)}
+                onClick={(e) => handleLinkClick(e, link.href, link.id)}
                 className={cn(
-                  "relative px-4 py-2 text-xs font-semibold tracking-wider transition-colors duration-150 uppercase font-mono",
-                  isHovered ? "text-white" : "text-slate-400 hover:text-slate-200"
+                  "relative py-1 text-xs sm:text-sm font-semibold tracking-wider transition-colors duration-200 uppercase font-mono cursor-pointer select-none",
+                  isActive
+                    ? "text-white [text-shadow:0_0_12px_rgba(255,255,255,0.7),0_0_20px_rgba(225,29,72,0.5)]"
+                    : "text-[#a3959a] hover:text-white"
                 )}
               >
-                {/* Sharp high-contrast blue geometric active frame */}
-                {isHovered && (
-                  <motion.div
-                    layoutId="nav-sharp-highlight"
-                    transition={{ type: "spring", stiffness: 500, damping: 32 }}
-                    className="absolute inset-0 rounded-lg bg-brand-500/20 border border-brand-400 shadow-[0_0_15px_rgba(59,130,246,0.35)]"
-                  />
-                )}
-                
-                <span className="relative z-10">{link.name}</span>
+                <span>{link.name}</span>
 
-                {/* Razor-sharp bottom blue laser indicator */}
-                {isHovered && (
+                {/* Glowing Crimson Laser Underline */}
+                {isActive && (
                   <motion.div
-                    layoutId="nav-laser-bar"
-                    transition={{ type: "spring", stiffness: 500, damping: 32 }}
-                    className="absolute -bottom-[1px] left-3 right-3 h-[2px] bg-brand-400 rounded-full shadow-[0_0_8px_#60a5fa]"
+                    layoutId="nav-active-glow-laser"
+                    transition={{ type: "spring", stiffness: 420, damping: 32 }}
+                    className="absolute -bottom-1 left-0 right-0 h-[2px] rounded-full bg-[#e11d48] shadow-[0_0_8px_#e11d48,0_0_16px_#e11d48,0_0_24px_rgba(225,29,72,0.8)] pointer-events-none"
                   />
                 )}
-              </Link>
+              </a>
             );
           })}
         </nav>
@@ -98,18 +172,18 @@ export function Navbar() {
         <div className="flex items-center gap-3 md:gap-4">
           <Link
             href="#contact"
-            className="hidden md:inline-flex items-center gap-2 relative overflow-hidden bg-brand-600 hover:bg-brand-500 text-white px-5 py-2.5 rounded-xl text-xs md:text-sm font-semibold tracking-wider uppercase border border-brand-400/60 shadow-[0_0_0_1px_rgba(59,130,246,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.55),0_0_0_1.5px_rgba(96,165,250,0.8)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-150 ease-out group"
+            className="hidden md:inline-flex items-center gap-2 relative overflow-hidden bg-gradient-to-r from-[#e11d48] via-[#be123c] to-[#9f1239] hover:from-[#f43f5e] hover:to-[#e11d48] text-white px-6 py-2.5 rounded-xl text-xs md:text-sm font-bold tracking-wider uppercase border border-[#fb7185]/50 shadow-[0_0_20px_rgba(225,29,72,0.35)] hover:shadow-[0_0_30px_rgba(225,29,72,0.6)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-150 ease-out group"
           >
             {/* Crisp directional specular sweep on hover */}
-            <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none" />
+            <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out bg-gradient-to-r from-transparent via-white/35 to-transparent pointer-events-none" />
             
             <span className="relative z-10 font-mono text-xs">Show Us Your Workflow</span>
-            <ArrowRight className="w-3.5 h-3.5 relative z-10 group-hover:translate-x-1 transition-transform duration-150" />
+            <ArrowRight className="w-3.5 h-3.5 relative z-10 group-hover:translate-x-1 transition-transform duration-150 text-white" />
           </Link>
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden text-slate-300 hover:text-white p-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
+            className="lg:hidden text-[#a3959a] hover:text-white p-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -130,28 +204,39 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="lg:hidden absolute top-full left-0 right-0 bg-[#060b17]/95 backdrop-blur-2xl border-b border-white/10 p-5 shadow-2xl"
+            className="lg:hidden absolute top-full left-0 right-0 bg-[#090607]/95 backdrop-blur-2xl border-b border-white/10 p-5 shadow-2xl"
           >
             <nav className="flex flex-col space-y-1">
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="py-2.5 px-4 text-sm font-medium text-slate-300 hover:text-white hover:bg-brand-500/10 rounded-xl transition-colors flex items-center justify-between border border-transparent hover:border-brand-500/20"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <span>{link.name}</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-brand-400 opacity-60" />
-                </Link>
-              ))}
+              {NAV_LINKS.map((link) => {
+                const isActive = activeId === link.id;
+                return (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    className={cn(
+                      "py-2.5 px-4 text-sm font-medium rounded-xl transition-all duration-150 flex items-center justify-between",
+                      isActive
+                        ? "text-white font-semibold [text-shadow:0_0_10px_rgba(225,29,72,0.7)] bg-white/[0.04]"
+                        : "text-[#a3959a] hover:text-white hover:bg-white/[0.04]"
+                    )}
+                    onClick={(e) => {
+                      handleLinkClick(e, link.href, link.id);
+                      setIsMobileMenuOpen(false);
+                    }}
+                  >
+                    <span>{link.name}</span>
+                    <ArrowRight className={cn("w-3.5 h-3.5", isActive ? "text-[#e11d48]" : "text-[#a3959a]/60")} />
+                  </a>
+                );
+              })}
               <div className="pt-3">
                 <Link
                   href="#contact"
-                  className="flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-500 text-white px-5 py-3 rounded-xl text-sm font-semibold shadow-[0_0_20px_rgba(37,99,235,0.35)] transition-all"
+                  className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#e11d48] to-[#be123c] text-white px-5 py-3 rounded-xl text-sm font-bold shadow-[0_0_20px_rgba(225,29,72,0.4)] transition-all"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <span>Show Us Your Workflow</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4 text-white" />
                 </Link>
               </div>
             </nav>
@@ -161,4 +246,3 @@ export function Navbar() {
     </header>
   );
 }
-

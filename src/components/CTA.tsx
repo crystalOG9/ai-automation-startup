@@ -23,6 +23,12 @@ const FREQUENCY_OPTIONS = [
   "Monthly / Periodic",
 ];
 
+import {
+  fadeInLeft,
+  defaultViewport,
+  SPARTAN_EASE,
+} from "@/lib/motion";
+
 export function CTA() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -87,29 +93,30 @@ export function CTA() {
   };
 
   return (
-    <section id="contact" className="py-24 relative overflow-hidden bg-brand-950/20">
+    <section id="contact" className="py-24 relative overflow-hidden bg-brand-950/20 perspective-1200">
       <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-brand-500/50 to-transparent" />
       
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start max-w-6xl mx-auto">
+      <div className="container mx-auto px-4 md:px-6 relative z-10 preserve-3d">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start max-w-6xl mx-auto preserve-3d">
           
-          {/* Left Column: Core Outreach & Value */}
+          {/* Left Column: Core Outreach & Value — Enters with Left Depth */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={defaultViewport}
+            variants={fadeInLeft}
             className="lg:col-span-5"
           >
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-brand-500/30 text-brand-300 text-xs font-semibold uppercase tracking-wider mb-6">
-              <Sparkles className="w-3.5 h-3.5 text-brand-400" /> Start With One Workflow
+              <Sparkles className="w-3.5 h-3.5 text-brand-400" /> Workflow Assessment
             </div>
 
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-6 uppercase leading-tight">
-              WHAT IS YOUR TEAM DOING EVERY DAY THAT A <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-cyan-300 to-blue-200">COMPUTER SHOULD DO?</span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-6 leading-tight">
+              What is your team doing every day that <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-cyan-300 to-blue-200">software should handle?</span>
             </h2>
 
             <p className="text-base md:text-lg text-muted-foreground mb-8 leading-relaxed">
-              Show us the workflow. We&apos;ll help you map the process, isolate repetitive bottlenecks, and design safe automation with built-in human control.
+              Describe your current manual steps. We&apos;ll map the process, identify the mechanical bottlenecks, and outline safe automation with built-in human control.
             </p>
 
             {/* Qualified Workflow Criteria Card */}
@@ -119,10 +126,10 @@ export function CTA() {
                 <div className="w-2 h-2 rounded-full bg-brand-400 mt-1.5 shrink-0 shadow-[0_0_8px_rgba(96,165,250,0.8)]" />
                 <div>
                   <div className="text-xs font-bold text-white tracking-wide uppercase mb-1">
-                    Target Repetitive Workflows
+                    Common Starting Points
                   </div>
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    Order reconciliation, email triage, invoice data extraction, or cross-system synchronization — start with one high-friction workflow and validate measurable ROI.
+                    Order reconciliation, invoice data extraction, inbox triage, or spreadsheet-to-ERP sync — start with one bottleneck and measure the time saved.
                   </p>
                 </div>
               </div>
@@ -131,15 +138,15 @@ export function CTA() {
             <div className="space-y-3">
               <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>Designed around your current tools — without forcing a complete system replacement.</span>
+                <span>Works with your existing software — zero system replacements required</span>
               </div>
               <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>Strict human-in-the-loop control for all critical actions</span>
+                <span>Strict human review gates for all critical or financial actions</span>
               </div>
               <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>Clear before-and-after operational throughput measurement</span>
+                <span>Measurable before-and-after turnaround times and hours saved</span>
               </div>
             </div>
 
@@ -184,11 +191,12 @@ export function CTA() {
             </div>
           </motion.div>
 
-          {/* Right Column: Upgraded Workflow Assessment Form (Task 9) */}
+          {/* Right Column: Culmination Scale + Depth Focus for Workflow Form */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            initial={{ opacity: 0, scale: 0.90, z: -120, y: 35, rotateX: 5 }}
+            whileInView={{ opacity: 1, scale: 1, z: 0, y: 0, rotateX: 0 }}
+            viewport={defaultViewport}
+            transition={{ duration: 0.76, delay: 0.12, ease: SPARTAN_EASE }}
             className="lg:col-span-7 glass-card p-6 md:p-8 rounded-3xl border border-white/10 shadow-2xl relative"
           >
             <AnimatePresence mode="wait">
@@ -204,10 +212,10 @@ export function CTA() {
                 >
                   <div>
                     <h3 className="text-xl md:text-2xl font-bold text-white uppercase tracking-wide">
-                      Request Workflow Assessment
+                      Request a Workflow Assessment
                     </h3>
                     <p className="text-xs text-muted-foreground mt-1">
-                      Tell us about your team&apos;s current manual steps.
+                      Tell us about your team&apos;s manual steps.
                     </p>
                   </div>
                   
@@ -223,7 +231,7 @@ export function CTA() {
                         id="name"
                         name="name"
                         className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors"
-                        placeholder="Your full name"
+                        placeholder="Jane Doe"
                       />
                     </div>
 
@@ -253,13 +261,13 @@ export function CTA() {
                         id="company"
                         name="company"
                         className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors"
-                        placeholder="Your company name"
+                        placeholder="Acme Corp"
                       />
                     </div>
 
                     <div className="space-y-1.5">
                       <label htmlFor="frequency" className="text-xs font-semibold text-muted-foreground">
-                        Process Frequency *
+                        How Often Does This Process Run? *
                       </label>
                       <select
                         required
@@ -282,7 +290,7 @@ export function CTA() {
                   {/* Task 9: Current Tools / Systems */}
                   <div className="space-y-2 pt-1">
                     <label className="text-xs font-semibold text-muted-foreground block">
-                      Current Tools / Systems Involved
+                      Tools Currently Used
                     </label>
                     <div className="flex flex-wrap gap-2">
                       {TOOLS_LIST.map((tool) => {
@@ -309,7 +317,7 @@ export function CTA() {
                   {/* Task 9: Workflow Details */}
                   <div className="space-y-1.5 pt-1">
                     <label htmlFor="process" className="text-xs font-semibold text-muted-foreground">
-                      Describe the Repetitive Workflow *
+                      Describe the Workflow *
                     </label>
                     <textarea
                       required
@@ -317,7 +325,7 @@ export function CTA() {
                       name="process"
                       rows={3}
                       className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors resize-none"
-                      placeholder="Describe your current manual steps, tools used, and where bottlenecks occur..."
+                      placeholder="What are the manual steps, what systems are involved, and where does work slow down?"
                     />
                   </div>
 
@@ -326,19 +334,17 @@ export function CTA() {
                       <span className="w-1.5 h-1.5 rounded-full bg-rose-400 shrink-0" />
                       <span>{errorMessage}</span>
                     </div>
-                  )}
-
-                  <button 
+                  )}                  <button 
                     type="submit" 
                     disabled={isSubmitting}
-                    className="w-full bg-brand-600 hover:bg-brand-500 text-white rounded-xl px-6 py-4 font-semibold text-sm transition-all hover:shadow-[0_0_20px_rgba(37,99,235,0.45)] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-4 cursor-pointer uppercase tracking-wider"
+                    className="w-full bg-gradient-to-r from-[#e11d48] to-[#be123c] hover:from-[#f43f5e] hover:to-[#e11d48] text-white rounded-xl px-6 py-4 font-bold text-sm transition-all shadow-[0_0_20px_rgba(225, 29, 72,0.25)] hover:shadow-[0_0_30px_rgba(225, 29, 72,0.5)] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-4 cursor-pointer uppercase tracking-wider"
                   >
                     {isSubmitting ? (
-                      <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      <span className="w-5 h-5 border-2 border-[#1c1517]/30 border-t-[#1c1517] rounded-full animate-spin" />
                     ) : (
                       <>
                         REQUEST WORKFLOW ASSESSMENT
-                        <ArrowRight className="w-4 h-4" />
+                        <ArrowRight className="w-4 h-4 text-white" />
                       </>
                     )}
                   </button>
@@ -346,31 +352,31 @@ export function CTA() {
               ) : (
                 <motion.div 
                   key="success"
-                  initial={{ opacity: 0, scale: 0.95 }}
+                  initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   className="py-8 flex flex-col items-center text-center h-full justify-center space-y-4"
                 >
-                  <div className="w-14 h-14 rounded-2xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-1 shadow-[0_0_25px_rgba(16,185,129,0.3)]">
+                  <div className="w-14 h-14 rounded-2xl bg-[#e11d48]/20 border border-[#e11d48]/30 flex items-center justify-center text-[#ffffff] mb-1 shadow-[0_0_25px_rgba(225, 29, 72,0.3)]">
                     <CheckCircle2 className="w-7 h-7" />
                   </div>
-                  <h3 className="text-xl md:text-2xl font-bold text-white uppercase">Assessment Requested</h3>
+                  <h3 className="text-xl md:text-2xl font-bold text-white uppercase">Assessment Request Received</h3>
                   <p className="text-xs sm:text-sm text-muted-foreground max-w-sm leading-relaxed">
-                    Thank you for sharing your workflow details. We have received your parameters and will reach out within 24 hours.
+                    We&apos;ve received your workflow details and will review the steps. Expect a response within 24 hours.
                   </p>
 
                   {/* Follow-up question: Schedule a meeting? */}
                   {meetingDecision === "pending" && (
-                    <div className="w-full max-w-md p-5 rounded-2xl bg-white/[0.03] border border-brand-500/30 text-left space-y-3.5 shadow-xl mt-3">
+                    <div className="w-full max-w-md p-5 rounded-2xl bg-white/[0.03] border border-[#e11d48]/30 text-left space-y-3.5 shadow-xl mt-3">
                       <div className="flex items-start gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-brand-500/20 border border-brand-500/30 flex items-center justify-center text-brand-400 shrink-0">
+                        <div className="w-9 h-9 rounded-xl bg-[#e11d48]/20 border border-[#e11d48]/30 flex items-center justify-center text-[#ffffff] shrink-0">
                           <Calendar className="w-4 h-4" />
                         </div>
                         <div>
                           <h4 className="text-xs font-bold text-white uppercase tracking-wider">
-                            Would you like to schedule a 15-min discovery call?
+                            Would you like a 15-minute discovery call?
                           </h4>
                           <p className="text-[11px] text-muted-foreground mt-0.5 leading-relaxed">
-                            Connect directly with our automation engineer to review bottlenecks and map your architecture live.
+                            Walk through your workflow live with an automation engineer.
                           </p>
                         </div>
                       </div>
@@ -379,7 +385,7 @@ export function CTA() {
                         <a
                           href={`mailto:sparten.tech26@gmail.com?subject=Schedule%20Discovery%20Meeting%20-%20SPARTAN&body=Hi%20SPARTAN%20Team,%0A%0AI%20just%20submitted%20a%20workflow%20assessment%20request%20(${submittedEmail})%20and%20would%20like%20to%20schedule%20a%2015-minute%20introductory%20meeting.%0A%0AMy%20preferred%20days%20and%20times%20are:%20`}
                           onClick={() => setMeetingDecision("scheduled")}
-                          className="flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl bg-brand-500 hover:bg-brand-400 text-white font-semibold text-xs uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] text-center"
+                          className="flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl bg-gradient-to-r from-[#e11d48] to-[#be123c] hover:from-[#f43f5e] hover:to-[#e11d48] text-white font-bold text-xs uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(225, 29, 72,0.3)] text-center"
                         >
                           <Calendar className="w-3.5 h-3.5" />
                           <span>Yes, Schedule Call</span>
@@ -397,15 +403,15 @@ export function CTA() {
                   )}
 
                   {meetingDecision === "scheduled" && (
-                    <div className="w-full max-w-md p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-xs text-emerald-300 flex items-center gap-2.5 text-left mt-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <div className="w-full max-w-md p-4 rounded-2xl bg-[#e11d48]/10 border border-[#e11d48]/30 text-xs text-[#ffffff] flex items-center gap-2.5 text-left mt-2">
+                      <CheckCircle2 className="w-4 h-4 text-[#e11d48] shrink-0" />
                       <span>Meeting request prepared! Check your email client or send to lock in your call slot.</span>
                     </div>
                   )}
 
                   {meetingDecision === "email_only" && (
                     <div className="w-full max-w-md p-4 rounded-2xl bg-white/[0.02] border border-white/10 text-xs text-muted-foreground flex items-center gap-2.5 text-left mt-2">
-                      <Mail className="w-4 h-4 text-brand-400 shrink-0" />
+                      <Mail className="w-4 h-4 text-[#e11d48] shrink-0" />
                       <span>Noted! We&apos;ll prepare your assessment and email you directly within 24 hours.</span>
                     </div>
                   )}
@@ -419,7 +425,7 @@ export function CTA() {
                       setSubmittedEmail("");
                       setMeetingDecision("pending");
                     }}
-                    className="mt-4 text-brand-400 hover:text-brand-300 font-medium text-xs underline underline-offset-4 transition-colors cursor-pointer"
+                    className="mt-4 text-[#e11d48] hover:text-[#ffffff] font-medium text-xs underline underline-offset-4 transition-colors cursor-pointer"
                   >
                     Submit another workflow
                   </button>

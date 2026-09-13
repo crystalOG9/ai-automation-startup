@@ -13,41 +13,47 @@ const INDUSTRIES = [
   "Professional Services",
 ];
 
+import {
+  scaleReveal,
+  defaultViewport,
+  SPARTAN_EASE,
+} from "@/lib/motion";
+
 export function Industries() {
   return (
-    <section id="industries" className="py-24 relative border-t border-white/5">
+    <section id="industries" className="py-24 relative border-t border-white/5 perspective-1200">
       <div className="container mx-auto px-4 md:px-6">
         
-        <div className="max-w-4xl mx-auto text-center mb-16">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl md:text-5xl font-bold tracking-tight mb-6"
-          >
-            Built around your workflow. <br className="hidden md:block" />
-            <span className="text-muted-foreground">Not the other way around.</span>
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-lg md:text-xl text-brand-300 font-medium"
-          >
-            We don&apos;t assume every company works the same way.
-          </motion.p>
-        </div>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={defaultViewport}
+          variants={scaleReveal}
+          className="max-w-4xl mx-auto text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-white">
+            Built for operations heavy in <br className="hidden md:block" />
+            <span className="text-[#a3959a]">daily data handoffs.</span>
+          </h2>
+          <p className="text-base md:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            Any business managing high-volume email intake, document parsing, or cross-system updates can eliminate hours of manual entry.
+          </p>
+        </motion.div>
 
-        <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
+        <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto preserve-3d">
           {INDUSTRIES.map((industry, idx) => (
             <motion.div
               key={industry}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, scale: 0.92, y: 16 }}
+              whileInView={{ opacity: 1, scale: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.05 }}
-              className="px-6 py-3 rounded-xl glass-card border border-white/10 hover:border-brand-500/50 hover:bg-white/5 transition-all cursor-default text-white font-medium"
+              transition={{
+                duration: 0.45,
+                delay: idx * 0.05,
+                ease: SPARTAN_EASE,
+              }}
+              whileHover={{ y: -3, scale: 1.02 }}
+              className="px-6 py-3 rounded-xl glass-card border border-white/10 hover:border-[#e11d48]/40 hover:text-[#ffffff] hover:bg-white/5 transition-all cursor-default text-white font-medium shadow-md"
             >
               {industry}
             </motion.div>

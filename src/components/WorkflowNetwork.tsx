@@ -311,7 +311,7 @@ export function WorkflowNetwork() {
             <span className="text-xs font-bold tracking-widest text-white block uppercase">YOUR BUSINESS</span>
           </div>
           <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-brand-500/20 text-brand-300">
-            Core
+            Operations
           </span>
         </motion.div>
       </div>
@@ -365,8 +365,8 @@ export function WorkflowNetwork() {
             <Bot className="w-3.5 h-3.5" />
           </div>
           <div className="text-left">
-            <div className="text-xs font-bold text-cyan-200">AI AUTOMATION</div>
-            <div className="text-[10px] text-muted-foreground">Classifies, parses data & prepares actions</div>
+            <div className="text-xs font-bold text-cyan-200">AI PROCESSING</div>
+            <div className="text-[10px] text-muted-foreground">Extracts data, validates rules & drafts actions</div>
           </div>
         </motion.div>
 
@@ -380,12 +380,12 @@ export function WorkflowNetwork() {
           </div>
           <div className="text-left">
             <div className="text-xs font-bold text-emerald-300 flex items-center gap-1.5">
-              HUMAN APPROVAL
+              HUMAN REVIEW
               <span className="text-[9px] font-mono uppercase px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
                 Gatekeeper
               </span>
             </div>
-            <div className="text-[10px] text-muted-foreground">Team authorizes critical decisions & edge cases</div>
+            <div className="text-[10px] text-muted-foreground">Team authorizes high-impact actions & exceptions</div>
           </div>
         </motion.div>
 
@@ -395,7 +395,7 @@ export function WorkflowNetwork() {
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-white/15 bg-white/5 text-[11px] md:text-xs text-white font-medium text-center shadow-lg"
         >
           <Zap className="w-3.5 h-3.5 text-brand-400 shrink-0" />
-          <span>SYSTEM EXECUTES: CRM updated • Customer notified • ERP synchronized</span>
+          <span>SYSTEM EXECUTES: Database updated • Dispatch sent • Records synchronized</span>
         </motion.div>
       </div>
     </div>

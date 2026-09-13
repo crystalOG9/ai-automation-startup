@@ -25,6 +25,13 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  scaleReveal,
+  fadeInUp,
+  depthReveal,
+  defaultViewport,
+  SPARTAN_EASE,
+} from "@/lib/motion";
 
 interface Scenario {
   id: string;
@@ -334,6 +341,17 @@ export function AutomationDemo() {
   const currentMessage = customMessages[scenario.id] ?? scenario.email.body;
   const currentDraft = customActionDrafts[scenario.id] ?? scenario.aiDraft.content;
 
+  // Passive event broadcast for dynamic system background integration
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(
+        new CustomEvent("spartan-demo-state", {
+          detail: { stage: activeStage, isExecuting },
+        })
+      );
+    }
+  }, [activeStage, isExecuting]);
+
   // Auto-run simulation step progression
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -401,29 +419,41 @@ export function AutomationDemo() {
   };
 
   return (
-    <section id="workflow-demo" className="py-24 relative overflow-hidden bg-brand-950/20 border-y border-white/5">
+    <section id="workflow-demo" className="py-24 relative overflow-hidden bg-brand-950/20 border-y border-white/5 perspective-1200">
       {/* Background ambient lighting */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-brand-500/10 blur-[140px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-[#881337]/25 blur-[140px] rounded-full pointer-events-none" />
 
-      <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-6xl">
+      <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-6xl preserve-3d">
         
-        {/* Section Header */}
-        <div className="max-w-4xl mx-auto text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-brand-500/30 text-brand-300 text-xs font-semibold uppercase tracking-wider mb-4">
-            <Cpu className="w-3.5 h-3.5 text-brand-400" />
-            Interactive Automation Engine
+        {/* Section Header — Assembles First */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={defaultViewport}
+          variants={scaleReveal}
+          className="max-w-4xl mx-auto text-center mb-10"
+        >
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-[#e11d48]/30 text-[#e11d48] text-xs font-semibold uppercase tracking-wider mb-4">
+            <Cpu className="w-3.5 h-3.5 text-[#e11d48]" />
+            Interactive Simulation
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4 text-white uppercase">
-            HOW WORKFLOW AUTOMATION <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-cyan-300 to-blue-200">ACTUALLY WORKS.</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4 text-white">
+            See an automated workflow <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#fda4af] to-[#e11d48]">in action.</span>
           </h2>
 
           <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Select a live enterprise scenario to watch AI parse, query systems, and draft work — with execution strictly gated behind human authorization.
+            Select an operational scenario to trace each step: trigger intake, data extraction, system verification, human review, and final sync.
           </p>
 
-          {/* Scenario Tabs */}
-          <div className="flex flex-wrap items-center justify-center gap-2 md:gap-3 p-1.5 rounded-2xl glass-card border border-white/10 max-w-3xl mx-auto mt-8">
+          {/* Scenario Tabs — Cascades In */}
+          <motion.div
+            initial={{ opacity: 0, y: 25, scale: 0.96 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={defaultViewport}
+            transition={{ duration: 0.52, delay: 0.12, ease: SPARTAN_EASE }}
+            className="flex flex-wrap items-center justify-center gap-2 md:gap-3 p-1.5 rounded-2xl glass-card border border-white/10 max-w-3xl mx-auto mt-8 shadow-lg"
+          >
             {SCENARIOS.map((s, idx) => {
               const isActive = activeScenarioIdx === idx;
               const Icon = s.icon;
@@ -434,7 +464,7 @@ export function AutomationDemo() {
                   className={cn(
                     "flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer",
                     isActive
-                      ? "bg-brand-600 text-white shadow-[0_0_18px_rgba(37,99,235,0.45)] border border-brand-400/40"
+                      ? "bg-gradient-to-r from-[#e11d48] to-[#be123c] text-white shadow-[0_0_18px_rgba(225, 29, 72,0.35)] font-bold"
                       : "text-muted-foreground hover:text-white hover:bg-white/5 border border-transparent"
                   )}
                 >
@@ -442,18 +472,24 @@ export function AutomationDemo() {
                   <span>{s.name}</span>
                   <span className={cn(
                     "text-[10px] font-mono px-1.5 py-0.2 rounded uppercase",
-                    isActive ? "bg-white/20 text-white" : "bg-white/5 text-muted-foreground"
+                    isActive ? "bg-[#1c1517]/20 text-white font-bold" : "bg-white/5 text-muted-foreground"
                   )}>
                     {s.tag}
                   </span>
                 </button>
               );
             })}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        {/* Dynamic Interactive Pipeline Tracker (Horizontal Flow) */}
-        <div className="glass-card rounded-2xl border border-white/10 p-3 md:p-4 mb-6 shadow-xl">
+        {/* Dynamic Interactive Pipeline Tracker (Horizontal Flow) — Docks in with Depth */}
+        <motion.div
+          initial={{ opacity: 0, y: 30, scale: 0.96 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={defaultViewport}
+          transition={{ duration: 0.58, delay: 0.22, ease: SPARTAN_EASE }}
+          className="glass-card rounded-2xl border border-white/10 p-3 md:p-4 mb-6 shadow-xl"
+        >
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
             {PIPELINE_STAGES.map((stage) => {
               const isActive = activeStage === stage.id;
@@ -470,7 +506,7 @@ export function AutomationDemo() {
                   className={cn(
                     "relative flex items-center gap-2.5 p-3 rounded-xl text-left transition-all duration-200 cursor-pointer overflow-hidden border",
                     isActive
-                      ? "bg-brand-500/15 border-brand-400/60 shadow-[0_0_15px_rgba(59,130,246,0.25)] text-white"
+                      ? "bg-[#e11d48]/15 border-[#e11d48]/60 shadow-[0_0_15px_rgba(225, 29, 72,0.25)] text-white"
                       : isPassed
                       ? "bg-emerald-950/10 border-emerald-500/30 text-slate-300 hover:bg-white/5"
                       : "bg-black/20 border-white/5 text-muted-foreground hover:text-slate-200 hover:bg-white/5"
@@ -478,14 +514,14 @@ export function AutomationDemo() {
                 >
                   {/* Active highlight top sheen */}
                   {isActive && (
-                    <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-brand-400 to-transparent" />
+                    <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#e11d48] to-transparent" />
                   )}
 
                   <div
                     className={cn(
                       "w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-xs font-mono font-bold transition-colors",
                       isActive
-                        ? "bg-brand-500 text-white shadow-[0_0_10px_rgba(59,130,246,0.6)]"
+                        ? "bg-[#e11d48] text-white shadow-[0_0_10px_rgba(225, 29, 72,0.6)] font-bold"
                         : isPassed
                         ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
                         : "bg-white/5 text-white/40 border border-white/5"
@@ -517,7 +553,7 @@ export function AutomationDemo() {
             <div className="flex items-center gap-3 text-xs text-muted-foreground">
               <span className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="font-mono text-white/90">Autonomous Protocol: Active</span>
+                <span className="font-mono text-white/90">Pipeline Status: Live</span>
               </span>
               <span className="hidden sm:inline text-white/20">•</span>
               <span className="hidden sm:inline">Scenario: <strong className="text-white font-medium">{scenario.name}</strong></span>
@@ -543,10 +579,16 @@ export function AutomationDemo() {
               </button>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Main Interactive Stage Display Container */}
-        <div className="glass-card rounded-3xl border border-white/10 shadow-2xl overflow-hidden bg-[#060b17] min-h-[460px] flex flex-col justify-between p-5 md:p-8">
+        {/* Main Interactive Stage Display Container — Settles Forward into 3D Focus */}
+        <motion.div
+          initial={{ opacity: 0, y: 35, scale: 0.94 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={defaultViewport}
+          transition={{ duration: 0.64, delay: 0.3, ease: SPARTAN_EASE }}
+          className="glass-card rounded-3xl border border-white/10 shadow-2xl overflow-hidden bg-[#060b17] min-h-[460px] flex flex-col justify-between p-5 md:p-8"
+        >
           <AnimatePresence mode="wait">
 
             {/* STAGE 01: Inbound Customer Input */}
@@ -564,7 +606,7 @@ export function AutomationDemo() {
                       STAGE 01
                     </span>
                     <h3 className="text-sm md:text-base font-bold text-white uppercase tracking-wide">
-                      Inbound Trigger Ingestion
+                      Inbound Trigger Intake
                     </h3>
                   </div>
                   <span className="text-[11px] font-mono text-muted-foreground flex items-center gap-1">
@@ -658,7 +700,7 @@ export function AutomationDemo() {
                       STAGE 02
                     </span>
                     <h3 className="text-sm md:text-base font-bold text-white uppercase tracking-wide">
-                      AI Intent Parsing & Entity Extraction
+                      Data Extraction & Classification
                     </h3>
                   </div>
                   <span className="text-[11px] font-mono text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">
@@ -738,7 +780,7 @@ export function AutomationDemo() {
                       STAGE 03
                     </span>
                     <h3 className="text-sm md:text-base font-bold text-white uppercase tracking-wide">
-                      Connected Enterprise Verification
+                      Database & System Verification
                     </h3>
                   </div>
                   <span className={cn("text-[10px] font-mono px-2.5 py-0.5 rounded border uppercase", scenario.systemCheck.statusColor)}>
@@ -809,7 +851,7 @@ export function AutomationDemo() {
                     </span>
                     <h3 className="text-sm md:text-base font-bold text-white uppercase tracking-wide flex items-center gap-2">
                       <ShieldCheck className="w-4 h-4 text-amber-400" />
-                      Supervised Human Review Gate
+                      Human Review Gate
                     </h3>
                   </div>
                   <span className="text-[10px] font-mono uppercase px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/40 flex items-center gap-1.5 animate-pulse">
@@ -929,7 +971,7 @@ export function AutomationDemo() {
 
                 <div className="max-w-xl mx-auto space-y-2">
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-mono uppercase tracking-wider">
-                    <CheckCircle2 className="w-3.5 h-3.5" /> Authorized Execution Completed
+                    <CheckCircle2 className="w-3.5 h-3.5" /> System Execution & Record Sync
                   </div>
                   <h3 className="text-xl md:text-2xl font-bold text-white">
                     {scenario.executionResult.title}
@@ -977,7 +1019,7 @@ export function AutomationDemo() {
             )}
 
           </AnimatePresence>
-        </div>
+        </motion.div>
 
       </div>
     </section>
