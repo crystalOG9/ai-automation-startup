@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, useScroll, useSpring, useVelocity, useTransform } from "framer-motion";
-import { useEffect, useState } from "react";
 
 export function DynamicScrollProgress() {
   const { scrollYProgress, scrollY } = useScroll();
@@ -15,24 +14,15 @@ export function DynamicScrollProgress() {
 
   // Track velocity to heighten laser intensity during fast scroll
   const scrollVelocity = useVelocity(scrollY);
-  const velocityGlow = useTransform(scrollVelocity, [-2000, 0, 2000], [1.8, 1, 1.8]);
+  const velocityGlow = useTransform(scrollVelocity, [-2000, 0, 2000], [1.6, 0.9, 1.6]);
   const laserOpacity = useTransform(scrollYProgress, [0, 0.02, 0.98, 1], [0, 1, 1, 0.9]);
-
-  const [hasScrolled, setHasScrolled] = useState(false);
-
-  useEffect(() => {
-    const unsub = scrollY.on("change", (latest) => {
-      setHasScrolled(latest > 20);
-    });
-    return () => unsub();
-  }, [scrollY]);
 
   return (
     <div className="fixed top-0 left-0 right-0 z-[60] pointer-events-none select-none">
       {/* Laser Track Background Line */}
       <div className="w-full h-[2px] bg-white/[0.04]" />
 
-      {/* Main Dynamic Laser Stream in Warm Skin & Champagne Colors */}
+      {/* Main Dynamic Laser Stream in Crimson and Warm Champagne */}
       <motion.div
         className="absolute top-0 left-0 right-0 h-[2px] origin-left bg-gradient-to-r from-[#881337] via-[#e11d48] to-[#ffffff]"
         style={{
@@ -42,20 +32,14 @@ export function DynamicScrollProgress() {
       >
         {/* Diffuse energetic glow under the laser beam */}
         <motion.div
-          className="absolute inset-0 blur-[3px] bg-gradient-to-r from-[#881337] via-[#e11d48] to-[#ffffff]"
+          className="absolute inset-0 blur-[2px] bg-gradient-to-r from-[#881337] via-[#e11d48] to-[#ffffff]"
           style={{ opacity: velocityGlow }}
         />
 
         {/* Leading Plasma Flare / Laser Head */}
         <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 flex items-center justify-center">
-          {/* Outer high-energy glow ring */}
-          <motion.div
-            className="w-4 h-4 rounded-full bg-[#e11d48]/40 blur-[4px]"
-            animate={{ scale: [1, 1.4, 1], opacity: [0.6, 1, 0.6] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          />
-          {/* Intense center plasma core */}
-          <div className="absolute w-2 h-2 rounded-full bg-[#ffffff] shadow-[0_0_10px_#ffffff,0_0_20px_#e11d48]" />
+          {/* Intense center plasma core with controlled glow */}
+          <div className="w-2.5 h-2.5 rounded-full bg-[#ffffff] shadow-[0_0_8px_#ffffff,0_0_16px_#e11d48]" />
         </div>
       </motion.div>
     </div>

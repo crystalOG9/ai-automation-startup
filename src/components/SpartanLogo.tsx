@@ -23,7 +23,6 @@ export function SpartanLogo({
         height={size * 2}
         className="w-full h-full object-contain drop-shadow-[0_0_12px_rgba(225,29,72,0.45)]"
         priority={priority}
-        unoptimized
       />
     </div>
   );

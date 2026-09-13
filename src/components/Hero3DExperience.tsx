@@ -12,7 +12,6 @@ import {
   ShieldCheck,
   Zap,
   CheckCircle2,
-  Info,
   Layers,
 } from "lucide-react";
 
@@ -124,9 +123,6 @@ const NODES_DATA: WorkflowNode[] = [
   },
 ];
 
-/**
- * Check if WebGL is supported in the current environment
- */
 function isWebGLSupported(): boolean {
   if (typeof window === "undefined") return false;
   try {
@@ -143,14 +139,14 @@ function isWebGLSupported(): boolean {
 export function Hero3DExperience() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const overlayRefs = useRef<{ [id: string]: HTMLDivElement | null }>({});
   const tooltipId = useId();
 
   const [hasWebGL, setHasWebGL] = useState<boolean>(true);
+  const [useFallback, setUseFallback] = useState<boolean>(false);
   const [activeNodeId, setActiveNodeId] = useState<string | null>("email");
-  const [screenCoords, setScreenCoords] = useState<{ [id: string]: { x: number; y: number; visible: boolean } }>({});
   const [workflowState, setWorkflowState] = useState<"UNDERSTAND" | "AUTOMATE" | "ORCHESTRATE">("ORCHESTRATE");
 
-  // Keep a ref for active node to avoid re-binding Three.js event loops
   const activeNodeRef = useRef<string | null>("email");
   activeNodeRef.current = activeNodeId;
 
@@ -166,8 +162,12 @@ export function Hero3DExperience() {
   }, []);
 
   useEffect(() => {
-    if (!isWebGLSupported()) {
-      setHasWebGL(false);
+    // Mobile Performance Mode: Immediately use lightweight fallback on small screens or touch-first devices
+    const isMobile = window.innerWidth < 768;
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    if (isMobile || reducedMotionQuery.matches || !isWebGLSupported()) {
+      setUseFallback(true);
       return;
     }
 
@@ -175,12 +175,10 @@ export function Hero3DExperience() {
     const canvas = canvasRef.current;
     if (!container || !canvas) return;
 
-    // Check prefers-reduced-motion
-    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let prefersReducedMotion = reducedMotionQuery.matches;
-
+    let prefersReducedMotion: boolean = reducedMotionQuery.matches;
     const handleMotionChange = (e: MediaQueryListEvent) => {
       prefersReducedMotion = e.matches;
+      if (prefersReducedMotion) setUseFallback(true);
     };
     reducedMotionQuery.addEventListener("change", handleMotionChange);
 
@@ -203,7 +201,9 @@ export function Hero3DExperience() {
         powerPreference: "high-performance",
       });
       renderer.setSize(width, height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      // Adaptive DPR: Laptop capped at 1.0, Desktop capped at 1.25 (eliminates high-res fill rate bottlenecks)
+      const dpr = window.innerWidth < 1200 ? 1.0 : Math.min(window.devicePixelRatio || 1, 1.25);
+      renderer.setPixelRatio(dpr);
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.15;
     } catch {
@@ -215,19 +215,19 @@ export function Hero3DExperience() {
     const ambientLight = new THREE.AmbientLight(0x1f0a10, 2.2);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 3.4);
+    const keyLight = new THREE.DirectionalLight(0xffffff, 3.2);
     keyLight.position.set(4, 6, 7);
     scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight(0xe11d48, 4.5);
+    const rimLight = new THREE.DirectionalLight(0xe11d48, 4.0);
     rimLight.position.set(-6, -3, -4);
     scene.add(rimLight);
 
-    const redCoreLight = new THREE.PointLight(0xbe123c, 6.0, 10);
+    const redCoreLight = new THREE.PointLight(0xbe123c, 5.0, 10);
     redCoreLight.position.set(0, 0, 0.5);
     scene.add(redCoreLight);
 
-    const whiteAccentLight = new THREE.PointLight(0xffffff, 3.5, 8);
+    const whiteAccentLight = new THREE.PointLight(0xffffff, 3.0, 8);
     whiteAccentLight.position.set(0, 1.2, -0.5);
     scene.add(whiteAccentLight);
 
@@ -242,10 +242,7 @@ export function Hero3DExperience() {
     coreGroup.position.set(0, 0.2, 0);
     worldGroup.add(coreGroup);
 
-    // Central 3D Extruded Spartan S Emblem Geometry
-    // Constructed with chamfered angular contours matching the official Spartan emblem
     const spartanShape = new THREE.Shape();
-    // Scaled around origin (-0.9 to 0.9)
     spartanShape.moveTo(-0.7, 0.95);
     spartanShape.lineTo(0.7, 0.95);
     spartanShape.lineTo(0.9, 0.55);
@@ -261,12 +258,12 @@ export function Hero3DExperience() {
     spartanShape.closePath();
 
     const extrudeSettings = {
-      depth: 0.22,
+      depth: 0.2,
       bevelEnabled: true,
-      bevelSegments: 3,
+      bevelSegments: 2,
       steps: 1,
-      bevelSize: 0.05,
-      bevelThickness: 0.05,
+      bevelSize: 0.04,
+      bevelThickness: 0.04,
     };
 
     const spartanGeometry = new THREE.ExtrudeGeometry(spartanShape, extrudeSettings);
@@ -278,18 +275,19 @@ export function Hero3DExperience() {
       emissiveIntensity: 0.45,
       roughness: 0.22,
       metalness: 0.88,
-      clearcoat: 0.95,
-      clearcoatRoughness: 0.12,
+      clearcoat: 0.9,
+      clearcoatRoughness: 0.15,
       reflectivity: 0.9,
     });
 
     const spartanMesh = new THREE.Mesh(spartanGeometry, spartanMaterial);
     coreGroup.add(spartanMesh);
 
-    // Inner Luminous Emblem Disc (Official SPARTAN Logo Badge)
+    // Inner Luminous Emblem Disc
     const textureLoader = new THREE.TextureLoader();
     const logoTexture = textureLoader.load("/branding/spartan-3d-logo-red.png");
-    logoTexture.generateMipmaps = true;
+    logoTexture.minFilter = THREE.LinearFilter;
+    logoTexture.generateMipmaps = false;
 
     const emblemGeometry = new THREE.PlaneGeometry(1.65, 1.65);
     const emblemMaterial = new THREE.MeshBasicMaterial({
@@ -304,15 +302,13 @@ export function Hero3DExperience() {
     emblemMesh.position.z = 0.22;
     coreGroup.add(emblemMesh);
 
-    // Backside emblem for 3D visibility during rotation
     const emblemMeshBack = emblemMesh.clone();
     emblemMeshBack.position.z = -0.22;
     emblemMeshBack.rotation.y = Math.PI;
     coreGroup.add(emblemMeshBack);
 
     // Concentric Precision Telemetry Rings
-    // Ring 1: Inner Chamfered Ring
-    const innerRingGeo = new THREE.TorusGeometry(1.35, 0.022, 16, 72);
+    const innerRingGeo = new THREE.TorusGeometry(1.35, 0.02, 12, 48);
     const ringMaterial = new THREE.MeshStandardMaterial({
       color: 0xf43f5e,
       emissive: 0xbe123c,
@@ -323,8 +319,7 @@ export function Hero3DExperience() {
     const innerRing = new THREE.Mesh(innerRingGeo, ringMaterial);
     coreGroup.add(innerRing);
 
-    // Ring 2: Tilted Outer Gimbal Ring with Technical Coordinate Ticks
-    const outerRingGeo = new THREE.TorusGeometry(1.85, 0.016, 16, 80);
+    const outerRingGeo = new THREE.TorusGeometry(1.85, 0.015, 12, 56);
     const outerRingMaterial = new THREE.MeshStandardMaterial({
       color: 0xfecdd3,
       emissive: 0x9f1239,
@@ -337,25 +332,6 @@ export function Hero3DExperience() {
     outerRing.rotation.y = Math.PI * 0.08;
     coreGroup.add(outerRing);
 
-    // Outer Blueprint Dashed Boundary
-    const dashedCirclePoints: THREE.Vector3[] = [];
-    const segments = 96;
-    for (let i = 0; i <= segments; i++) {
-      const theta = (i / segments) * Math.PI * 2;
-      dashedCirclePoints.push(new THREE.Vector3(Math.cos(theta) * 2.2, Math.sin(theta) * 2.2, 0));
-    }
-    const dashedGeo = new THREE.BufferGeometry().setFromPoints(dashedCirclePoints);
-    const dashedMat = new THREE.LineDashedMaterial({
-      color: 0xe11d48,
-      dashSize: 0.15,
-      gapSize: 0.08,
-      transparent: true,
-      opacity: 0.35,
-    });
-    const dashedRing = new THREE.Line(dashedGeo, dashedMat);
-    dashedRing.computeLineDistances();
-    coreGroup.add(dashedRing);
-
     // -------------------------------------------------------------
     // 2. CONNECTED WORKFLOW NODES & CONDUITS
     // -------------------------------------------------------------
@@ -364,10 +340,9 @@ export function Hero3DExperience() {
     const conduitLines: { [id: string]: THREE.Line } = {};
     const conduitMaterials: { [id: string]: THREE.LineBasicMaterial } = {};
 
-    // Base geometry for node housings
     const nodeBaseGeo = new THREE.CylinderGeometry(0.34, 0.38, 0.09, 6);
-    const nodeCoreGeo = new THREE.SphereGeometry(0.16, 16, 16);
-    const nodeRingGeo = new THREE.TorusGeometry(0.44, 0.012, 12, 32);
+    const nodeCoreGeo = new THREE.SphereGeometry(0.16, 12, 12);
+    const nodeRingGeo = new THREE.TorusGeometry(0.44, 0.012, 8, 24);
 
     NODES_DATA.forEach((node) => {
       const nodeGroup = new THREE.Group();
@@ -375,177 +350,142 @@ export function Hero3DExperience() {
       worldGroup.add(nodeGroup);
       nodeMeshes[node.id] = nodeGroup;
 
-      // Base cylinder
       const baseMat = new THREE.MeshStandardMaterial({
         color: 0x0f172a,
-        emissive: node.hexColor,
-        emissiveIntensity: 0.12,
-        roughness: 0.3,
-        metalness: 0.85,
+        roughness: 0.5,
+        metalness: 0.7,
       });
       const baseMesh = new THREE.Mesh(nodeBaseGeo, baseMat);
-      baseMesh.rotation.x = Math.PI * 0.5;
+      baseMesh.rotation.x = Math.PI / 2;
       nodeGroup.add(baseMesh);
 
-      // Glowing Center Orb
       const coreMat = new THREE.MeshStandardMaterial({
         color: node.hexColor,
         emissive: node.hexColor,
-        emissiveIntensity: 0.9,
-        roughness: 0.2,
-        metalness: 0.5,
+        emissiveIntensity: 0.75,
+        roughness: 0.3,
+        metalness: 0.8,
       });
       const coreMesh = new THREE.Mesh(nodeCoreGeo, coreMat);
-      coreMesh.position.z = 0.06;
+      coreMesh.position.z = 0.08;
       nodeGroup.add(coreMesh);
 
-      // Precision Ring
-      const ringMesh = new THREE.Mesh(
-        nodeRingGeo,
-        new THREE.MeshBasicMaterial({ color: node.hexColor, transparent: true, opacity: 0.6 })
+      const haloMat = new THREE.MeshBasicMaterial({
+        color: node.hexColor,
+        transparent: true,
+        opacity: 0.5,
+      });
+      const haloMesh = new THREE.Mesh(nodeRingGeo, haloMat);
+      haloMesh.position.z = 0.04;
+      nodeGroup.add(haloMesh);
+
+      // Conduit Curves
+      const startPt = new THREE.Vector3(...node.pos);
+      const endPt = new THREE.Vector3(0, 0.2, 0);
+      const midPt = new THREE.Vector3(
+        (startPt.x + endPt.x) * 0.5,
+        (startPt.y + endPt.y) * 0.5 + (startPt.y > 0 ? 0.4 : -0.4),
+        (startPt.z + endPt.z) * 0.5 + 0.3
       );
-      nodeGroup.add(ringMesh);
 
-      // Geometric Connecting Conduits
-      let startPt = new THREE.Vector3(...node.pos);
-      let endPt: THREE.Vector3;
-      let controlPt: THREE.Vector3;
-
-      if (node.category === "input") {
-        // From business node to Spartan Core
-        endPt = new THREE.Vector3(0, 0.2, 0);
-        // Clean curved architecture
-        controlPt = new THREE.Vector3(
-          startPt.x * 0.45,
-          startPt.y * 0.65 + 0.2,
-          (startPt.z + endPt.z) * 0.5 + 0.3
-        );
-      } else if (node.id === "human") {
-        // From Spartan Core to Human Approval
-        startPt = new THREE.Vector3(0.5, 0.1, 0);
-        endPt = new THREE.Vector3(...node.pos);
-        controlPt = new THREE.Vector3(1.3, 0.1, 0.2);
-      } else {
-        // From Human Approval to Execute
-        const prevNode = NODES_DATA.find((n) => n.id === "human")!;
-        startPt = new THREE.Vector3(...prevNode.pos);
-        endPt = new THREE.Vector3(...node.pos);
-        controlPt = new THREE.Vector3(2.8, -1.2, 0.3);
-      }
-
-      const curve = new THREE.QuadraticBezierCurve3(startPt, controlPt, endPt);
+      const curve = new THREE.QuadraticBezierCurve3(startPt, midPt, endPt);
       conduitCurves[node.id] = curve;
 
-      const curvePoints = curve.getPoints(36);
-      const lineGeo = new THREE.BufferGeometry().setFromPoints(curvePoints);
+      const points = curve.getPoints(24);
+      const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
       const lineMat = new THREE.LineBasicMaterial({
         color: node.hexColor,
         transparent: true,
-        opacity: 0.22,
-        linewidth: 1,
+        opacity: 0.35,
       });
-      const lineMesh = new THREE.Line(lineGeo, lineMat);
-      worldGroup.add(lineMesh);
+      const line = new THREE.Line(lineGeo, lineMat);
+      worldGroup.add(line);
 
-      conduitLines[node.id] = lineMesh;
+      conduitLines[node.id] = line;
       conduitMaterials[node.id] = lineMat;
     });
 
     // -------------------------------------------------------------
-    // 3. FLOWING DATA PACKETS ALONG CONDUITS
+    // 3. INSTANCED DATA PACKETS
     // -------------------------------------------------------------
-    const packetCount = NODES_DATA.length * 3;
-    const packetGeo = new THREE.SphereGeometry(0.045, 12, 12);
-    const packetMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const packetCount = NODES_DATA.length * 2;
+    const packetGeo = new THREE.SphereGeometry(0.065, 8, 8);
+    const packetMat = new THREE.MeshBasicMaterial({
+      color: 0xffffff,
+      transparent: true,
+      opacity: 0.85,
+    });
     const packetInstancedMesh = new THREE.InstancedMesh(packetGeo, packetMat, packetCount);
-    packetInstancedMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
     worldGroup.add(packetInstancedMesh);
 
-    // Track each packet's curve and progress
     interface Packet {
       nodeId: string;
       progress: number;
       speed: number;
       scale: number;
     }
+
     const packets: Packet[] = [];
     NODES_DATA.forEach((node) => {
-      for (let p = 0; p < 3; p++) {
-        packets.push({
-          nodeId: node.id,
-          progress: (p / 3) + Math.random() * 0.15,
-          speed: 0.0035 + Math.random() * 0.002,
-          scale: 0.8 + Math.random() * 0.4,
-        });
-      }
+      packets.push({
+        nodeId: node.id,
+        progress: Math.random(),
+        speed: 0.005 + Math.random() * 0.003,
+        scale: 0.8 + Math.random() * 0.4,
+      });
+      packets.push({
+        nodeId: node.id,
+        progress: Math.random(),
+        speed: 0.005 + Math.random() * 0.003,
+        scale: 0.8 + Math.random() * 0.4,
+      });
     });
 
     // -------------------------------------------------------------
-    // 4. MOUSE PARALLAX & SCROLL INTERACTION
+    // 4. PARALLAX, SCROLL & INTERSECTION OBSERVER
     // -------------------------------------------------------------
-    let mouseX = 0;
-    let mouseY = 0;
     let targetRotX = 0;
     let targetRotY = 0;
     let currentRotX = 0;
     let currentRotY = 0;
-
     let targetScrollOffset = 0;
     let currentScrollOffset = 0;
 
     const handlePointerMove = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      mouseX = x;
-      mouseY = y;
-
-      if (!prefersReducedMotion) {
-        targetRotY = mouseX * 0.35;
-        targetRotX = -mouseY * 0.25;
-      }
+      const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      const ny = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+      targetRotY = nx * 0.22;
+      targetRotX = ny * 0.16;
     };
 
     const handlePointerLeave = () => {
-      mouseX = 0;
-      mouseY = 0;
       targetRotX = 0;
       targetRotY = 0;
     };
 
+    container.addEventListener("mousemove", handlePointerMove, { passive: true });
+    container.addEventListener("mouseleave", handlePointerLeave, { passive: true });
+
     const handleScroll = () => {
-      if (prefersReducedMotion) return;
-      const scrollY = window.scrollY;
-      targetScrollOffset = Math.min(Math.max(scrollY * 0.0004, 0), 0.35);
+      const rect = container.getBoundingClientRect();
+      const viewH = window.innerHeight;
+      const progress = (viewH - rect.top) / (viewH + rect.height);
+      targetScrollOffset = (progress - 0.5) * 0.4;
     };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
-    container.addEventListener("mousemove", handlePointerMove);
-    container.addEventListener("mouseleave", handlePointerLeave);
 
-    // Resize Handler
     const handleResize = () => {
       if (!container || !renderer) return;
       const w = container.clientWidth;
       const h = container.clientHeight;
       camera.aspect = w / h;
-
-      // Adjust camera distance based on viewport width to guarantee zero clipping
-      if (w < 480) {
-        camera.position.z = 11.2;
-      } else if (w < 768) {
-        camera.position.z = 10.4;
-      } else {
-        camera.position.z = 9.2;
-      }
-
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
     };
     window.addEventListener("resize", handleResize);
-    handleResize();
 
-    // IntersectionObserver to freeze animation when off-screen (saves 100% GPU/CPU)
+    // Pause rendering when outside viewport
     let isVisible = true;
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -555,8 +495,18 @@ export function Hero3DExperience() {
     );
     observer.observe(container);
 
+    // Pause rendering when browser tab is hidden
+    let isTabVisible = !document.hidden;
+    const handleVisibilityChange = () => {
+      isTabVisible = !document.hidden;
+      if (isTabVisible && isVisible) {
+        lastRenderTime = performance.now();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
     // -------------------------------------------------------------
-    // 5. ANIMATION & RENDER LOOP
+    // 5. ANIMATION & RENDER LOOP (Zero React Re-renders!)
     // -------------------------------------------------------------
     let animationFrameId: number;
     const tempMatrix = new THREE.Matrix4();
@@ -565,13 +515,18 @@ export function Hero3DExperience() {
     const tempQuaternion = new THREE.Quaternion();
 
     let clock = 0;
+    let lastRenderTime = performance.now();
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
 
-      if (!isVisible || !renderer) return;
+      // Early bailout: completely pause rendering when hidden or offscreen
+      if (!isVisible || !isTabVisible || !renderer) return;
 
-      clock += 0.016;
+      const now = performance.now();
+      const dt = Math.min((now - lastRenderTime) / 1000, 0.05);
+      lastRenderTime = now;
+      clock += dt;
 
       // Parallax Interpolation (Lerp)
       currentRotX += (targetRotX - currentRotX) * 0.06;
@@ -582,20 +537,14 @@ export function Hero3DExperience() {
       worldGroup.rotation.x = currentRotX + currentScrollOffset * 0.4;
 
       // Core Gentle Breathing & Rotation
-      if (!prefersReducedMotion) {
-        coreGroup.rotation.y = clock * 0.25;
-        outerRing.rotation.z = -clock * 0.3;
-        innerRing.rotation.x = Math.sin(clock * 0.5) * 0.15;
+      coreGroup.rotation.y = clock * 0.22;
+      outerRing.rotation.z = -clock * 0.28;
+      innerRing.rotation.x = Math.sin(clock * 0.5) * 0.12;
 
-        // Emblem dynamic pulse
-        const pulse = 1 + Math.sin(clock * 2.0) * 0.025;
-        spartanMesh.scale.set(pulse, pulse, pulse);
-      } else {
-        coreGroup.rotation.y = 0.25;
-        outerRing.rotation.z = -0.15;
-      }
+      const pulse = 1 + Math.sin(clock * 1.8) * 0.02;
+      spartanMesh.scale.set(pulse, pulse, pulse);
 
-      // Update Node highlights based on active selection
+      // Node highlighting
       const currentActive = activeNodeRef.current;
       NODES_DATA.forEach((node) => {
         const isSelected = currentActive === node.id;
@@ -603,34 +552,31 @@ export function Hero3DExperience() {
         const nodeGrp = nodeMeshes[node.id];
 
         if (lineMat) {
-          const targetOpacity = isSelected ? 0.95 : 0.2;
+          const targetOpacity = isSelected ? 0.9 : 0.2;
           lineMat.opacity += (targetOpacity - lineMat.opacity) * 0.1;
         }
 
         if (nodeGrp) {
-          const targetScale = isSelected ? 1.15 : 1.0;
+          const targetScale = isSelected ? 1.12 : 1.0;
           nodeGrp.scale.lerp(tempScale.set(targetScale, targetScale, targetScale), 0.1);
         }
       });
 
-      // Update Flowing Data Packets
+      // Flowing Data Packets
       packets.forEach((packet, idx) => {
         const curve = conduitCurves[packet.nodeId];
         if (!curve) return;
 
         const isSelected = currentActive === packet.nodeId;
-        const currentSpeed = isSelected ? packet.speed * 1.8 : packet.speed;
+        const currentSpeed = isSelected ? packet.speed * 1.6 : packet.speed;
 
-        if (!prefersReducedMotion) {
-          packet.progress += currentSpeed;
-          if (packet.progress > 1) packet.progress = 0;
-        }
+        packet.progress += currentSpeed;
+        if (packet.progress > 1) packet.progress = 0;
 
-        // Calculate 3D position along the conduit curve
         const pt = curve.getPointAt(Math.min(Math.max(packet.progress, 0), 1));
         tempVector.copy(pt);
 
-        const s = packet.scale * (isSelected ? 1.4 : 1.0);
+        const s = packet.scale * (isSelected ? 1.3 : 1.0);
         tempScale.set(s, s, s);
 
         tempMatrix.compose(tempVector, tempQuaternion, tempScale);
@@ -641,37 +587,34 @@ export function Hero3DExperience() {
       // Render 3D Scene
       renderer.render(scene, camera);
 
-      // Project 3D Node positions to Screen Space for crisp 2D Typography Overlays
+      // Project 3D Node positions to Screen Space via DIRECT DOM REFS (Zero React state re-renders!)
       const rect = container.getBoundingClientRect();
-      const coordsUpdate: { [id: string]: { x: number; y: number; visible: boolean } } = {};
-
       NODES_DATA.forEach((node) => {
         const mesh = nodeMeshes[node.id];
-        if (!mesh) return;
+        const overlayEl = overlayRefs.current[node.id];
+        if (!mesh || !overlayEl) return;
 
-        // Get world position
         mesh.getWorldPosition(tempVector);
-        // Project to NDC (-1 to +1)
         tempVector.project(camera);
 
-        // Map to container coordinates
-        const x = (tempVector.x * 0.5 + 0.5) * rect.width;
-        const y = (-tempVector.y * 0.5 + 0.5) * rect.height;
-        const visible = tempVector.z < 1.0;
-
-        coordsUpdate[node.id] = { x, y, visible };
+        if (tempVector.z < 1.0) {
+          const x = (tempVector.x * 0.5 + 0.5) * rect.width;
+          const y = (-tempVector.y * 0.5 + 0.5) * rect.height;
+          overlayEl.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
+          overlayEl.style.display = "block";
+        } else {
+          overlayEl.style.display = "none";
+        }
       });
-
-      setScreenCoords(coordsUpdate);
     };
 
     animate();
 
-    // Cleanup on component unmount
     return () => {
       cancelAnimationFrame(animationFrameId);
       observer.disconnect();
       reducedMotionQuery.removeEventListener("change", handleMotionChange);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("scroll", handleScroll);
       container.removeEventListener("mousemove", handlePointerMove);
@@ -684,8 +627,6 @@ export function Hero3DExperience() {
       emblemMaterial.dispose();
       innerRingGeo.dispose();
       outerRingGeo.dispose();
-      dashedGeo.dispose();
-      dashedMat.dispose();
       nodeBaseGeo.dispose();
       nodeCoreGeo.dispose();
       nodeRingGeo.dispose();
@@ -703,7 +644,7 @@ export function Hero3DExperience() {
     };
   }, []);
 
-  if (!hasWebGL) {
+  if (!hasWebGL || useFallback) {
     return <Hero3DFallback />;
   }
 
@@ -712,12 +653,12 @@ export function Hero3DExperience() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[600px] md:h-[660px] rounded-3xl border border-white/10 bg-[#090607]/90 backdrop-blur-xl overflow-hidden shadow-2xl flex flex-col justify-between select-none"
+      className="relative w-full h-[540px] md:h-[620px] rounded-3xl border border-white/10 bg-[#090607]/90 backdrop-blur-xl overflow-hidden shadow-2xl flex flex-col justify-between select-none"
     >
       {/* 3D WebGL Canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing z-0" />
 
-      {/* Decorative Technical Grid & Radial Vignette */}
+      {/* Decorative Technical Grid */}
       <div
         className="absolute inset-0 opacity-20 pointer-events-none z-[1]"
         style={{
@@ -728,14 +669,13 @@ export function Hero3DExperience() {
           backgroundSize: "32px 32px",
         }}
       />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-600/[0.12] blur-[110px] rounded-full pointer-events-none z-[1]" />
 
-      {/* Top Telemetry Header Bar */}
-      <div className="relative z-10 p-5 flex items-center justify-between border-b border-white/5 bg-[#090607]/60 backdrop-blur-md">
-        <div className="flex items-center gap-3">
+      {/* Header bar: Live Telemetry Status */}
+      <div className="relative z-10 p-5 border-b border-white/10 flex items-center justify-between bg-gradient-to-b from-[#090607]/90 to-transparent">
+        <div className="flex items-center gap-2.5">
           <div className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-500" />
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#e11d48] opacity-75" />
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#e11d48]" />
           </div>
           <div>
             <div className="text-[11px] font-mono tracking-widest text-white uppercase flex items-center gap-2">
@@ -751,7 +691,6 @@ export function Hero3DExperience() {
         </div>
 
         <div className="flex items-center gap-2">
-          {/* Live Workflow State Readout */}
           <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-brand-950/80 border border-brand-500/40 text-[10px] font-mono text-brand-300">
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
             <span>PIPELINE:</span>
@@ -760,22 +699,22 @@ export function Hero3DExperience() {
         </div>
       </div>
 
-      {/* Screen-Space Interactive Overlays for Each Node */}
+      {/* Screen-Space Interactive Overlays for Each Node (Rendered statically, translated via direct ref) */}
       <div className="absolute inset-0 pointer-events-none z-10">
         {NODES_DATA.map((node) => {
-          const coords = screenCoords[node.id];
-          if (!coords || !coords.visible) return null;
-
           const isSelected = activeNodeId === node.id;
           const Icon = node.icon;
 
           return (
             <div
               key={node.id}
-              style={{
-                transform: `translate3d(${coords.x}px, ${coords.y}px, 0)`,
+              ref={(el) => {
+                overlayRefs.current[node.id] = el;
               }}
-              className="absolute -translate-x-1/2 -translate-y-1/2 pointer-events-auto transition-transform duration-75"
+              style={{
+                display: "none",
+              }}
+              className="absolute -translate-x-1/2 -translate-y-1/2 pointer-events-auto will-change-transform"
             >
               <button
                 type="button"
@@ -783,10 +722,10 @@ export function Hero3DExperience() {
                 onMouseEnter={() => setActiveNodeId(node.id)}
                 onFocus={() => setActiveNodeId(node.id)}
                 aria-describedby={isSelected ? tooltipId : undefined}
-                className={`group flex items-center gap-1.5 px-2.5 py-1 rounded-lg border transition-all duration-200 backdrop-blur-md shadow-lg ${
+                className={`group flex items-center gap-1.5 px-2.5 py-1 rounded-lg border transition-all duration-150 backdrop-blur-md shadow-lg cursor-pointer ${
                   isSelected
-                    ? "bg-slate-900/95 border-brand-400 scale-105 shadow-[0_0_18px_rgba(59,130,246,0.4)] ring-1 ring-brand-400/50"
-                    : "bg-slate-950/75 border-white/15 hover:border-brand-500/50 hover:bg-slate-900/80"
+                    ? "bg-[#1c1114]/95 border-[#e11d48] scale-105 shadow-[0_0_16px_rgba(225,29,72,0.45)] ring-1 ring-[#e11d48]/50"
+                    : "bg-[#120b0e]/80 border-white/15 hover:border-[#e11d48]/50 hover:bg-[#1c1114]/90"
                 }`}
               >
                 <div className={`p-1 rounded ${node.color} bg-white/5`}>
@@ -797,7 +736,7 @@ export function Hero3DExperience() {
                 </span>
 
                 {isSelected && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#e11d48] animate-pulse" />
                 )}
               </button>
             </div>
@@ -806,7 +745,7 @@ export function Hero3DExperience() {
       </div>
 
       {/* Bottom Floating Telemetry Card / Detailed Node Readout */}
-      <div className="relative z-10 p-5 mt-auto border-t border-white/10 bg-[#090607]/85 backdrop-blur-xl">
+      <div className="relative z-10 p-4 mt-auto border-t border-white/10 bg-[#090607]/85 backdrop-blur-xl">
         <div id={tooltipId} role="region" aria-label="System Node Telemetry" className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div className="flex items-start gap-3">
             <div className={`p-2 rounded-xl bg-white/5 border border-white/10 ${activeNode.color}`}>
@@ -843,7 +782,7 @@ export function Hero3DExperience() {
         </div>
 
         {/* Quick Node Switcher Pills */}
-        <div className="mt-3.5 pt-3 border-t border-white/5 flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+        <div className="mt-3 pt-2.5 border-t border-white/5 flex items-center gap-1.5 overflow-x-auto no-scrollbar">
           <span className="text-[9px] font-mono text-slate-400 uppercase mr-1 flex items-center gap-1">
             <Layers className="w-3 h-3" /> NODES:
           </span>
@@ -851,7 +790,7 @@ export function Hero3DExperience() {
             <button
               key={node.id}
               onClick={() => setActiveNodeId(node.id)}
-              className={`px-2 py-0.5 rounded text-[9px] font-mono transition-colors ${
+              className={`px-2 py-0.5 rounded text-[9px] font-mono transition-colors cursor-pointer ${
                 activeNodeId === node.id
                   ? "bg-brand-500/25 border border-brand-400 text-white"
                   : "bg-white/5 border border-white/5 text-slate-400 hover:text-slate-200 hover:border-white/15"

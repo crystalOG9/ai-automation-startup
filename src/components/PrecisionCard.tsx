@@ -16,43 +16,61 @@ export function PrecisionCard({
   ...props
 }: PrecisionCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState<{ rotX: number; rotY: number }>({ rotX: 0, rotY: 0 });
-  const [mousePos, setMousePos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const glowRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
   const [isHovered, setIsHovered] = useState(false);
-  const [enabled, setEnabled] = useState(false);
+  const isEnabledRef = useRef(false);
 
   useEffect(() => {
     const hasFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setEnabled(hasFinePointer && !prefersReducedMotion);
+    isEnabledRef.current = hasFinePointer && !prefersReducedMotion;
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!enabled || !cardRef.current) return;
+    if (!isEnabledRef.current || !cardRef.current) return;
+
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    setMousePos({ x, y });
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
 
-    // Normalized coordinates from -1 to 1
-    const normalizedX = (x / rect.width - 0.5) * 2;
-    const normalizedY = (y / rect.height - 0.5) * 2;
+    rafRef.current = requestAnimationFrame(() => {
+      if (!cardRef.current) return;
 
-    // Responsive 3D tilt: max 5.5 degrees for tangible spatial depth
-    const rotX = -normalizedY * 5.5;
-    const rotY = normalizedX * 5.5;
+      const normalizedX = (x / rect.width - 0.5) * 2;
+      const normalizedY = (y / rect.height - 0.5) * 2;
+      const rotX = (-normalizedY * 4.5).toFixed(2);
+      const rotY = (normalizedX * 4.5).toFixed(2);
 
-    setTilt({ rotX, rotY });
+      cardRef.current.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.015, 1.015, 1.015) translateZ(4px)`;
+
+      if (glowRef.current) {
+        glowRef.current.style.background = `radial-gradient(280px circle at ${x}px ${y}px, ${glowColor}, transparent 65%)`;
+        glowRef.current.style.opacity = "1";
+      }
+    });
   };
 
   const handleMouseEnter = () => {
-    if (enabled) setIsHovered(true);
+    if (!isEnabledRef.current) return;
+    setIsHovered(true);
+    if (cardRef.current) {
+      cardRef.current.style.transition = "transform 100ms ease-out, border-color 200ms ease, box-shadow 200ms ease";
+    }
   };
 
   const handleMouseLeave = () => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
     setIsHovered(false);
-    setTilt({ rotX: 0, rotY: 0 });
+    if (cardRef.current) {
+      cardRef.current.style.transition = "transform 350ms cubic-bezier(0.19, 1, 0.22, 1), border-color 250ms ease, box-shadow 250ms ease";
+      cardRef.current.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1) translateZ(0px)";
+    }
+    if (glowRef.current) {
+      glowRef.current.style.opacity = "0";
+    }
   };
 
   return (
@@ -62,33 +80,24 @@ export function PrecisionCard({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{
-        transform: enabled && isHovered
-          ? `perspective(1000px) rotateX(${tilt.rotX.toFixed(2)}deg) rotateY(${tilt.rotY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02) translateZ(8px)`
-          : undefined,
-        transition: isHovered
-          ? "transform 80ms ease-out, border-color 150ms ease, box-shadow 150ms ease"
-          : "transform 350ms cubic-bezier(0.19, 1, 0.22, 1), border-color 200ms ease, box-shadow 200ms ease",
         transformStyle: "preserve-3d",
+        willChange: isHovered ? "transform" : "auto",
       }}
       className={cn(
-        "relative overflow-hidden rounded-2xl border transition-all",
+        "relative overflow-hidden rounded-2xl border transition-all duration-200",
         isHovered
-          ? "border-[#e11d48]/60 shadow-[0_8px_32px_rgba(225,29,72,0.25)]"
+          ? "border-[#e11d48]/60 shadow-[0_8px_32px_rgba(225,29,72,0.22)]"
           : "border-white/10",
         className
       )}
       {...props}
     >
-      {/* High-contrast directional edge highlight following cursor */}
-      {enabled && isHovered && (
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 pointer-events-none z-0 transition-opacity duration-150"
-          style={{
-            background: `radial-gradient(280px circle at ${mousePos.x}px ${mousePos.y}px, ${glowColor}, transparent 65%)`,
-          }}
-        />
-      )}
+      {/* High-contrast directional edge highlight following cursor via direct DOM styling */}
+      <div
+        ref={glowRef}
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none z-0 transition-opacity duration-200 opacity-0"
+      />
 
       {/* Crisp technical top-edge sheen */}
       <div

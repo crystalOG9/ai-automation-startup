@@ -1,27 +1,32 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { ArrowUp } from "lucide-react";
 
 export function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const isVisibleRef = useRef(false);
+  const { scrollYProgress, scrollY } = useScroll();
+
+  // High-performance smooth spring for progress track without React re-renders
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 260,
+    damping: 30,
+    restDelta: 0.001,
+  });
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = docHeight > 0 ? Math.min(1, Math.max(0, scrollY / docHeight)) : 0;
-      
-      setScrollProgress(progress);
-      setIsVisible(scrollY > 350);
-    };
+    const unsub = scrollY.on("change", (latest) => {
+      const shouldBeVisible = latest > 350;
+      if (shouldBeVisible !== isVisibleRef.current) {
+        isVisibleRef.current = shouldBeVisible;
+        setIsVisible(shouldBeVisible);
+      }
+    });
 
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    return () => unsub();
+  }, [scrollY]);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -30,9 +35,6 @@ export function ScrollToTop() {
     });
   };
 
-  const circumference = 2 * Math.PI * 18;
-  const strokeDashoffset = circumference - scrollProgress * circumference;
-
   return (
     <AnimatePresence>
       {isVisible && (
@@ -40,7 +42,7 @@ export function ScrollToTop() {
           initial={{ opacity: 0, scale: 0.8, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 10 }}
-          transition={{ duration: 0.25, ease: "easeOut" }}
+          transition={{ duration: 0.22, ease: "easeOut" }}
           className="fixed bottom-6 right-6 z-40"
         >
           <button
@@ -59,18 +61,17 @@ export function ScrollToTop() {
                 strokeWidth="2.5"
                 fill="transparent"
               />
-              {/* Dynamic Progress Indicator */}
-              <circle
+              {/* Dynamic Progress Indicator driven by Framer Motion pathLength without React re-renders */}
+              <motion.circle
                 cx="22"
                 cy="22"
                 r="18"
-                className="stroke-[#e11d48] transition-all duration-100 ease-out"
+                className="stroke-[#e11d48]"
                 strokeWidth="2.5"
-                strokeDasharray={circumference}
-                strokeDashoffset={strokeDashoffset}
                 strokeLinecap="round"
                 fill="transparent"
                 style={{
+                  pathLength: smoothProgress,
                   filter: "drop-shadow(0 0 4px rgba(225, 29, 72, 0.6))",
                 }}
               />

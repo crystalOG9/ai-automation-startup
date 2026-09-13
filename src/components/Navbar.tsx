@@ -26,24 +26,39 @@ export function Navbar() {
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+    let rafId: number | null = null;
+    let isScrolledCurrent = false;
+    let activeIdCurrent = "hero";
+
+    const updateNavState = () => {
+      rafId = null;
+      const scrollY = window.scrollY;
+      const shouldBeScrolled = scrollY > 20;
+      if (shouldBeScrolled !== isScrolledCurrent) {
+        isScrolledCurrent = shouldBeScrolled;
+        setIsScrolled(shouldBeScrolled);
+      }
 
       if (isManualScrollRef.current) return;
 
-      const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
       const docHeight = document.documentElement.scrollHeight;
 
       // Bottom of page (CTA / Contact / Why Us area)
       if (scrollY + windowHeight >= docHeight - 80) {
-        setActiveId("why-us");
+        if (activeIdCurrent !== "why-us") {
+          activeIdCurrent = "why-us";
+          setActiveId("why-us");
+        }
         return;
       }
 
       // Very top of page
       if (scrollY < 140) {
-        setActiveId("hero");
+        if (activeIdCurrent !== "hero") {
+          activeIdCurrent = "hero";
+          setActiveId("hero");
+        }
         return;
       }
 
@@ -51,39 +66,47 @@ export function Navbar() {
       const viewLine = scrollY + windowHeight * 0.35;
 
       const targets = [
-        { id: "hero", navId: "hero" },
-        { id: "problem", navId: "hero" },
-        { id: "differentiator", navId: "differentiator" },
-        { id: "core-message", navId: "differentiator" },
-        { id: "how-it-works", navId: "how-it-works" },
-        { id: "workflow-demo", navId: "workflow-demo" },
-        { id: "solutions", navId: "solutions" },
-        { id: "industries", navId: "solutions" },
-        { id: "human-in-the-loop", navId: "solutions" },
-        { id: "roi", navId: "solutions" },
-        { id: "why-us", navId: "why-us" },
-        { id: "discovery", navId: "why-us" },
         { id: "contact", navId: "why-us" },
+        { id: "discovery", navId: "why-us" },
+        { id: "why-us", navId: "why-us" },
+        { id: "roi", navId: "solutions" },
+        { id: "human-in-the-loop", navId: "solutions" },
+        { id: "industries", navId: "solutions" },
+        { id: "solutions", navId: "solutions" },
+        { id: "workflow-demo", navId: "workflow-demo" },
+        { id: "how-it-works", navId: "how-it-works" },
+        { id: "core-message", navId: "differentiator" },
+        { id: "differentiator", navId: "differentiator" },
+        { id: "problem", navId: "hero" },
+        { id: "hero", navId: "hero" },
       ];
 
       let matchedNavId = "hero";
       for (const target of targets) {
         const el = document.getElementById(target.id);
-        if (el) {
-          const top = el.offsetTop;
-          if (viewLine >= top) {
-            matchedNavId = target.navId;
-          }
+        if (el && viewLine >= el.offsetTop) {
+          matchedNavId = target.navId;
+          break;
         }
       }
 
-      setActiveId(matchedNavId);
+      if (matchedNavId !== activeIdCurrent) {
+        activeIdCurrent = matchedNavId;
+        setActiveId(matchedNavId);
+      }
     };
 
-    handleScroll();
+    const handleScroll = () => {
+      if (rafId === null) {
+        rafId = requestAnimationFrame(updateNavState);
+      }
+    };
+
+    updateNavState();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
       if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
     };
   }, []);
@@ -183,7 +206,7 @@ export function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden text-[#a3959a] hover:text-white p-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
+            className="lg:hidden text-[#a3959a] hover:text-white w-11 h-11 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors cursor-pointer"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >

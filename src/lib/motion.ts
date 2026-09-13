@@ -1,48 +1,61 @@
 import type { Variants, Transition } from "framer-motion";
 
 /**
- * SPARTAN MOTION SYSTEM — DYNAMIC 3D EDITION
- * Tangible momentum, spatial depth, directional entrance, and precision settling.
+ * SPARTAN MOTION SYSTEM — ADAPTIVE PERFORMANCE EDITION
+ * Desktop: Subtle spatial depth, controlled momentum, crisp settling.
+ * Mobile / Low-power: Snappy translateY + opacity, zero heavy 3D matrix transforms, 400-500ms duration.
  */
 
 // Premium physical momentum easing curve: swift initial impulse with smooth, cushioned deceleration
 export const SPARTAN_EASE = [0.19, 1, 0.22, 1] as const;
 
+// Helper to detect mobile/touch environment safely in client runtime
+const isMobileClient = (): boolean => {
+  if (typeof window === "undefined") return false;
+  return window.innerWidth < 768 || window.matchMedia("(pointer: coarse)").matches;
+};
+
 export const DEFAULT_TRANSITION: Transition = {
-  duration: 0.72,
+  duration: 0.58,
   ease: SPARTAN_EASE,
 };
 
 export const QUICK_TRANSITION: Transition = {
-  duration: 0.56,
+  duration: 0.44,
   ease: SPARTAN_EASE,
 };
 
 export const SPATIAL_TRANSITION: Transition = {
-  duration: 0.82,
+  duration: 0.62,
   ease: SPARTAN_EASE,
 };
 
-// Viewport trigger threshold: triggers as soon as 18% of the element enters view
+// Viewport trigger threshold: triggers as soon as 15% of the element enters view
 export const defaultViewport = {
   once: true,
-  amount: 0.18,
-  margin: "0px 0px -40px 0px",
+  amount: 0.15,
+  margin: "0px 0px -30px 0px",
 } as const;
 
 /**
  * 1. LEFT → CENTER
- * Tangible left sweep with noticeable 3D rotateY and scale recovery.
+ * Desktop: Subtle 36px sweep with minor 3D rotateY.
+ * Mobile: Snappy 22px vertical lift with zero horizontal overflow risk.
  */
 export const fadeInLeft: Variants = {
-  hidden: {
-    x: -90,
-    opacity: 0,
-    rotateY: -8,
-    scale: 0.95,
+  hidden: () => {
+    const isMobile = isMobileClient();
+    return {
+      x: isMobile ? 0 : -36,
+      y: isMobile ? 22 : 0,
+      opacity: 0,
+      rotateY: isMobile ? 0 : -3,
+      scale: 0.98,
+    };
   },
   visible: {
     x: 0,
+    y: 0,
     opacity: 1,
     rotateY: 0,
     scale: 1,
@@ -52,17 +65,23 @@ export const fadeInLeft: Variants = {
 
 /**
  * 2. RIGHT → CENTER
- * Tangible right sweep with noticeable 3D rotateY and scale recovery.
+ * Desktop: Subtle 36px sweep with minor 3D rotateY.
+ * Mobile: Snappy 22px vertical lift with zero horizontal overflow risk.
  */
 export const fadeInRight: Variants = {
-  hidden: {
-    x: 90,
-    opacity: 0,
-    rotateY: 8,
-    scale: 0.95,
+  hidden: () => {
+    const isMobile = isMobileClient();
+    return {
+      x: isMobile ? 0 : 36,
+      y: isMobile ? 22 : 0,
+      opacity: 0,
+      rotateY: isMobile ? 0 : 3,
+      scale: 0.98,
+    };
   },
   visible: {
     x: 0,
+    y: 0,
     opacity: 1,
     rotateY: 0,
     scale: 1,
@@ -72,13 +91,16 @@ export const fadeInRight: Variants = {
 
 /**
  * 3. BOTTOM → CENTER
- * Upward lift with perceptible elevation and crisp settling.
+ * Controlled upward lift with clean settling.
  */
 export const fadeInUp: Variants = {
-  hidden: {
-    y: 75,
-    opacity: 0,
-    scale: 0.94,
+  hidden: () => {
+    const isMobile = isMobileClient();
+    return {
+      y: isMobile ? 20 : 28,
+      opacity: 0,
+      scale: 0.98,
+    };
   },
   visible: {
     y: 0,
@@ -90,17 +112,23 @@ export const fadeInUp: Variants = {
 
 /**
  * 4. DEPTH → FRONT
- * Spatial 3D launch from negative Z-space with subtle rotateX pitch.
+ * Desktop: Restrained spatial depth without heavy compositing lag.
+ * Mobile: Light vertical fade-in.
  */
 export const depthReveal: Variants = {
-  hidden: {
-    z: -140,
-    scale: 0.90,
-    opacity: 0,
-    rotateX: 7,
+  hidden: () => {
+    const isMobile = isMobileClient();
+    return {
+      z: isMobile ? 0 : -35,
+      y: isMobile ? 20 : 0,
+      scale: isMobile ? 0.98 : 0.95,
+      opacity: 0,
+      rotateX: isMobile ? 0 : 3,
+    };
   },
   visible: {
     z: 0,
+    y: 0,
     scale: 1,
     opacity: 1,
     rotateX: 0,
@@ -110,11 +138,11 @@ export const depthReveal: Variants = {
 
 /**
  * 5. SCALE REVEAL
- * Focal point expansion with distinct zoom-to-precision impulse.
+ * Clean focal expansion with fast impulse.
  */
 export const scaleReveal: Variants = {
   hidden: {
-    scale: 0.91,
+    scale: 0.96,
     opacity: 0,
   },
   visible: {
@@ -125,18 +153,23 @@ export const scaleReveal: Variants = {
 };
 
 /**
- * Helper to generate directional variants with custom delay
+ * Directional variants with custom delay
  */
-export function createFadeInLeft(delay = 0, distance = 90): Variants {
+export function createFadeInLeft(delay = 0, distance = 36): Variants {
   return {
-    hidden: {
-      x: -distance,
-      opacity: 0,
-      rotateY: -8,
-      scale: 0.95,
+    hidden: () => {
+      const isMobile = isMobileClient();
+      return {
+        x: isMobile ? 0 : -distance,
+        y: isMobile ? 20 : 0,
+        opacity: 0,
+        rotateY: isMobile ? 0 : -3,
+        scale: 0.98,
+      };
     },
     visible: {
       x: 0,
+      y: 0,
       opacity: 1,
       rotateY: 0,
       scale: 1,
@@ -148,16 +181,21 @@ export function createFadeInLeft(delay = 0, distance = 90): Variants {
   };
 }
 
-export function createFadeInRight(delay = 0, distance = 90): Variants {
+export function createFadeInRight(delay = 0, distance = 36): Variants {
   return {
-    hidden: {
-      x: distance,
-      opacity: 0,
-      rotateY: 8,
-      scale: 0.95,
+    hidden: () => {
+      const isMobile = isMobileClient();
+      return {
+        x: isMobile ? 0 : distance,
+        y: isMobile ? 20 : 0,
+        opacity: 0,
+        rotateY: isMobile ? 0 : 3,
+        scale: 0.98,
+      };
     },
     visible: {
       x: 0,
+      y: 0,
       opacity: 1,
       rotateY: 0,
       scale: 1,
@@ -169,12 +207,15 @@ export function createFadeInRight(delay = 0, distance = 90): Variants {
   };
 }
 
-export function createFadeInUp(delay = 0, distance = 75): Variants {
+export function createFadeInUp(delay = 0, distance = 28): Variants {
   return {
-    hidden: {
-      y: distance,
-      opacity: 0,
-      scale: 0.94,
+    hidden: () => {
+      const isMobile = isMobileClient();
+      return {
+        y: isMobile ? 18 : distance,
+        opacity: 0,
+        scale: 0.98,
+      };
     },
     visible: {
       y: 0,
@@ -190,14 +231,19 @@ export function createFadeInUp(delay = 0, distance = 75): Variants {
 
 export function createDepthReveal(delay = 0): Variants {
   return {
-    hidden: {
-      z: -140,
-      scale: 0.90,
-      opacity: 0,
-      rotateX: 7,
+    hidden: () => {
+      const isMobile = isMobileClient();
+      return {
+        z: isMobile ? 0 : -35,
+        y: isMobile ? 20 : 0,
+        scale: isMobile ? 0.98 : 0.95,
+        opacity: 0,
+        rotateX: isMobile ? 0 : 3,
+      };
     },
     visible: {
       z: 0,
+      y: 0,
       scale: 1,
       opacity: 1,
       rotateX: 0,
@@ -212,7 +258,7 @@ export function createDepthReveal(delay = 0): Variants {
 export function createScaleReveal(delay = 0): Variants {
   return {
     hidden: {
-      scale: 0.91,
+      scale: 0.96,
       opacity: 0,
     },
     visible: {
@@ -229,7 +275,7 @@ export function createScaleReveal(delay = 0): Variants {
 /**
  * Stagger container for cascading child elements
  */
-export function createStaggerContainer(staggerDelay = 0.1, delayChildren = 0): Variants {
+export function createStaggerContainer(staggerDelay = 0.08, delayChildren = 0): Variants {
   return {
     hidden: { opacity: 0 },
     visible: {
@@ -243,14 +289,13 @@ export function createStaggerContainer(staggerDelay = 0.1, delayChildren = 0): V
 }
 
 /**
- * Enhanced card hover physics:
- * translateY(-6px), scale(1.015)
+ * Card hover physics: subtle lift without heavy layout jumps
  */
 export const subtleHoverLift = {
-  y: -6,
-  scale: 1.015,
+  y: -4,
+  scale: 1.01,
   transition: {
-    duration: 0.24,
+    duration: 0.2,
     ease: "easeOut",
   },
 };
