@@ -140,8 +140,8 @@ export function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out border-b",
         isScrolled
-          ? "bg-[#0B0B0B]/90 backdrop-blur-xl border-white/[0.06] shadow-[0_4px_30px_rgba(0,0,0,0.6)] py-3"
-          : "bg-transparent border-transparent py-5"
+          ? "bg-[#0B0B0B]/90 backdrop-blur-xl border-white shadow-[0_1px_12px_rgba(255,255,255,0.2),0_4px_24px_rgba(0,0,0,0.6)] py-3"
+          : "bg-transparent border-transparent py-5 shadow-none"
       )}
     >
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">

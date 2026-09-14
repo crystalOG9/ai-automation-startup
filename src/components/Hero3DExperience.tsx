@@ -285,7 +285,7 @@ export function Hero3DExperience() {
 
     // Inner Luminous Emblem Disc
     const textureLoader = new THREE.TextureLoader();
-    const logoTexture = textureLoader.load("/branding/spartan-galaxy-logo.png");
+    const logoTexture = textureLoader.load("/branding/Spartan-final-logo.png");
     logoTexture.minFilter = THREE.LinearFilter;
     logoTexture.generateMipmaps = false;
 

@@ -16,41 +16,41 @@ const isMobileClient = (): boolean => {
 };
 
 export const DEFAULT_TRANSITION: Transition = {
-  duration: 0.58,
+  duration: 0.46,
   ease: SPARTAN_EASE,
 };
 
 export const QUICK_TRANSITION: Transition = {
-  duration: 0.44,
+  duration: 0.32,
   ease: SPARTAN_EASE,
 };
 
 export const SPATIAL_TRANSITION: Transition = {
-  duration: 0.62,
+  duration: 0.50,
   ease: SPARTAN_EASE,
 };
 
-// Viewport trigger threshold: triggers as soon as 15% of the element enters view
+// Viewport trigger threshold: triggers cleanly on initial scroll contact
 export const defaultViewport = {
   once: true,
-  amount: 0.15,
-  margin: "0px 0px -30px 0px",
+  amount: 0.08,
+  margin: "0px 0px -20px 0px",
 } as const;
 
 /**
  * 1. LEFT → CENTER
  * Desktop: Subtle 36px sweep with minor 3D rotateY.
- * Mobile: Snappy 22px vertical lift with zero horizontal overflow risk.
+ * Mobile: Snappy 8px vertical lift, zero horizontal or scale strain.
  */
 export const fadeInLeft: Variants = {
   hidden: () => {
     const isMobile = isMobileClient();
     return {
       x: isMobile ? 0 : -36,
-      y: isMobile ? 22 : 0,
+      y: isMobile ? 8 : 0,
       opacity: 0,
-      rotateY: isMobile ? 0 : -3,
-      scale: 0.98,
+      rotateY: 0,
+      scale: 1,
     };
   },
   visible: {
@@ -66,17 +66,17 @@ export const fadeInLeft: Variants = {
 /**
  * 2. RIGHT → CENTER
  * Desktop: Subtle 36px sweep with minor 3D rotateY.
- * Mobile: Snappy 22px vertical lift with zero horizontal overflow risk.
+ * Mobile: Snappy 8px vertical lift, zero horizontal or scale strain.
  */
 export const fadeInRight: Variants = {
   hidden: () => {
     const isMobile = isMobileClient();
     return {
       x: isMobile ? 0 : 36,
-      y: isMobile ? 22 : 0,
+      y: isMobile ? 8 : 0,
       opacity: 0,
-      rotateY: isMobile ? 0 : 3,
-      scale: 0.98,
+      rotateY: 0,
+      scale: 1,
     };
   },
   visible: {
@@ -97,9 +97,9 @@ export const fadeInUp: Variants = {
   hidden: () => {
     const isMobile = isMobileClient();
     return {
-      y: isMobile ? 20 : 28,
+      y: isMobile ? 10 : 24,
       opacity: 0,
-      scale: 0.98,
+      scale: 1,
     };
   },
   visible: {
@@ -112,18 +112,18 @@ export const fadeInUp: Variants = {
 
 /**
  * 4. DEPTH → FRONT
- * Desktop: Restrained spatial depth without heavy compositing lag.
- * Mobile: Light vertical fade-in.
+ * Desktop: Restrained spatial depth.
+ * Mobile: Light 10px vertical fade-in without 3D rotation.
  */
 export const depthReveal: Variants = {
   hidden: () => {
     const isMobile = isMobileClient();
     return {
-      z: isMobile ? 0 : -35,
-      y: isMobile ? 20 : 0,
-      scale: isMobile ? 0.98 : 0.95,
+      z: isMobile ? 0 : -25,
+      y: isMobile ? 10 : 0,
+      scale: isMobile ? 1 : 0.97,
       opacity: 0,
-      rotateX: isMobile ? 0 : 3,
+      rotateX: 0,
     };
   },
   visible: {
@@ -138,11 +138,11 @@ export const depthReveal: Variants = {
 
 /**
  * 5. SCALE REVEAL
- * Clean focal expansion with fast impulse.
+ * Clean focal expansion.
  */
 export const scaleReveal: Variants = {
   hidden: {
-    scale: 0.96,
+    scale: 0.98,
     opacity: 0,
   },
   visible: {
@@ -161,10 +161,10 @@ export function createFadeInLeft(delay = 0, distance = 36): Variants {
       const isMobile = isMobileClient();
       return {
         x: isMobile ? 0 : -distance,
-        y: isMobile ? 20 : 0,
+        y: isMobile ? 8 : 0,
         opacity: 0,
-        rotateY: isMobile ? 0 : -3,
-        scale: 0.98,
+        rotateY: 0,
+        scale: 1,
       };
     },
     visible: {
@@ -187,10 +187,10 @@ export function createFadeInRight(delay = 0, distance = 36): Variants {
       const isMobile = isMobileClient();
       return {
         x: isMobile ? 0 : distance,
-        y: isMobile ? 20 : 0,
+        y: isMobile ? 8 : 0,
         opacity: 0,
-        rotateY: isMobile ? 0 : 3,
-        scale: 0.98,
+        rotateY: 0,
+        scale: 1,
       };
     },
     visible: {
@@ -207,14 +207,14 @@ export function createFadeInRight(delay = 0, distance = 36): Variants {
   };
 }
 
-export function createFadeInUp(delay = 0, distance = 28): Variants {
+export function createFadeInUp(delay = 0, distance = 24): Variants {
   return {
     hidden: () => {
       const isMobile = isMobileClient();
       return {
-        y: isMobile ? 18 : distance,
+        y: isMobile ? 10 : distance,
         opacity: 0,
-        scale: 0.98,
+        scale: 1,
       };
     },
     visible: {
@@ -234,11 +234,11 @@ export function createDepthReveal(delay = 0): Variants {
     hidden: () => {
       const isMobile = isMobileClient();
       return {
-        z: isMobile ? 0 : -35,
-        y: isMobile ? 20 : 0,
-        scale: isMobile ? 0.98 : 0.95,
+        z: isMobile ? 0 : -25,
+        y: isMobile ? 10 : 0,
+        scale: isMobile ? 1 : 0.97,
         opacity: 0,
-        rotateX: isMobile ? 0 : 3,
+        rotateX: 0,
       };
     },
     visible: {
@@ -258,7 +258,7 @@ export function createDepthReveal(delay = 0): Variants {
 export function createScaleReveal(delay = 0): Variants {
   return {
     hidden: {
-      scale: 0.96,
+      scale: 0.98,
       opacity: 0,
     },
     visible: {

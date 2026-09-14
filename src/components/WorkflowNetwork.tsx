@@ -81,16 +81,9 @@ export function WorkflowNetwork() {
       const dotSpacing = 32;
       for (let gx = dotSpacing; gx < width; gx += dotSpacing) {
         for (let gy = dotSpacing; gy < height; gy += dotSpacing) {
-          const distToMouse = hasCursor ? Math.hypot(gx - mx, gy - my) : 999;
           ctx.beginPath();
-          if (distToMouse < 75) {
-            const factor = 1 - distToMouse / 75;
-            ctx.arc(gx, gy, 1.2, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(201, 174, 198, ${0.12 + factor * 0.28})`;
-          } else {
-            ctx.arc(gx, gy, 0.9, 0, Math.PI * 2);
-            ctx.fillStyle = "rgba(255, 255, 255, 0.04)";
-          }
+          ctx.arc(gx, gy, 0.9, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(255, 255, 255, 0.04)";
           ctx.fill();
         }
       }

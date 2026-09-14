@@ -15,7 +15,6 @@ export const metadata: Metadata = {
 
 import { BackgroundVisuals } from "@/components/BackgroundVisuals";
 import { PrecisionMouseSystem } from "@/components/PrecisionMouseSystem";
-import { DynamicScrollProgress } from "@/components/DynamicScrollProgress";
 import { ScrollToTop } from "@/components/ScrollToTop";
 
 export default function RootLayout({
@@ -26,7 +25,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} antialiased scroll-smooth`}>
       <body className="min-h-full flex flex-col bg-background text-foreground overflow-x-hidden selection:bg-brand-500/30 selection:text-brand-50">
-        <DynamicScrollProgress />
         <BackgroundVisuals />
         <PrecisionMouseSystem />
         <ScrollToTop />

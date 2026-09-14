@@ -421,21 +421,6 @@ export function DynamicSystemField() {
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
 
-        // Cursor wake (desktop only)
-        if (!isTouchDevice && mouseX !== -1000) {
-          const dxMouse = p.x - mouseX;
-          const dyMouse = p.y - mouseY;
-          const distMouseSq = dxMouse * dxMouse + dyMouse * dyMouse;
-
-          if (distMouseSq < mouseWakeRadius * mouseWakeRadius && distMouseSq > 0.1) {
-            const distMouse = Math.sqrt(distMouseSq);
-            const norm = 1 - distMouse / mouseWakeRadius;
-            const force = norm * norm * 1.2 * p.z;
-            const angle = Math.atan2(dyMouse, dxMouse);
-            p.fluidVx += (Math.cos(angle) * force + mouseVx * norm * 0.25) * dt;
-            p.fluidVy += (Math.sin(angle) * force + mouseVy * norm * 0.25) * dt;
-          }
-        }
 
         p.fluidVx *= Math.pow(0.88, dt);
         p.fluidVy *= Math.pow(0.88, dt);

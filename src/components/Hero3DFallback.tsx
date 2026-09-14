@@ -82,11 +82,11 @@ export function Hero3DFallback() {
             <div className="absolute inset-1 rounded-full border border-dashed border-[#C9AEC6]/30 animate-[spin_30s_linear_infinite]" />
             <div className="relative w-20 h-20 flex items-center justify-center">
               <Image
-                src="/branding/spartan-galaxy-logo.png"
+                src="/branding/Spartan-final-logo.png"
                 alt="SPARTAN Automation Core"
                 width={80}
                 height={80}
-                className="w-16 h-16 object-contain drop-shadow-[0_0_15px_rgba(201,174,198,0.45)]"
+                className="w-16 h-16 object-contain"
                 priority
               />
             </div>
