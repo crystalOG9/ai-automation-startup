@@ -2,19 +2,36 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, ArrowDown } from "lucide-react";
+import { ArrowRight, ArrowDown, Layers, Cpu, ShieldCheck, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 
 import { SPARTAN_EASE } from "@/lib/motion";
 
-const TICKER_ITEMS = [
-  "Custom Business Logic",
-  "Zero System Migration",
-  "Human-in-the-Loop Safeguards",
-  "Integrated Into Your Existing Tools",
-  "Fixed Scope & Predictable Delivery",
-  "Production-Ready Workflow Pipelines",
-  "Audited & Validated Before Live Deployment",
+const SYSTEM_CAPABILITIES = [
+  {
+    tag: "01 / INTEGRATION",
+    title: "Zero System Migration",
+    description: "Hooks into your existing databases, ERPs, CRM & inboxes without replacing software.",
+    icon: Layers,
+  },
+  {
+    tag: "02 / ARCHITECTURE",
+    title: "Deterministic Logic",
+    description: "Custom rule pipelines and audited code. Zero hallucinations or black-box drift.",
+    icon: Cpu,
+  },
+  {
+    tag: "03 / GOVERNANCE",
+    title: "Human-in-the-Loop",
+    description: "Policy-enforced sign-offs for sensitive financial actions, payouts, and client comms.",
+    icon: ShieldCheck,
+  },
+  {
+    tag: "04 / DELIVERY",
+    title: "Fixed Scope & Milestones",
+    description: "Predictable engineering sprints delivered in weeks with production SLA validation.",
+    icon: CheckCircle2,
+  },
 ];
 
 export function Hero() {
@@ -106,25 +123,44 @@ export function Hero() {
         </div>
       </motion.div>
 
-      {/* 5. Ticker marquee strip in Obsidian & Champagne palette */}
+      {/* 5. Enterprise Architectural Guarantees & System Capabilities Grid */}
       <motion.div
-        initial={{ opacity: 0, y: 15 }}
+        initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.4, ease: SPARTAN_EASE }}
-        className="w-full mt-14 py-3.5 border-y border-white/[0.06] bg-[#0B0B0B]/90 backdrop-blur-md overflow-hidden select-none"
+        transition={{ duration: 0.6, delay: 0.35, ease: SPARTAN_EASE }}
+        className="w-full mt-14 border-y border-white/[0.08] bg-[#0E0E0E]/90 backdrop-blur-md relative z-10"
       >
-        <motion.div
-          className="flex w-max space-x-10 text-xs font-mono tracking-widest text-[#8E8295] uppercase"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, ease: "linear", duration: 32 }}
-        >
-          {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, idx) => (
-            <div key={idx} className="flex items-center space-x-3 shrink-0">
-              <span className="text-[#C9AEC6]">✦</span>
-              <span className="hover:text-[#F6EFF5] transition-colors">{item}</span>
-            </div>
-          ))}
-        </motion.div>
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+          {SYSTEM_CAPABILITIES.map((cap, idx) => {
+            const Icon = cap.icon;
+            const borderClasses = [
+              "border-b sm:border-b lg:border-b-0 sm:border-r lg:border-r border-white/[0.08]",
+              "border-b sm:border-b lg:border-b-0 sm:border-r-0 lg:border-r border-white/[0.08]",
+              "border-b sm:border-b-0 lg:border-b-0 sm:border-r lg:border-r border-white/[0.08]",
+              "border-b-0 sm:border-b-0 lg:border-b-0 sm:border-r-0 lg:border-r-0",
+            ];
+
+            return (
+              <div
+                key={idx}
+                className={`py-6 px-6 sm:px-8 xl:px-10 flex flex-col justify-start group hover:bg-white/[0.02] transition-colors duration-200 ${borderClasses[idx]}`}
+              >
+                <div className="flex items-center justify-between gap-3 mb-2.5">
+                  <span className="text-[10px] font-mono tracking-widest text-[#C9AEC6]/80 uppercase">
+                    {cap.tag}
+                  </span>
+                  <Icon className="w-3.5 h-3.5 text-[#8E8295] group-hover:text-[#C9AEC6] transition-colors" />
+                </div>
+                <h3 className="text-sm font-semibold text-[#F6EFF5] tracking-tight mb-1.5 group-hover:text-white transition-colors">
+                  {cap.title}
+                </h3>
+                <p className="text-xs text-[#8E8295] leading-relaxed font-normal">
+                  {cap.description}
+                </p>
+              </div>
+            );
+          })}
+        </div>
       </motion.div>
     </section>
   );
