@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { PrecisionCard } from "@/components/PrecisionCard";
+import { scrollToSection } from "@/lib/utils";
 
 const SOLUTIONS = [
   {
@@ -186,14 +187,15 @@ export function Solutions() {
                     </p>
                   </div>
                 </div>
-                <Link
+                <a
                   href="#contact"
-                  className="relative overflow-hidden px-6 py-3.5 rounded-xl bg-[#C9AEC6] hover:bg-[#EAD6E6] text-[#0B0B0B] text-xs sm:text-sm font-semibold uppercase font-mono tracking-wider border border-[#EAD6E6]/60 shadow-[0_0_15px_rgba(201,174,198,0.18)] hover:shadow-[0_0_24px_rgba(201,174,198,0.3)] hover:-translate-y-0.5 hover:scale-[1.015] active:translate-y-0 active:scale-[0.98] whitespace-nowrap inline-flex items-center gap-2 shrink-0 group transition-all duration-150 ease-out"
+                  onClick={(e) => scrollToSection("#contact", e)}
+                  className="relative overflow-hidden px-6 py-3.5 rounded-xl bg-[#C9AEC6] hover:bg-[#EAD6E6] text-[#0B0B0B] text-xs sm:text-sm font-semibold uppercase font-mono tracking-wider border border-[#EAD6E6]/60 shadow-[0_0_15px_rgba(201,174,198,0.18)] hover:shadow-[0_0_24px_rgba(201,174,198,0.3)] hover:-translate-y-0.5 hover:scale-[1.015] active:translate-y-0 active:scale-[0.98] whitespace-nowrap inline-flex items-center gap-2 shrink-0 group transition-all duration-150 ease-out cursor-pointer"
                 >
                   <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none" />
-                  <span className="relative z-10">SHOW US YOUR WORKFLOW</span>
+                  <span className="relative z-10">CUSTOMIZE YOUR PIPELINE</span>
                   <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform duration-150 text-[#0B0B0B]" />
-                </Link>
+                </a>
               </div>
             </PrecisionCard>
           </motion.div>

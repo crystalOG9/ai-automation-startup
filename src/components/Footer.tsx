@@ -1,7 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import { Globe, Mail } from "lucide-react";
 import { SpartanLogo } from "@/components/SpartanLogo";
 import { InstagramIcon } from "@/components/InstagramIcon";
+import { scrollToSection } from "@/lib/utils";
 
 export function Footer() {
   return (
@@ -12,6 +15,7 @@ export function Footer() {
           <div className="lg:col-span-1">
             <Link
               href="/"
+              onClick={(e) => scrollToSection("#hero", e)}
               className="text-2xl font-bold tracking-tighter text-[#F6EFF5] flex items-center gap-2.5 mb-4 inline-flex group"
             >
               <SpartanLogo size={36} />
@@ -25,20 +29,20 @@ export function Footer() {
           <div>
             <h4 className="text-[#F6EFF5] font-semibold mb-4 text-sm uppercase tracking-wider">Platform</h4>
             <ul className="space-y-3">
-              <li><Link href="#how-it-works" className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm">How It Works</Link></li>
-              <li><Link href="#workflow-demo" className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm">Workflow Demo</Link></li>
-              <li><Link href="#solutions" className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm">Solutions</Link></li>
-              <li><Link href="#industries" className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm">Industries</Link></li>
-              <li><Link href="#why-us" className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm">Why Us</Link></li>
+              <li><a href="#how-it-works" onClick={(e) => scrollToSection("#how-it-works", e)} className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm cursor-pointer">How It Works</a></li>
+              <li><a href="#workflow-demo" onClick={(e) => scrollToSection("#workflow-demo", e)} className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm cursor-pointer">Workflow Demo</a></li>
+              <li><a href="#solutions" onClick={(e) => scrollToSection("#solutions", e)} className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm cursor-pointer">Solutions</a></li>
+              <li><a href="#industries" onClick={(e) => scrollToSection("#industries", e)} className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm cursor-pointer">Industries</a></li>
+              <li><a href="#why-us" onClick={(e) => scrollToSection("#why-us", e)} className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm cursor-pointer">Why Us</a></li>
             </ul>
           </div>
 
           <div>
             <h4 className="text-[#F6EFF5] font-semibold mb-4 text-sm uppercase tracking-wider">Assessment & Method</h4>
             <ul className="space-y-3">
-              <li><Link href="#contact" className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm">Request Assessment</Link></li>
-              <li><Link href="#differentiator" className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm">Engineering Method</Link></li>
-              <li><Link href="#contact" className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm">Start With One Workflow</Link></li>
+              <li><a href="#contact" onClick={(e) => scrollToSection("#contact", e)} className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm cursor-pointer">Request Assessment</a></li>
+              <li><a href="#differentiator" onClick={(e) => scrollToSection("#differentiator", e)} className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm cursor-pointer">Engineering Method</a></li>
+              <li><a href="#contact" onClick={(e) => scrollToSection("#contact", e)} className="text-[#8E8295] hover:text-[#C9AEC6] transition-colors text-sm cursor-pointer">Start With One Workflow</a></li>
             </ul>
           </div>
 

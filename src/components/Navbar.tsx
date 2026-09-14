@@ -4,11 +4,10 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, scrollToSection } from "@/lib/utils";
 import { SpartanLogo } from "@/components/SpartanLogo";
 
-// Synchronized sequence:
-// 1. Hero -> 2. Method -> 3. How It Works -> 4. Workflow Demo -> 5. Solutions -> 6. Why Us
+// Synchronized sequence matching page flow
 const NAV_LINKS = [
   { name: "Home", href: "#hero", id: "hero" },
   { name: "Method", href: "#differentiator", id: "differentiator" },
@@ -16,6 +15,7 @@ const NAV_LINKS = [
   { name: "Workflow Demo", href: "#workflow-demo", id: "workflow-demo" },
   { name: "Solutions", href: "#solutions", id: "solutions" },
   { name: "Why Us", href: "#why-us", id: "why-us" },
+  { name: "Contact", href: "#contact", id: "contact" },
 ];
 
 export function Navbar() {
@@ -46,9 +46,9 @@ export function Navbar() {
 
       // Bottom of page (CTA / Contact / Why Us area)
       if (scrollY + windowHeight >= docHeight - 80) {
-        if (activeIdCurrent !== "why-us") {
-          activeIdCurrent = "why-us";
-          setActiveId("why-us");
+        if (activeIdCurrent !== "contact") {
+          activeIdCurrent = "contact";
+          setActiveId("contact");
         }
         return;
       }
@@ -62,31 +62,18 @@ export function Navbar() {
         return;
       }
 
-      // Mid-view line for responsive section detection
-      const viewLine = scrollY + windowHeight * 0.35;
-
-      const targets = [
-        { id: "contact", navId: "why-us" },
-        { id: "discovery", navId: "why-us" },
-        { id: "why-us", navId: "why-us" },
-        { id: "roi", navId: "solutions" },
-        { id: "human-in-the-loop", navId: "solutions" },
-        { id: "industries", navId: "solutions" },
-        { id: "solutions", navId: "solutions" },
-        { id: "workflow-demo", navId: "workflow-demo" },
-        { id: "how-it-works", navId: "how-it-works" },
-        { id: "core-message", navId: "differentiator" },
-        { id: "differentiator", navId: "differentiator" },
-        { id: "problem", navId: "hero" },
-        { id: "hero", navId: "hero" },
-      ];
-
+      // Check section bounding boxes with smooth hysteresis threshold
+      const sectionIds = ["differentiator", "how-it-works", "workflow-demo", "solutions", "why-us", "contact"];
       let matchedNavId = "hero";
-      for (const target of targets) {
-        const el = document.getElementById(target.id);
-        if (el && viewLine >= el.offsetTop) {
-          matchedNavId = target.navId;
-          break;
+
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 200 && rect.bottom >= 120) {
+            matchedNavId = id;
+            break;
+          }
         }
       }
 
@@ -116,18 +103,7 @@ export function Navbar() {
     setActiveId(id);
     isManualScrollRef.current = true;
 
-    if (href === "#hero") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } else {
-      const targetEl = document.querySelector(href);
-      if (targetEl) {
-        const navHeight = 80;
-        const bodyRect = document.body.getBoundingClientRect().top;
-        const elRect = targetEl.getBoundingClientRect().top;
-        const targetPos = elRect - bodyRect - navHeight;
-        window.scrollTo({ top: Math.max(0, targetPos), behavior: "smooth" });
-      }
-    }
+    scrollToSection(href, e);
 
     if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
     scrollTimeoutRef.current = setTimeout(() => {
@@ -191,22 +167,10 @@ export function Navbar() {
           })}
         </nav>
 
-        {/* CTA and Mobile Menu Toggle */}
-        <div className="flex items-center gap-3 md:gap-4">
-          <Link
-            href="#contact"
-            className="hidden md:inline-flex items-center gap-2 relative overflow-hidden bg-[#C9AEC6] hover:bg-[#EAD6E6] text-[#0B0B0B] px-6 py-2.5 rounded-xl text-xs md:text-sm font-bold tracking-wider uppercase border border-[#EAD6E6]/60 shadow-[0_0_15px_rgba(201,174,198,0.15)] hover:shadow-[0_0_20px_rgba(201,174,198,0.25)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-150 ease-out group"
-          >
-            {/* Crisp directional specular sweep on hover */}
-            <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out bg-gradient-to-r from-transparent via-white/35 to-transparent pointer-events-none" />
-            
-            <span className="relative z-10 font-mono text-xs">Show Us Your Workflow</span>
-            <ArrowRight className="w-3.5 h-3.5 relative z-10 group-hover:translate-x-1 transition-transform duration-150 text-[#0B0B0B]" />
-          </Link>
-
-          {/* Mobile Menu Button */}
+        {/* Mobile Menu Toggle (desktop navigation is clean and uncluttered) */}
+        <div className="lg:hidden flex items-center">
           <button
-            className="lg:hidden text-[#BAAEC0] hover:text-[#F6EFF5] w-11 h-11 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors cursor-pointer"
+            className="text-[#BAAEC0] hover:text-[#F6EFF5] w-11 h-11 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors cursor-pointer"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -237,7 +201,7 @@ export function Navbar() {
                     key={link.name}
                     href={link.href}
                     className={cn(
-                      "py-2.5 px-4 text-sm font-medium rounded-xl transition-all duration-150 flex items-center justify-between",
+                      "py-2.5 px-4 text-sm font-medium rounded-xl transition-all duration-150 flex items-center justify-between cursor-pointer",
                       isActive
                         ? "text-[#F6EFF5] font-semibold [text-shadow:0_0_10px_rgba(201,174,198,0.3)] bg-white/[0.04]"
                         : "text-[#BAAEC0] hover:text-[#F6EFF5] hover:bg-white/[0.04]"
@@ -252,16 +216,6 @@ export function Navbar() {
                   </a>
                 );
               })}
-              <div className="pt-3">
-                <Link
-                  href="#contact"
-                  className="flex items-center justify-center gap-2 bg-[#C9AEC6] hover:bg-[#EAD6E6] text-[#0B0B0B] px-5 py-3 rounded-xl text-sm font-bold shadow-[0_0_15px_rgba(201,174,198,0.2)] transition-all"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <span>Show Us Your Workflow</span>
-                  <ArrowRight className="w-4 h-4 text-[#0B0B0B]" />
-                </Link>
-              </div>
             </nav>
           </motion.div>
         )}

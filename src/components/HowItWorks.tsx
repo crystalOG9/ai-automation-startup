@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { PrecisionCard } from "@/components/PrecisionCard";
+import { scrollToSection } from "@/lib/utils";
 
 const WORKFLOW_STEPS = [
   {
@@ -148,14 +149,15 @@ export function HowItWorks() {
 
         {/* Bottom CTA Button */}
         <div className="text-center">
-          <Link
+          <a
             href="#contact"
-            className="relative overflow-hidden inline-flex items-center justify-center gap-2.5 bg-[#C9AEC6] hover:bg-[#EAD6E6] text-[#0B0B0B] px-8 py-4 rounded-xl text-sm md:text-base font-semibold uppercase font-mono tracking-wider border border-[#EAD6E6]/60 shadow-[0_0_20px_rgba(201,174,198,0.18)] hover:shadow-[0_0_30px_rgba(201,174,198,0.3)] hover:-translate-y-0.5 hover:scale-[1.015] active:translate-y-0 active:scale-[0.98] transition-all duration-150 ease-out group"
+            onClick={(e) => scrollToSection("#contact", e)}
+            className="relative overflow-hidden inline-flex items-center justify-center gap-2.5 bg-[#C9AEC6] hover:bg-[#EAD6E6] text-[#0B0B0B] px-8 py-4 rounded-xl text-sm md:text-base font-semibold uppercase font-mono tracking-wider border border-[#EAD6E6]/60 shadow-[0_0_20px_rgba(201,174,198,0.18)] hover:shadow-[0_0_30px_rgba(201,174,198,0.3)] hover:-translate-y-0.5 hover:scale-[1.015] active:translate-y-0 active:scale-[0.98] transition-all duration-150 ease-out group cursor-pointer"
           >
             <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none" />
-            <span className="relative z-10">SHOW US YOUR WORKFLOW</span>
+            <span className="relative z-10">MAP YOUR PROCESS</span>
             <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform duration-150" />
-          </Link>
+          </a>
         </div>
 
       </div>

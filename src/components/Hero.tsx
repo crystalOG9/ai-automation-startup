@@ -6,6 +6,7 @@ import { ArrowRight, ArrowDown, Layers, Cpu, ShieldCheck, CheckCircle2 } from "l
 import Link from "next/link";
 
 import { SPARTAN_EASE } from "@/lib/motion";
+import { scrollToSection } from "@/lib/utils";
 
 const SYSTEM_CAPABILITIES = [
   {
@@ -100,24 +101,26 @@ export function Hero() {
               transition={{ duration: 0.56, delay: 0.3, ease: SPARTAN_EASE }}
               className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-14"
             >
-              <Link
+              <a
                 href="#contact"
-                className="relative overflow-hidden inline-flex items-center justify-center gap-2.5 bg-[#C9AEC6] hover:bg-[#EAD6E6] text-[#0B0B0B] px-8 py-4 rounded-xl text-xs sm:text-sm font-bold tracking-wider uppercase border border-[#EAD6E6]/60 shadow-[0_0_20px_rgba(201,174,198,0.18)] hover:shadow-[0_0_25px_rgba(201,174,198,0.3)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-150 ease-out group font-mono"
+                onClick={(e) => scrollToSection("#contact", e)}
+                className="relative overflow-hidden inline-flex items-center justify-center gap-2.5 bg-[#C9AEC6] hover:bg-[#EAD6E6] text-[#0B0B0B] px-8 py-4 rounded-xl text-xs sm:text-sm font-bold tracking-wider uppercase border border-[#EAD6E6]/60 shadow-[0_0_20px_rgba(201,174,198,0.18)] hover:shadow-[0_0_25px_rgba(201,174,198,0.3)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-150 ease-out group font-mono cursor-pointer"
               >
                 {/* Directional specular sweep on hover */}
                 <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out bg-gradient-to-r from-transparent via-white/35 to-transparent pointer-events-none" />
                 
                 <span className="relative z-10">SHOW US YOUR WORKFLOW</span>
                 <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform duration-150 text-[#0B0B0B]" />
-              </Link>
+              </a>
               
-              <Link
+              <a
                 href="#how-it-works"
-                className="inline-flex items-center justify-center gap-2.5 bg-[#141414] hover:bg-[#1A1A1A] border border-white/[0.08] hover:border-[#C9AEC6]/40 text-[#F6EFF5] hover:text-white px-8 py-4 rounded-xl text-xs sm:text-sm font-medium tracking-wider uppercase hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(201,174,198,0.08)] active:translate-y-0 active:scale-[0.98] transition-all duration-150 ease-out font-mono"
+                onClick={(e) => scrollToSection("#how-it-works", e)}
+                className="inline-flex items-center justify-center gap-2.5 bg-[#141414] hover:bg-[#1A1A1A] border border-white/[0.08] hover:border-[#C9AEC6]/40 text-[#F6EFF5] hover:text-white px-8 py-4 rounded-xl text-xs sm:text-sm font-medium tracking-wider uppercase hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(201,174,198,0.08)] active:translate-y-0 active:scale-[0.98] transition-all duration-150 ease-out font-mono cursor-pointer"
               >
                 <span>SEE HOW IT WORKS</span>
                 <ArrowDown className="w-3.5 h-3.5 text-[#C9AEC6]" />
-              </Link>
+              </a>
             </motion.div>
           </div>
         </div>

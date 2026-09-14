@@ -12,6 +12,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
+import { scrollToSection } from "@/lib/utils";
 
 const DIFFERENTIATOR_STEPS = [
   {
@@ -174,13 +175,14 @@ export function MainDifferentiator() {
             transition={{ delay: 0.3 }}
             className="mt-12 text-center"
           >
-            <Link
+            <a
               href="#contact"
-              className="inline-flex items-center justify-center gap-2.5 bg-[#C9AEC6] hover:bg-[#EAD6E6] text-[#0B0B0B] px-8 py-4 rounded-full text-base font-semibold transition-all hover:shadow-[0_0_25px_rgba(201,174,198,0.25)] group"
+              onClick={(e) => scrollToSection("#contact", e)}
+              className="inline-flex items-center justify-center gap-2.5 bg-[#C9AEC6] hover:bg-[#EAD6E6] text-[#0B0B0B] px-8 py-4 rounded-full text-sm sm:text-base font-semibold transition-all hover:shadow-[0_0_25px_rgba(201,174,198,0.25)] group cursor-pointer font-mono uppercase tracking-wider"
             >
-              SHOW US YOUR WORKFLOW
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
+              REQUEST WORKFLOW AUDIT
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </a>
           </motion.div>
         </div>
 
