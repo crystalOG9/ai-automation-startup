@@ -11,7 +11,6 @@ import {
   ArrowDown,
   ArrowRight,
 } from "lucide-react";
-import Link from "next/link";
 import { scrollToSection } from "@/lib/utils";
 
 const DIFFERENTIATOR_STEPS = [

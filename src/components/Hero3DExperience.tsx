@@ -148,7 +148,9 @@ export function Hero3DExperience() {
   const [workflowState, setWorkflowState] = useState<"UNDERSTAND" | "AUTOMATE" | "ORCHESTRATE">("ORCHESTRATE");
 
   const activeNodeRef = useRef<string | null>("email");
-  activeNodeRef.current = activeNodeId;
+  useEffect(() => {
+    activeNodeRef.current = activeNodeId;
+  }, [activeNodeId]);
 
   // Track cycle intervals for workflow state readout
   useEffect(() => {
@@ -167,8 +169,10 @@ export function Hero3DExperience() {
     const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     if (isMobile || reducedMotionQuery.matches || !isWebGLSupported()) {
-      setUseFallback(true);
-      return;
+      const fallbackTimer = setTimeout(() => {
+        setUseFallback(true);
+      }, 0);
+      return () => clearTimeout(fallbackTimer);
     }
 
     const container = containerRef.current;
@@ -207,7 +211,9 @@ export function Hero3DExperience() {
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.15;
     } catch {
-      setHasWebGL(false);
+      setTimeout(() => {
+        setHasWebGL(false);
+      }, 0);
       return;
     }
 

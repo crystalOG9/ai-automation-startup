@@ -1,39 +1,42 @@
-import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
-import { ProblemSection } from "@/components/ProblemSection";
-import { MainDifferentiator } from "@/components/MainDifferentiator";
-import { CoreMessage } from "@/components/CoreMessage";
-import { HowItWorks } from "@/components/HowItWorks";
-import { AutomationDemo } from "@/components/AutomationDemo";
-import { Solutions } from "@/components/Solutions";
-import { Industries } from "@/components/Industries";
+import { SpartanWhoWeAre } from "@/components/SpartanWhoWeAre";
+import { StatsProof } from "@/components/StatsProof";
+import { WhatWeBuild } from "@/components/WhatWeBuild";
+import { HowSpartanWorks } from "@/components/HowSpartanWorks";
+import { SelectedBuilds } from "@/components/SelectedBuilds";
 import { HumanInTheLoop } from "@/components/HumanInTheLoop";
-import { ROI } from "@/components/ROI";
-import { WhyUs } from "@/components/WhyUs";
-import { CustomerDiscovery } from "@/components/CustomerDiscovery";
+import { TeamSection } from "@/components/TeamSection";
 import { CTA } from "@/components/CTA";
-import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
-    <>
-      <Navbar />
-      <main>
-        <Hero />
-        <ProblemSection />
-        <MainDifferentiator />
-        <CoreMessage />
-        <HowItWorks />
-        <AutomationDemo />
-        <Solutions />
-        <Industries />
-        <HumanInTheLoop />
-        <ROI />
-        <WhyUs />
-        <CustomerDiscovery />
-        <CTA />
-      </main>
-      <Footer />
-    </>
+    <div className="relative flex flex-col">
+      {/* 02. HERO */}
+      <Hero />
+
+      {/* 03. INTRO / WHO WE ARE */}
+      <SpartanWhoWeAre />
+
+      {/* 04. NUMBERS / PROOF */}
+      <StatsProof />
+
+      {/* 05. WHAT WE BUILD */}
+      <WhatWeBuild />
+
+      {/* 06. HOW SPARTAN WORKS */}
+      <HowSpartanWorks />
+
+      {/* 07. SELECTED BUILDS / PROJECTS */}
+      <SelectedBuilds />
+
+      {/* 08. HUMAN-IN-THE-LOOP */}
+      <HumanInTheLoop />
+
+      {/* 09. TEAM */}
+      <TeamSection />
+
+      {/* 10. FINAL CTA */}
+      <CTA />
+    </div>
   );
 }

@@ -358,7 +358,9 @@ export function AutomationDemo() {
     if (isAutoPlaying) {
       if (activeStage === 3) {
         // Pauses automatically at Stage 4 (Human Review Gate) to emphasize human oversight
-        setIsAutoPlaying(false);
+        timer = setTimeout(() => {
+          setIsAutoPlaying(false);
+        }, 0);
       } else if (activeStage < 4) {
         timer = setTimeout(() => {
           setActiveStage((prev) => prev + 1);

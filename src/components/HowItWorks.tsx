@@ -10,7 +10,6 @@ import {
   Maximize2,
   ArrowRight,
 } from "lucide-react";
-import Link from "next/link";
 import { PrecisionCard } from "@/components/PrecisionCard";
 import { scrollToSection } from "@/lib/utils";
 

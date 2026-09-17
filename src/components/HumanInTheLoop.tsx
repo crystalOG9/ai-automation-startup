@@ -1,149 +1,231 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CheckCircle2, AlertCircle, ShieldAlert, ArrowRight } from "lucide-react";
+import { ArrowDown, ShieldCheck, CheckCircle2, UserCheck, Bot, Cpu, Sparkles } from "lucide-react";
+import { defaultViewport, scaleReveal, SPARTAN_EASE } from "@/lib/motion";
 
-import {
-  fadeInLeft,
-  fadeInRight,
-  fadeInUp,
-  scaleReveal,
-  defaultViewport,
-} from "@/lib/motion";
+const PIPELINE_NODES = [
+  {
+    step: "01",
+    label: "AUTOMATION",
+    desc: "Ingests data, monitors inboxes & listens for system triggers.",
+    icon: Cpu,
+    highlight: false,
+  },
+  {
+    step: "02",
+    label: "PROCESS",
+    desc: "Normalizes records, maps schemas & validates business rules.",
+    icon: Bot,
+    highlight: false,
+  },
+  {
+    step: "03",
+    label: "AI / LOGIC",
+    desc: "Extracts unstructured information & drafts proposed actions.",
+    icon: Sparkles,
+    highlight: false,
+  },
+  {
+    step: "04",
+    label: "HUMAN CHECK",
+    desc: "Supervisor review & explicit authorization for critical tasks.",
+    icon: UserCheck,
+    highlight: true,
+  },
+  {
+    step: "05",
+    label: "ACTION",
+    desc: "Final commit: update CRM, send verified email, trigger payout.",
+    icon: CheckCircle2,
+    highlight: false,
+  },
+];
 
 export function HumanInTheLoop() {
   return (
-    <section className="py-24 relative overflow-hidden perspective-1200">
-      <div className="container mx-auto px-4 md:px-6">
+    <section className="py-24 relative overflow-hidden bg-[#0A0A0A] perspective-1200">
+      {/* Subtle centered backdrop glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-72 bg-[#C9AEC6]/[0.025] blur-[160px] rounded-full pointer-events-none" />
+
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
         
+        {/* Header */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={defaultViewport}
           variants={scaleReveal}
-          className="max-w-4xl mx-auto text-center mb-16"
+          className="max-w-4xl mx-auto text-center mb-16 sm:mb-20"
         >
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-[#F6EFF5]">
-            Automation with strict human control. <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFFFFF] via-[#EAD6E6] to-[#C9AEC6]">Not unmonitored autonomy.</span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-[#C9AEC6]/30 text-[#C9AEC6] text-xs font-mono font-semibold uppercase tracking-wider mb-4">
+            <ShieldCheck className="w-3.5 h-3.5 text-[#C9AEC6]" />
+            <span>Operational Safety</span>
+          </div>
+
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-[#F6EFF5] uppercase font-sans mb-6 leading-tight">
+            AUTOMATION DOESN&apos;T MEAN <br className="hidden sm:inline" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFFFFF] via-[#EAD6E6] to-[#C9AEC6]">
+              GIVING THE ROBOT THE KEYS.
+            </span>
           </h2>
-          <p className="text-lg md:text-xl text-[#8E8295] leading-relaxed">
-            Every workflow enforces clear permission tiers. You define which routine steps execute automatically and which actions require supervisor sign-off.
+
+          <p className="text-base sm:text-lg md:text-xl text-[#BAAEC0] max-w-2xl mx-auto leading-relaxed font-normal">
+            We automate repetitive work while keeping humans in control of important decisions.
           </p>
         </motion.div>
 
-        {/* 3 Main Content Blocks: Left, Bottom, Right */}
-        <div className="max-w-5xl mx-auto grid lg:grid-cols-3 gap-6 items-stretch preserve-3d">
+        {/* Clean Minimal Visual Flow: AUTOMATION -> PROCESS -> AI / LOGIC -> HUMAN CHECK -> ACTION */}
+        <div className="max-w-5xl mx-auto">
           
-          {/* BLOCK 1 → From Left (Automatic Level) */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={defaultViewport}
-            variants={fadeInLeft}
-            whileHover={{ y: -6, scale: 1.015 }}
-            className="glass-card p-7 sm:p-8 rounded-2xl border border-white/[0.06] bg-[#141414] flex flex-col justify-between shadow-lg hover:border-[#22C55E]/40 transition-colors"
-          >
-            <div>
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-3 h-3 rounded-full bg-[#22C55E] shadow-[0_0_10px_rgba(34,197,94,0.6)]" />
-                <h3 className="text-xl font-bold text-[#F6EFF5] tracking-tight">Automatic</h3>
-              </div>
-              <p className="text-sm text-[#8E8295] mb-8 leading-relaxed">
-                Deterministic, low-risk tasks like data formatting, record tagging, and draft creation.
-              </p>
-            </div>
-            <div className="mt-auto flex items-center gap-2 p-3 rounded-xl bg-black/50 border border-white/[0.06] text-xs font-mono">
-              <span className="font-semibold text-[#C9AEC6]">AI</span>
-              <ArrowRight className="w-3.5 h-3.5 text-slate-500 shrink-0" />
-              <span className="font-semibold text-[#22C55E] flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-[#22C55E] shrink-0" /> Execute
-              </span>
-            </div>
-          </motion.div>
+          {/* Desktop Horizontal Pipeline */}
+          <div className="hidden lg:grid grid-cols-5 gap-3 items-stretch relative">
+            {PIPELINE_NODES.map((node, idx) => {
+              const Icon = node.icon;
+              const isHuman = node.highlight;
 
-          {/* BLOCK 2 → From Bottom (Review Level) */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={defaultViewport}
-            variants={fadeInUp}
-            whileHover={{ y: -6, scale: 1.015 }}
-            className="glass-card p-7 sm:p-8 rounded-2xl border border-white/[0.06] bg-[#141414] flex flex-col justify-between shadow-lg hover:border-[#C9AEC6]/40 transition-colors"
-          >
-            <div>
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-3 h-3 rounded-full bg-[#EF4444] shadow-[0_0_10px_rgba(239,68,68,0.4)]" />
-                <h3 className="text-xl font-bold text-[#F6EFF5] tracking-tight">Review</h3>
-              </div>
-              <p className="text-sm text-[#8E8295] mb-8 leading-relaxed">
-                Edge cases, low-confidence extractions, and non-standard inquiries flagged for quick operator review.
-              </p>
-            </div>
-            <div className="mt-auto flex items-center gap-2 p-3 rounded-xl bg-black/50 border border-white/[0.06] text-xs font-mono">
-              <span className="font-semibold text-[#C9AEC6]">AI</span>
-              <ArrowRight className="w-3.5 h-3.5 text-slate-500 shrink-0" />
-              <span className="font-semibold text-rose-400 flex items-center gap-1.5">
-                <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" /> Human Review
-              </span>
-            </div>
-          </motion.div>
+              return (
+                <div key={node.label} className="relative flex flex-col justify-between">
+                  <motion.div
+                    initial={{ opacity: 0, y: 25, scale: 0.95 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    viewport={defaultViewport}
+                    transition={{
+                      duration: 0.5,
+                      delay: idx * 0.08,
+                      ease: SPARTAN_EASE,
+                    }}
+                    whileHover={{ y: -4 }}
+                    className={`p-5 rounded-2xl border transition-all duration-200 h-full flex flex-col justify-between ${
+                      isHuman
+                        ? "bg-[#161616] border-[#C9AEC6]/60 shadow-[0_0_20px_rgba(201,174,198,0.12)] ring-1 ring-[#C9AEC6]/40"
+                        : "bg-[#121212] border-white/[0.08] hover:border-white/20"
+                    }`}
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <div
+                          className={`w-9 h-9 rounded-lg flex items-center justify-center border ${
+                            isHuman
+                              ? "bg-[#C9AEC6]/15 border-[#C9AEC6]/30 text-[#C9AEC6]"
+                              : "bg-white/[0.03] border-white/[0.08] text-[#8E8295]"
+                          }`}
+                        >
+                          <Icon className="w-4 h-4" />
+                        </div>
+                        <span
+                          className={`text-[10px] font-mono font-bold ${
+                            isHuman ? "text-[#C9AEC6]" : "text-[#8E8295]/50"
+                          }`}
+                        >
+                          {node.step}
+                        </span>
+                      </div>
 
-          {/* BLOCK 3 → From Right (Approval Level with Settling Pause State) */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={defaultViewport}
-            variants={fadeInRight}
-            whileHover={{ y: -6, scale: 1.015 }}
-            className="glass-card p-7 sm:p-8 rounded-2xl border border-[#C9AEC6]/40 bg-[#161616] flex flex-col justify-between shadow-xl relative overflow-hidden group hover:border-[#C9AEC6]/70 transition-colors"
-          >
-            {/* Subtle settling ambient breathing glow indicating waiting for decision */}
-            <motion.div
-              animate={{
-                opacity: [0.35, 0.65, 0.35],
-                scale: [0.98, 1.02, 0.98],
-              }}
-              transition={{
-                duration: 3.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="absolute inset-0 bg-gradient-to-br from-[#C9AEC6]/[0.08] to-[#141414] pointer-events-none rounded-2xl"
-            />
+                      <h3
+                        className={`text-xs font-mono font-bold uppercase tracking-wider mb-2 ${
+                          isHuman ? "text-[#F6EFF5]" : "text-[#F6EFF5]/90"
+                        }`}
+                      >
+                        {node.label}
+                      </h3>
 
-            <div className="relative z-10">
-              <div className="flex items-center justify-between gap-3 mb-5">
-                <div className="flex items-center gap-3">
-                  <span className="relative flex h-3 w-3">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#C9AEC6] opacity-60"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-[#C9AEC6]"></span>
-                  </span>
-                  <h3 className="text-xl font-bold text-[#F6EFF5] tracking-tight">Approval Required</h3>
+                      <p className="text-[11px] text-[#8E8295] leading-relaxed">
+                        {node.desc}
+                      </p>
+                    </div>
+
+                    {isHuman && (
+                      <div className="mt-4 pt-2 border-t border-[#C9AEC6]/20 flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#C9AEC6] animate-pulse" />
+                        <span className="text-[9px] font-mono font-bold uppercase tracking-wider text-[#C9AEC6]">
+                          Mandatory Gate
+                        </span>
+                      </div>
+                    )}
+                  </motion.div>
+
+                  {/* Connector Arrow for all except last */}
+                  {idx < PIPELINE_NODES.length - 1 && (
+                    <div className="hidden" aria-hidden="true" />
+                  )}
                 </div>
+              );
+            })}
+          </div>
 
-                {/* Status indicator: SYSTEM PAUSED / WAITING FOR HUMAN DECISION */}
-                <span className="text-[10px] font-mono tracking-wider px-2 py-0.5 rounded bg-[#C9AEC6]/15 text-[#C9AEC6] border border-[#C9AEC6]/30 uppercase font-semibold">
-                  Gatekeeper
-                </span>
-              </div>
-              <p className="text-sm text-[#BAAEC0] mb-8 leading-relaxed">
-                Financial transactions, contract changes, and external communications that require explicit manager authorization.
-              </p>
-            </div>
+          {/* Mobile & Tablet Vertical Pipeline */}
+          <div className="lg:hidden space-y-3 max-w-md mx-auto">
+            {PIPELINE_NODES.map((node, idx) => {
+              const Icon = node.icon;
+              const isHuman = node.highlight;
 
-            <div className="relative z-10 mt-auto flex flex-wrap items-center gap-2 p-3 rounded-xl bg-black/60 border border-[#C9AEC6]/30 text-xs font-mono shadow-[0_0_15px_rgba(201,174,198,0.08)]">
-              <span className="font-semibold text-[#C9AEC6]">AI Prepares</span>
-              <ArrowRight className="w-3.5 h-3.5 text-slate-500 shrink-0" />
-              <span className="font-semibold text-[#F6EFF5] flex items-center gap-1.5 bg-[#C9AEC6]/15 px-2 py-0.5 rounded border border-[#C9AEC6]/40">
-                <ShieldAlert className="w-4 h-4 text-[#C9AEC6] shrink-0" /> Human Approval
-              </span>
-              <ArrowRight className="w-3.5 h-3.5 text-slate-500 shrink-0" />
-              <span className="font-semibold text-[#22C55E]">Execute</span>
+              return (
+                <div key={node.label} className="space-y-3">
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={defaultViewport}
+                    transition={{
+                      duration: 0.45,
+                      delay: idx * 0.06,
+                      ease: SPARTAN_EASE,
+                    }}
+                    className={`p-5 rounded-2xl border flex items-start gap-4 ${
+                      isHuman
+                        ? "bg-[#161616] border-[#C9AEC6]/60 shadow-[0_0_15px_rgba(201,174,198,0.12)] ring-1 ring-[#C9AEC6]/30"
+                        : "bg-[#121212] border-white/[0.08]"
+                    }`}
+                  >
+                    <div
+                      className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border ${
+                        isHuman
+                          ? "bg-[#C9AEC6]/15 border-[#C9AEC6]/30 text-[#C9AEC6]"
+                          : "bg-white/[0.04] border-white/[0.08] text-[#8E8295]"
+                      }`}
+                    >
+                      <Icon className="w-5 h-5" />
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2 mb-1">
+                        <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#F6EFF5]">
+                          {node.label}
+                        </h3>
+                        <span
+                          className={`text-[10px] font-mono font-bold ${
+                            isHuman ? "text-[#C9AEC6]" : "text-[#8E8295]/50"
+                          }`}
+                        >
+                          {node.step}
+                        </span>
+                      </div>
+                      <p className="text-xs text-[#8E8295] leading-relaxed">
+                        {node.desc}
+                      </p>
+                    </div>
+                  </motion.div>
+
+                  {idx < PIPELINE_NODES.length - 1 && (
+                    <div className="flex justify-center py-0.5 text-[#C9AEC6]/50">
+                      <ArrowDown className="w-4 h-4" />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Minimal reassurance tag below */}
+          <div className="mt-12 text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.02] border border-white/[0.06] text-xs font-mono text-[#8E8295]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#22C55E]" />
+              <span>Machines handle the brute force. People make the decisions.</span>
             </div>
-          </motion.div>
+          </div>
 
         </div>
+
       </div>
     </section>
   );

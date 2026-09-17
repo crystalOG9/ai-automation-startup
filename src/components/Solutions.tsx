@@ -13,7 +13,6 @@ import {
   ArrowRight,
   ShieldCheck,
 } from "lucide-react";
-import Link from "next/link";
 import { PrecisionCard } from "@/components/PrecisionCard";
 import { scrollToSection } from "@/lib/utils";
 

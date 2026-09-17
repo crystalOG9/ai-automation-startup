@@ -139,11 +139,11 @@ export function DynamicSystemField() {
     initParticles();
 
     // Data Pulses
-    let pulses: Pulse[] = [];
+    const pulses: Pulse[] = [];
     let lastPulseSpawn = 0;
 
     // Water Ripples (Desktop only, capped at 3)
-    let ripples: WaterRipple[] = [];
+    const ripples: WaterRipple[] = [];
     let lastRippleTime = 0;
     let lastRippleX = -1000;
     let lastRippleY = -1000;

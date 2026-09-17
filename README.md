@@ -1,148 +1,80 @@
-# SPARTAN — AI Business Automation
+# SPARTAN — Custom Automation Systems & Engineering Studio
 
-> **"We don't replace people. We automate the repetitive work around them."**
+> **"A small technical team building custom automation systems for businesses that are tired of doing the same thing 500 times."**
 
-**SPARTAN** is an early-stage AI automation company focused on identifying repetitive computer-based work inside businesses and engineering custom automations that reduce operational friction while keeping humans firmly in control of critical decisions.
-
-Rather than offering generic, one-size-fits-all software, SPARTAN builds from the ground up: discovering how an organization truly operates, mapping bottlenecks, and engineering workflow-specific automations with strict **Human-in-the-Loop (HITL)** governance.
+**SPARTAN** is a boutique automation and software engineering studio. Rather than selling generic, rigid SaaS templates, SPARTAN engineers custom automation systems directly around how your business actually operates — eliminating routine digital busywork, integrating existing software tools, and keeping humans firmly in control of critical decisions.
 
 ---
 
-## The Problem: Repetitive Digital Friction
+## What SPARTAN Does
 
-Employees in small, medium, and growing businesses spend hours each day on routine, error-prone digital tasks:
+Most businesses lose hundreds of hours each month to routine computer tasks that nobody wants to do:
+- Copying data back and forth between WhatsApp, Excel, CRMs, and ERPs.
+- Manually sorting, classifying, and extracting line items from incoming invoices and emails.
+- Repetitive customer order status lookups and tracking updates.
+- Routine multi-sheet data reconciliations and audit checks.
 
-- **Email & Ticket Ingestion**: Reading, categorizing, routing, and answering standard inbound requests.
-- **Data Synchronization**: Manually copy-pasting customer, order, and status records across isolated systems.
-- **Status & Shipment Verification**: Querying tracking APIs, carrier portals, or ERPs for routine status lookups.
-- **Record Updates**: Manually updating spreadsheets, CRMs, ERPs, and internal dashboards.
-- **Repetitive Administrative Loops**: Moving data between disconnected tools with zero creative or strategic value.
-
-**Our Mission**: We eliminate repetitive busywork so team members can focus on high-impact problem solving, customer relationships, and critical business judgment.
-
----
-
-## Architectural Philosophy: Human-in-the-Loop (HITL)
-
-Every automation engineered under the SPARTAN framework follows strict **Human-in-the-Loop** boundaries to eliminate hallucinations, prevent unauthorized actions, and maintain auditability:
-
-```
-Inbound Event (Email, Form, API, Webhook)
-       ↓
-[1] AI Identifies & Validates
-       ↓
-[2] Information Extraction & Enrichment
-       ↓
-[3] Business Rules & Policy Evaluation
-       ↓
-[4] AI Prepares Draft Action & Parameters
-       ↓
-[5] HUMAN APPROVAL (Gatekeeper: Approve / Edit / Reject)
-       ↓
-[6] System Executes Verified Action (CRM, ERP, Email, Database)
-       ↓
-[7] Immutable Audit Logging & Monitoring
-```
-
-> **The Gatekeeper Guarantee**: High-stakes decisions—such as financial transactions, customer-impacting communications, refunds, cancellations, and contract updates—must always pass through explicit human authorization before execution.
+**Our Approach**:
+1. **Understand the process first**: We map your actual operational steps before touching code.
+2. **Automate what makes sense**: No over-engineering. If a simple script or API webhook solves it, we build that.
+3. **Integrate existing systems**: Zero forced software migrations. We build alongside your current tools (SAP, Tally, Excel, Gmail, WhatsApp, Zoho, etc.).
+4. **Human-in-the-Loop**: Strict policy gates ensure high-stakes approvals, payments, and sensitive client messages always pass through human sign-off.
 
 ---
 
-## Key Interactive Features
+## Multi-Page Architecture
 
-The SPARTAN platform demonstrates these capabilities through interactive, high-performance UI systems:
+SPARTAN is architected as a modern, high-performance multi-page company website:
 
-### 1. Editable Interactive Workflow Simulation (`AutomationDemo.tsx`)
-- **Stage 1: Customer Input** — Fully user-editable customer message interface allowing users to input real-world business scenarios or test custom queries.
-- **Stage 2: AI Understands** — Real-time entity extraction, sentiment analysis, and intent classification.
-- **Stage 3: Systems Consulted** — Live simulated lookups against Order Systems, Shipping APIs, and CRM history.
-- **Stage 4: Gatekeeper Human Approval** — An interactive authorization interface where operators can inspect AI-prepared response parameters, adjust email drafts, and verify actions before execution.
-- **Stage 5: System Executes** — Real-time execution feedback showing CRM record updates, carrier notifications, and customer resolution.
+| Route | Purpose & Key Features |
+|---|---|
+| **`/` (Home)** | Studio overview, interactive 3D hero experience, core principles, selected build highlights, verified stats, and direct workflow assessment. |
+| **`/work`** | **"Stuff We've Actually Built"** — Deep-dive into real in-house builds, prototypes, multi-system pipeline engines, and inbound triage gateways. |
+| **`/services`** | **"What We Build"** — Detailed breakdown across Web Interfaces, Backend APIs, Custom Automations, Enterprise Integrations, and Pragmatic AI. |
+| **`/about`** | **"Who We Are"** — Studio philosophy (*"How We Think"*), core engineering creed, and the team. |
+| **`/contact`** | **"Show Us The Work You Hate Doing"** — Interactive workflow intake form capturing process frequency, software tools, and manual bottlenecks. |
+| **`/api/workflow`** | Secure backend API route validating intake submissions, persisting to **Supabase**, and alerting via **Resend**. |
 
-### 2. Live Architectural Workflow Network (`WorkflowNetwork.tsx`)
-- High-performance HTML5 Canvas rendering of multi-department data ingestion:
-  - **Inbound Streams**: Sales, Operations, Support, Finance, and Logistics.
-  - **Distributed Ingestion Bus**: Parallel, non-intersecting conduits routing directly into the central AI Automation engine.
-  - **Pulse Packet Animation**: Real-time vector laser packets simulating live asynchronous data throughput.
-  - **Executive Blueprint Matrix**: Clean architectural dot-grid with subtle proximity illumination, designed for enterprise executive presentations.
+---
 
-### 3. Precision Interaction & 3D Spatial System (`PrecisionCard.tsx` & `PrecisionMouseSystem.tsx`)
-- **Zero Blurry Light Blobs**: Replaced soft, unfocused cursor blooms with crisp, disciplined geometric design tokens.
-- **3D Parallax Tilt**: Cards feature subtle, physics-based 3D tilt clamped strictly to 3.5° max angle, specular edge sheen, and smooth spring physics.
-- **Digital Scanning Focus Reticle**: Hero interface features a dynamic HUD scanning reticle with corner brackets (`┌ ┐ └ ┘`) snapping to nearest UI elements on cursor proximity.
-- **Accessibility & Motion Guards**: Automatically disabled on touch/mobile devices via `@media (hover: hover) and (pointer: fine)` and strictly respects `prefers-reduced-motion`.
+## Interactive UI & Component Engineering
 
-### 4. Interactive Workflow Assessment & Intake (`CTA.tsx`)
-- Interactive discovery and assessment form capturing:
-  - Full Name, Work Email, Company Name.
-  - Process Frequency and daily routine volume.
-  - Integrated Tools (SAP, Tally, Excel/Sheets, CRM, ERP, Gmail, Outlook, etc.).
-  - Freeform bottleneck description.
-- **Automated Dispatch**: Integrated with **Supabase** for secure lead capture and **Resend** for instant notifications routed directly to `sparten.tech26@gmail.com`.
-- **Post-Submission Meeting Scheduling**: After submitting, visitors are prompted with an interactive option to instantly schedule a 15-minute architecture discovery call with the engineering team.
+The platform integrates custom motion engineering and curated open-source components:
+
+- **Cinematic Logo Intro Animation**: Powered by the **React Bits `<StrokeText />`** component with GSAP outline drawing and white wipe reveal, layered on top of an undulating **React Bits `<Silk />`** WebGL shader in dusty metallic gray (`#7B7481`).
+- **Gooey Global Navigation**: Powered by the **React Bits `<GooeyNav />`** component, featuring an SVG alpha color matrix (`feGaussianBlur` + `feColorMatrix`) for fluid, liquid-droplet route switching with 100% transparent backdrop blending.
+- **Interactive Workflow Simulation (`AutomationDemo.tsx`)**: An interactive 5-stage editable workflow simulator demonstrating real-time message intake, AI entity extraction, multi-system querying, human approval gatekeeping, and automated execution.
+- **Precision Mouse & 3D Spatial System**: Custom RAF pointer tracking, dynamic focus reticles, and 3D card tilt with specular edge sheens.
+- **Responsive Mobile Navigation**: Clean slide-down navigation drawer with instant client-side route transitions.
 
 ---
 
 ## Tech Stack
 
-- **Framework**: [Next.js](https://nextjs.org/) (v16 App Router with Turbopack)
-- **Library**: [React](https://react.dev/) (v19)
-- **Language**: [TypeScript](https://www.typescriptlang.org/) (Strict Mode)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/) (v4)
-- **Animation**: [Framer Motion](https://www.framer.com/motion/) & HTML5 Canvas API
+- **Framework**: [Next.js](https://nextjs.org/) 16 (App Router + Turbopack)
+- **Library**: [React](https://react.dev/) 19
+- **Language**: [TypeScript](https://www.typescriptlang.org/) 5 (Strict Mode)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) v4
+- **3D & WebGL**: [Three.js](https://threejs.org/) & [@react-three/fiber](https://r3f.docs.pmnd.rs/)
+- **Animation**: [GSAP](https://gsap.com/) & [Framer Motion](https://www.framer.com/motion/)
 - **Icons**: [Lucide React](https://lucide.dev/)
-- **Backend & Database**: [Supabase](https://supabase.com/)
+- **Database**: [Supabase](https://supabase.com/) (`workflow_submissions` table)
 - **Email Infrastructure**: [Resend](https://resend.com/)
-- **Hosting & Edge Deployment**: [Vercel](https://vercel.com/)
+- **Deployment**: [Vercel](https://vercel.com/)
 
 ---
 
-## Project Structure
+## Team
 
-```
-src/
-├── app/
-│   ├── api/
-│   │   └── workflow/               # Backend endpoint for workflow lead submission & email dispatch
-│   ├── favicon.ico
-│   ├── globals.css                 # Design tokens, custom animations, Tailwind CSS v4 setup
-│   ├── layout.tsx                  # Root layout, metadata, PrecisionMouseSystem mounting
-│   └── page.tsx                    # Main landing page combining all section components
-│
-├── components/
-│   ├── AutomationDemo.tsx          # Multi-stage interactive workflow simulation
-│   ├── BackgroundVisuals.tsx       # Subtle ambient gradient backdrops
-│   ├── CTA.tsx                     # Workflow assessment intake form & post-submission meeting prompt
-│   ├── CoreMessage.tsx             # AI vs Human tasks division showcase
-│   ├── CustomerDiscovery.tsx       # Department-by-department automation discovery cards
-│   ├── Footer.tsx                  # Footer navigation, contact info, and social links
-│   ├── Hero.tsx                    # Hero section with scanning focus reticle & CTA
-│   ├── HowItWorks.tsx              # 6-step engagement roadmap cards
-│   ├── HumanInTheLoop.tsx          # Architectural governance principles
-│   ├── Industries.tsx              # Target enterprise industry verticals
-│   ├── InstagramIcon.tsx           # Reusable SVG icon for Instagram branding
-│   ├── MainDifferentiator.tsx      # System replacement vs custom workflow automation
-│   ├── Navbar.tsx                  # Fixed glass navbar with sliding indicator
-│   ├── PrecisionCard.tsx           # Reusable 3D parallax container with specular edge
-│   ├── PrecisionMouseSystem.tsx    # Performant requestAnimationFrame pointer tracking
-│   ├── ProblemSection.tsx          # Side-by-side comparison: TODAY vs WITH AUTOMATION
-│   ├── ROI.tsx                     # Core operational standards & principles
-│   ├── Solutions.tsx               # Core automation capabilities and safety features
-│   ├── SpartanLogo.tsx             # Brand logo component
-│   ├── WhyUs.tsx                   # Enterprise credibility & engineering philosophy
-│   └── WorkflowNetwork.tsx         # Canvas architectural workflow data bus diagram
-│
-└── lib/
-    ├── supabase.ts                 # Supabase client configuration
-    └── utils.ts                    # Class merging utility (clsx + tailwind-merge)
+Three people. A suspicious amount of work:
 
-public/
-└── branding/                       # SPARTAN SVG logos and visual assets
-```
+1. **Harshad** — Founder · Automation
+2. **Piyush** — Web · Backend · APIs · Automation
+3. **Samar** — HR · Marketing
 
 ---
 
-## Getting Started
+## Getting Started Locally
 
 ### Prerequisites
 - Node.js 18.18+ or 20+
@@ -159,8 +91,8 @@ cd ai-automation-startup
 npm install
 ```
 
-### 3. Configure Environment Variables
-Create a `.env.local` file in the project root:
+### 3. Environment Variables
+Create `.env.local` in the project root:
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
@@ -168,7 +100,7 @@ RESEND_API_KEY=your_resend_api_key
 NOTIFICATION_EMAIL=sparten.tech26@gmail.com
 NOTIFICATION_FROM_EMAIL=SPARTAN <onboarding@resend.dev>
 ```
-> ⚠️ **Security Notice**: Never commit `.env.local` or API keys to GitHub.
+*(The front-end and interactive demos run completely client-side even if backend environment variables are omitted).*
 
 ### 4. Run Development Server
 ```bash
@@ -180,62 +112,11 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ```bash
 npm run build
 ```
-Tests TypeScript types, compiles Next.js pages with Turbopack, and validates static site generation (SSG).
-
-### 6. Run Production Build Locally
-```bash
-npm start
-```
 
 ---
 
-## Environment Variables Reference
+## Contact & Direct Channels
 
-| Variable | Required | Default | Description |
-|---|:---:|---|---|
-| `NEXT_PUBLIC_SUPABASE_URL` | Optional | — | Supabase project URL for storing assessment form submissions |
-| `SUPABASE_SERVICE_ROLE_KEY` | Optional | — | Supabase service role key for backend lead insertion |
-| `RESEND_API_KEY` | Optional | — | Resend API key for sending confirmation emails |
-| `NOTIFICATION_EMAIL` | Optional | `sparten.tech26@gmail.com` | Destination email where new lead notifications are routed |
-| `NOTIFICATION_FROM_EMAIL` | Optional | `SPARTAN <onboarding@resend.dev>` | Verified sender address for outbound notifications |
-
-*(The website and interactive demos run completely client-side even if backend environment variables are omitted).*
-
----
-
-## Deployment
-
-The application is deployed on **Vercel** with automated continuous integration:
-- Every push to the `main` branch triggers an automated build and edge deployment.
-- **Live URL**: [https://ai-automation-startup.vercel.app/](https://ai-automation-startup.vercel.app/)
-
----
-
-## Contact & Connect
-
-- **Official Email**: [sparten.tech26@gmail.com](mailto:sparten.tech26@gmail.com)
-- **Instagram**: [@sparten.tech](https://www.instagram.com/sparten.tech/)
+- **Email**: [sparten.tech26@gmail.com](mailto:sparten.tech26@gmail.com)
+- **Instagram**: [@spartantech.ai](https://www.instagram.com/spartantech.ai/)
 - **Website**: [https://ai-automation-startup.vercel.app/](https://ai-automation-startup.vercel.app/)
-
----
-
-## Responsible AI & Operational Safety
-
-SPARTAN adheres to strict operational boundaries:
-1. **Zero Black-Box Executions**: All automated decisions require deterministic business rules and structured schema validation.
-2. **Explicit Human Gatekeeper**: High-stakes business actions require explicit human sign-off before downstream systems execute.
-3. **Least-Privilege System Integration**: Systems connect via read-only access where possible, with minimal write scopes.
-4. **Complete Traceability**: Every input, transformation, prompt, and execution step is logged for auditing.
-5. **Fail-Safe Graceful Fallback**: Any unexpected error or unconfident model prediction routes directly to a human operator.
-
----
-
-## Team
-
-- **Piyush & Harshad** — Founders, SPARTAN
-
----
-
-## License & Disclaimer
-
-SPARTAN is currently in active customer discovery and validation. Features and architecture are continuously refined based on feedback from operating businesses.
