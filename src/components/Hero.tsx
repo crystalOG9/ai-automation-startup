@@ -48,6 +48,20 @@ export function Hero() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-[480px] bg-[#141414]/[0.3] blur-[180px] rounded-full pointer-events-none select-none" />
       <div className="absolute top-1/4 right-0 w-96 h-96 bg-[#C9AEC6]/[0.025] blur-[160px] rounded-full pointer-events-none select-none" />
       
+      {/* Subtle black transparent gradient overlay behind left-side text: strongest near left edge, smoothly fading to transparent toward the right */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-y-0 left-0 w-full sm:w-[90%] md:w-[78%] lg:w-[68%] xl:w-[60%] pointer-events-none select-none z-0"
+        style={{
+          background:
+            "linear-gradient(to right, rgba(8, 8, 8, 0.82) 0%, rgba(8, 8, 8, 0.65) 30%, rgba(8, 8, 8, 0.32) 65%, rgba(8, 8, 8, 0) 100%)",
+          maskImage:
+            "linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)",
+        }}
+      />
+
       <motion.div
         style={{ y: heroContentY, opacity: heroContentOpacity }}
         className="container mx-auto px-4 md:px-6 relative z-10 my-auto pb-16 md:pb-24"
@@ -74,7 +88,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 26, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.64, delay: 0.1, ease: SPARTAN_EASE }}
-              className="text-4xl sm:text-6xl md:text-7xl lg:text-[4.75rem] font-bold tracking-tight text-[#F6EFF5] mb-8 leading-[1.04] max-w-5xl uppercase font-sans"
+              className="text-4xl sm:text-6xl md:text-7xl lg:text-[4.75rem] font-bold tracking-tight text-[#F6EFF5] mb-8 leading-[1.04] max-w-5xl uppercase font-sans drop-shadow-[0_2px_14px_rgba(0,0,0,0.7)]"
             >
               <span>We automate the work </span>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFFFFF] via-[#EAD6E6] to-[#C9AEC6]">
@@ -87,7 +101,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: SPARTAN_EASE }}
-              className="text-lg sm:text-xl md:text-2xl text-[#BAAEC0] mb-8 leading-relaxed max-w-3xl font-normal"
+              className="text-lg sm:text-xl md:text-2xl text-[#E2D5E3] mb-8 leading-relaxed max-w-3xl font-normal [text-shadow:_0_1px_2px_rgba(0,0,0,0.9),_0_2px_8px_rgba(0,0,0,0.6)]"
             >
               You show us the process. We figure out what should be automated, connected, or left to a human.
             </motion.p>
@@ -97,9 +111,9 @@ export function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.25, ease: SPARTAN_EASE }}
-              className="flex items-center gap-2.5 text-xs sm:text-sm font-mono text-[#8E8295] mb-10"
+              className="flex items-center gap-2.5 text-xs sm:text-sm font-mono text-[#BFB2C6] mb-10 [text-shadow:_0_1px_2px_rgba(0,0,0,0.9)]"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#C9AEC6]/80" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C9AEC6] shadow-[0_0_8px_rgba(201,174,198,0.5)]" />
               <span>No automation theatre. Just systems that actually run.</span>
             </motion.div>
             

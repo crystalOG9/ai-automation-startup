@@ -157,9 +157,23 @@ export default function WorkPage() {
     : PROJECTS.filter((p) => p.category === activeFilter);
 
   return (
-    <div className="relative pt-32 pb-24 min-h-screen">
+    <div className="relative pt-32 pb-24 min-h-screen overflow-hidden">
       {/* Background ambient lighting */}
       <div className="absolute top-20 left-1/2 -translate-x-1/2 w-full max-w-5xl h-96 bg-[#C9AEC6]/[0.035] blur-[180px] rounded-full pointer-events-none" />
+
+      {/* Subtle black transparent gradient overlay behind left-side text: strongest near left edge, smoothly fading to transparent toward the right */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-y-0 left-0 w-full sm:w-[90%] md:w-[78%] lg:w-[68%] xl:w-[60%] pointer-events-none select-none z-0"
+        style={{
+          background:
+            "linear-gradient(to right, rgba(8, 8, 8, 0.82) 0%, rgba(8, 8, 8, 0.65) 30%, rgba(8, 8, 8, 0.32) 65%, rgba(8, 8, 8, 0) 100%)",
+          maskImage:
+            "linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)",
+        }}
+      />
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         
@@ -175,7 +189,7 @@ export default function WorkPage() {
           </div>
 
           {/* Main Headline: STUFF WE'VE ACTUALLY BUILT. */}
-          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[4.75rem] font-bold tracking-tight text-[#F6EFF5] mb-8 leading-[1.04] max-w-5xl uppercase font-sans">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[4.75rem] font-bold tracking-tight text-[#F6EFF5] mb-8 leading-[1.04] max-w-5xl uppercase font-sans drop-shadow-[0_2px_14px_rgba(0,0,0,0.7)]">
             <span>Stuff we&apos;ve </span>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFFFFF] via-[#EAD6E6] to-[#C9AEC6]">
               actually built.
@@ -183,13 +197,13 @@ export default function WorkPage() {
           </h1>
 
           {/* Supporting Text */}
-          <p className="text-lg sm:text-xl md:text-2xl text-[#BAAEC0] mb-8 leading-relaxed max-w-3xl font-normal">
+          <p className="text-lg sm:text-xl md:text-2xl text-[#E2D5E3] mb-8 leading-relaxed max-w-3xl font-normal [text-shadow:_0_1px_2px_rgba(0,0,0,0.9),_0_2px_8px_rgba(0,0,0,0.6)]">
             Real systems, prototypes, and automation infrastructure engineered in-house. No vaporware, zero imaginary metrics.
           </p>
 
           {/* Small Supporting Line with glowing dot */}
-          <div className="flex items-center gap-2.5 text-xs sm:text-sm font-mono text-[#8E8295] mb-10">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#C9AEC6]/80" />
+          <div className="flex items-center gap-2.5 text-xs sm:text-sm font-mono text-[#BFB2C6] mb-10 [text-shadow:_0_1px_2px_rgba(0,0,0,0.9)]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#C9AEC6] shadow-[0_0_8px_rgba(201,174,198,0.5)]" />
             <span>Production code running in live environments. Every system proven.</span>
           </div>
 
@@ -426,7 +440,7 @@ export default function WorkPage() {
             <h2 className="text-3xl sm:text-4xl font-black text-[#F6EFF5] uppercase font-sans mb-3">
               HOW WE ACTUALLY SHIP SYSTEMS.
             </h2>
-            <p className="text-sm sm:text-base text-[#BAAEC0] max-w-xl mx-auto leading-relaxed">
+            <p className="text-sm sm:text-base text-[#E2D5E3] max-w-xl mx-auto leading-relaxed [text-shadow:_0_1px_2px_rgba(0,0,0,0.8)]">
               Every workflow undergoes four rigorous engineering stages before handling production business data.
             </p>
           </div>
@@ -466,7 +480,7 @@ export default function WorkPage() {
           <h3 className="text-2xl sm:text-3xl font-black text-[#F6EFF5] uppercase font-sans mb-3">
             HAVE A SYSTEM YOU NEED BUILT?
           </h3>
-          <p className="text-sm sm:text-base text-[#BAAEC0] max-w-lg mx-auto mb-6 leading-relaxed">
+          <p className="text-sm sm:text-base text-[#E2D5E3] max-w-lg mx-auto mb-6 leading-relaxed [text-shadow:_0_1px_2px_rgba(0,0,0,0.8)]">
             Every company has different data schemas and operational tools. We build the glue and automation around what your team actually needs.
           </p>
           <Link

@@ -43,11 +43,11 @@ export function CTA() {
               </span>
             </h2>
 
-            <p className="text-lg sm:text-xl text-[#F6EFF5] font-semibold leading-relaxed">
+            <p className="text-lg sm:text-xl text-[#F6EFF5] font-semibold leading-relaxed [text-shadow:_0_1px_2px_rgba(0,0,0,0.9)]">
               Show us what you&apos;re doing manually.
             </p>
 
-            <p className="text-base sm:text-lg text-[#BAAEC0] leading-relaxed font-normal max-w-2xl">
+            <p className="text-base sm:text-lg text-[#E2D5E3] leading-relaxed font-normal max-w-2xl [text-shadow:_0_1px_2px_rgba(0,0,0,0.9),_0_2px_8px_rgba(0,0,0,0.6)]">
               We&apos;ll tell you whether it can actually be automated — directly, honestly, and without a 40-slide sales pitch.
             </p>
 

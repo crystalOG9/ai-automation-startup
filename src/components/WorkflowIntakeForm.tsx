@@ -116,20 +116,20 @@ export function WorkflowIntakeForm() {
           <span>Workflow Intake & Scoping</span>
         </div>
 
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#F6EFF5] uppercase font-sans leading-[1.06]">
+        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#F6EFF5] uppercase font-sans leading-[1.06] drop-shadow-[0_2px_14px_rgba(0,0,0,0.7)]">
           <span>Show us the work </span>
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFFFFF] via-[#EAD6E6] to-[#C9AEC6]">
             you hate doing.
           </span>
         </h1>
 
-        <p className="text-base sm:text-lg md:text-xl text-[#BAAEC0] leading-relaxed font-normal">
+        <p className="text-base sm:text-lg md:text-xl text-[#E2D5E3] leading-relaxed font-normal [text-shadow:_0_1px_2px_rgba(0,0,0,0.9),_0_2px_8px_rgba(0,0,0,0.6)]">
           Tell us what your team keeps doing manually. We&apos;ll figure out what should be automated, connected, or left to a human.
         </p>
 
         {/* Small Supporting Line with glowing dot */}
-        <div className="flex items-center gap-2.5 text-xs sm:text-sm font-mono text-[#8E8295]">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#C9AEC6]/80" />
+        <div className="flex items-center gap-2.5 text-xs sm:text-sm font-mono text-[#BFB2C6] [text-shadow:_0_1px_2px_rgba(0,0,0,0.9)]">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#C9AEC6] shadow-[0_0_8px_rgba(201,174,198,0.5)]" />
           <span>Direct engineer assessment. No 40-slide sales pitch.</span>
         </div>
 
@@ -142,7 +142,7 @@ export function WorkflowIntakeForm() {
               <h3 className="text-xs font-bold text-[#F6EFF5] tracking-wide uppercase mb-1.5 font-mono">
                 How We Evaluate Submissions
               </h3>
-              <p className="text-xs text-[#BAAEC0] leading-relaxed">
+              <p className="text-xs text-[#E2D5E3] leading-relaxed [text-shadow:_0_1px_2px_rgba(0,0,0,0.8)]">
                 An engineer personally reviews your submission. We look for deterministic logic, API availability, and identify where a human review gate should remain.
               </p>
             </div>
@@ -238,7 +238,7 @@ export function WorkflowIntakeForm() {
                     id="name"
                     name="name"
                     className="w-full bg-[#111111] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-[#F6EFF5] placeholder-[#8E8295] focus:outline-none focus:border-[#C9AEC6] transition-colors"
-                    placeholder="Jane Doe"
+                    placeholder="Full name"
                   />
                 </div>
 
@@ -252,7 +252,7 @@ export function WorkflowIntakeForm() {
                     id="email"
                     name="email"
                     className="w-full bg-[#111111] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-[#F6EFF5] placeholder-[#8E8295] focus:outline-none focus:border-[#C9AEC6] transition-colors"
-                    placeholder="name@company.com"
+                    placeholder="Work email"
                   />
                 </div>
               </div>
@@ -269,7 +269,7 @@ export function WorkflowIntakeForm() {
                     id="company"
                     name="company"
                     className="w-full bg-[#111111] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-[#F6EFF5] placeholder-[#8E8295] focus:outline-none focus:border-[#C9AEC6] transition-colors"
-                    placeholder="Acme Industries"
+                    placeholder="Company name"
                   />
                 </div>
 

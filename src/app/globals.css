@@ -19,7 +19,7 @@
   --color-background: #0B0B0B; /* Deep obsidian black canvas */
   --color-foreground: #F6EFF5; /* Luminous cosmic starlight core primary text */
   --color-muted: #1A1A1A;
-  --color-muted-foreground: #8E8295; /* Cosmic nebula dust muted text */
+  --color-muted-foreground: #BFB2C6; /* Cosmic nebula dust muted text with enhanced contrast */
   --color-card: #141414; /* Refined graphite card/panel */
   --color-card-foreground: #F6EFF5;
   --color-border: rgba(255, 255, 255, 0.06);
@@ -34,8 +34,8 @@
   --surface-elevated: #1A1A1A;
   --border: rgba(255, 255, 255, 0.06);
   --text-primary: #F6EFF5;
-  --text-secondary: #BAAEC0;
-  --text-muted: #8E8295;
+  --text-secondary: #E2D5E3;
+  --text-muted: #BFB2C6;
   --accent: #C9AEC6;
   --accent-hover: #EAD6E6;
   --accent-dark: #8E7796;

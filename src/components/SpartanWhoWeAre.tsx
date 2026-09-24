@@ -27,15 +27,15 @@ export function SpartanWhoWeAre() {
               <span>Identity &amp; Approach</span>
             </div>
 
-            <h2 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-[#F6EFF5] uppercase font-sans leading-[1.08]">
+            <h2 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-[#F6EFF5] uppercase font-sans leading-[1.08] drop-shadow-[0_2px_14px_rgba(0,0,0,0.7)]">
               We&apos;re <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFFFFF] via-[#EAD6E6] to-[#C9AEC6]">SPARTAN.</span>
             </h2>
 
-            <p className="text-lg sm:text-xl text-[#BAAEC0] leading-relaxed font-normal">
+            <p className="text-lg sm:text-xl text-[#E2D5E3] leading-relaxed font-normal [text-shadow:_0_1px_2px_rgba(0,0,0,0.9),_0_2px_8px_rgba(0,0,0,0.6)]">
               A small technical team building custom automation systems for businesses that are tired of doing the same thing 500 times.
             </p>
 
-            <p className="text-sm sm:text-base text-[#8E8295] leading-relaxed">
+            <p className="text-sm sm:text-base text-[#BFB2C6] leading-relaxed [text-shadow:_0_1px_2px_rgba(0,0,0,0.9)]">
               We aren&apos;t a 40-person agency charging you for pitch decks. We sit down with your operators, inspect where data gets stuck between software, and write the custom glue code, database connectors, and AI triage pipelines that fix it permanently.
             </p>
 

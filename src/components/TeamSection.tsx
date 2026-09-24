@@ -67,14 +67,14 @@ export function TeamSection() {
             <span>The Builders</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-[#F6EFF5] uppercase font-sans mb-6">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-[#F6EFF5] uppercase font-sans mb-6 drop-shadow-[0_2px_14px_rgba(0,0,0,0.7)]">
             THREE PEOPLE. <br className="hidden sm:inline" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFFFFF] via-[#EAD6E6] to-[#C9AEC6]">
               A SUSPICIOUS AMOUNT OF WORK.
             </span>
           </h2>
 
-          <p className="text-base sm:text-lg md:text-xl text-[#BAAEC0] max-w-2xl mx-auto leading-relaxed font-normal">
+          <p className="text-base sm:text-lg md:text-xl text-[#E2D5E3] max-w-2xl mx-auto leading-relaxed font-normal [text-shadow:_0_1px_2px_rgba(0,0,0,0.9),_0_2px_8px_rgba(0,0,0,0.6)]">
             No middle managers. When you talk to SPARTAN, you&apos;re speaking directly with the people writing the code and building the workflows.
           </p>
         </motion.div>
